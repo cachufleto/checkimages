@@ -16,7 +16,8 @@ class images extends Bdd
 
     public function __construct()
     {
-        $this->connexion('ceido_surfimages');
+        // on utilise la base de données pour les images
+        $this->connexion(SURFIMAGE);
         $this->_lib = file_contents_libelles();
     }
 

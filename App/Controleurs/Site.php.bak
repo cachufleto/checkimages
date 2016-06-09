@@ -15,7 +15,7 @@ use Site\Import;
 class Site extends Import
 {
     public function indexAction(){
-        $this->connexion(MEDICAMENTS);
+        $this->connexion('ceido_medicaments');
         extract($_SESSION['accueil']);
         if($produit == 'ok'){
             $_liste = $this->selectMedicamentOk();

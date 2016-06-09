@@ -54,12 +54,12 @@ class Bdd
     }
 
     public function queryUpdate($sql){
-        $this->mysqli->query($sql) or die ('ERREUR 801 de mise à jours de la BDD : <br>'.$sql);
+        $this->mysqli->query($sql) or die ('ERREUR de mise à jours de la BDD');
         return true;
     }
 
     public function queryInsert($sql){
-        $this->mysqli->query($sql) or die ('ERREUR 802 de mise à jours de la BDD : <br>'.$sql);
+        $this->mysqli->query($sql) or die ('ERREUR de mise à jours de la BDD');
         return true;
     }
 

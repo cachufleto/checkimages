@@ -5,11 +5,11 @@
  * Date: 31/05/2016
  * Time: 13:40
  */
-require __DIR__ . '/vendor/autoload.php';
-require __DIR__ . '/Conf/param.php';
+require dirname(__DIR__) . '/vendor/autoload.php';
+require dirname(__DIR__) . '/Conf/param.php';
 
-require __DIR__ . '/Class/App.php';
-require __DIR__ . '/Class/bdd.php';
+require dirname(__DIR__) . '/Class/App.php';
+require dirname(__DIR__) . '/Class/Bdd.php';
 
 require FUNC . 'debug.inc.php';
 require FUNC . 'functions.inc.php';

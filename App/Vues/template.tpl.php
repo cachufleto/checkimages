@@ -3,8 +3,8 @@
 <head>
     <meta charset="utf-8">
     <title>Titre de la page</title>
-    <link rel="stylesheet" href="inc/styles.css">
-    <script src="inc/script.js"></script>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="js/script.js"></script>
 </head>
 <body>
 <?php

@@ -46,6 +46,7 @@
 
 # base PHOTOTHEQUE
 /www/photos/*
+/photos/*
 
 # Backup entities generated with doctrine:generate:entities command
 */Entity/*~
