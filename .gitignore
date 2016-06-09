@@ -18,6 +18,7 @@
 # Parameters
 /app/config/parameters.yml
 /app/config/parameters.ini
+/conf/bdd.inc.php
 /Conf/Bdd.inc.php
 
 # Managed by Composer
