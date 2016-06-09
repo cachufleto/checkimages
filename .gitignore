@@ -44,5 +44,8 @@
 # Composer PHAR
 /composer.phar
 
+# base PHOTOTHEQUE
+/www/photos/*
+
 # Backup entities generated with doctrine:generate:entities command
 */Entity/*~
