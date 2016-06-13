@@ -19,8 +19,7 @@ foreach($liste as $key=>$info){
     $ligne = '
         <div class="'.$row.'">';
         foreach ($info as $champ=>$data){
-
-            $ligne .= '<div><span>' . $this->_lib[$champ] . ' : </span>'. utf8_encode($data) .'</div>';
+            $ligne .= '<div class="ligne"><label>' . $this->_lib[$champ] . ' : </label><div>'. utf8_encode($data) .'</div></div>';
         }
     $ligne .= '
         </div>';

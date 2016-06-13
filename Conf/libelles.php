@@ -8,7 +8,7 @@
 $_libelle = [];
 $_libelle['id_produit'] = 'Produit';
 $_libelle['libelle_ospharm'] = 'Nom';
-$_libelle['famille'] = 'Fam.';
+$_libelle['famille'] = 'Famille';
 $_libelle['sFamille'] = 'Sous Fam.';
 $_libelle['ssFamille'] = 'Sous-Sous Fam.';
 $_libelle['image'] = 'Photo';

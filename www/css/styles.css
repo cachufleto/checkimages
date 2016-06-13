@@ -1,5 +1,32 @@
 body{
-    background-color: rgba(140, 135, 222, 0.23);
+    background-color: rgba(140, 135, 222, 0.04);
+}
+
+#homme {
+    margin: 0 auto;
+    width: 30%;
+    margin-top: 150px ;
+}
+#homme .titre{
+    width: 100%;
+    float: left;
+    height: 180px;
+    font-size: 1.8em;
+}
+
+#homme .liste{
+    width: 100%;
+    float: left;
+    height: 225px;
+}
+#homme ul li{
+    height: 50px;
+    font-size: 0.8em;
+    list-style: none;
+    margin-left: -50px;
+}
+#homme ul li a:link {
+    background-color: aqua;
 }
 
 .ligne,
@@ -72,8 +99,24 @@ a:hover{
 
 .row1 img, .row0 img{
     padding: 2px;
+    border: 1px solid;
+    border-color: darkcyan;
 }
 
 .row1 span, .row0 span{
     color: coral ;
+}
+
+label {
+    float: left;
+    color: coral;
+    width: 120px;
+    height: 20px;
+    text-align: right;
+    padding-right: 5px;
+}
+
+.info div {
+    float: left;
+    width: 530px;
 }

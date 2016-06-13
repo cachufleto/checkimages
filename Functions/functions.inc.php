@@ -62,7 +62,8 @@ function remote_file_exists ($url)
     return $return;
 }
 
-function afficheMenu($page, $numProduits = 0){
+function afficheMenu($page, $numProduits = 0)
+{
 
     extract($_SESSION[$page]);
 
@@ -83,3 +84,15 @@ function afficheMenu($page, $numProduits = 0){
     include VUE . 'menu.tpl.php';
     return $f;
 }
+
+function testPagination($page, $num){
+
+    if($num < $_SESSION[$page]['a']){
+        $_SESSION[$page]['display'] = intval( $num / $_SESSION[$page]['b']);
+        header('Location:?page='.$page.'&display='.$_SESSION[$page]['display']);
+        exit();
+    }
+
+    $_SESSION[$page]['a'] = $_SESSION[$page]['b'] * $_SESSION[$page]['display'];
+}
+

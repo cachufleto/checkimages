@@ -24,6 +24,8 @@ class App
         $this->getRoute();
         $this->setPage();
         $this->setSession();
+        $this->setSessionMoteurRecherche();
+
     }
 
     public function destroy()
@@ -78,12 +80,20 @@ class App
             }
 
             if(!empty($_GET)){
-                
                 $_SESSION[$this->page]['display'] = isset($_GET['display'])? ( ($_GET['display']>=0)? $_GET['display'] : 0 ) : 0;
-                $_SESSION[$this->page]['b'] = isset($_GET['nombre'])? ( ($_GET['nombre']>0)? $_GET['nombre'] : NUM ) : NUM;
                 $_SESSION[$this->page]['p'] = isset($_GET['produit'])? true : false;
+                if($_SESSION[$this->page]['p']){
+                    if($_GET['produit'] != $_SESSION[$this->page]['produit']){
+                        $_SESSION[$this->page]['display'] = 0;
+                    }
+                } else {
+                    if(!empty($_SESSION[$this->page]['produit'])){
+                        $_SESSION[$this->page]['display'] = 0;
+                    }
+                }
                 $_SESSION[$this->page]['produit'] = isset($_GET['produit'])? $_GET['produit'] : "";
-                $_SESSION[$this->page]['a'] = 0 + ($_SESSION[$this->page]['b'] * $_SESSION[$this->page]['display']);
+                $_SESSION[$this->page]['b'] = isset($_GET['nombre'])? ( ($_GET['nombre']>0)? $_GET['nombre'] : NUM ) : NUM;
+                $_SESSION[$this->page]['a'] = $_SESSION[$this->page]['b'] * $_SESSION[$this->page]['display'];
                 $_SESSION[$this->page]['zaper'] = ($_SESSION[$this->page]['p'])? (
                                                         ($_SESSION[$this->page]['produit'] == 'ok')? 2 : (
                                                         ($_SESSION[$this->page]['produit'] == 'ko')? 1 : 0)
@@ -91,7 +101,14 @@ class App
             }
 
         }
-
     }
 
+    function setSessionMoteurRecherche()
+    {
+        if(isset($_POST['chercher'])){
+            $_SESSION['recherche'][$this->page] = $_POST;
+        } else if (!isset($_SESSION['recherche'][$this->page])){
+            $_SESSION['recherche'][$this->page] = [];
+        }
+    }
 }

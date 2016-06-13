@@ -10,7 +10,12 @@ $_r = [
     'action' => 'erreur404Action'
     ],
 
-'import' => [
+'medicament' => [
+        'controleur' => 'Site',
+        'action' => 'medicamentAction'
+    ],
+
+    'import' => [
     'controleur' => 'Import',
     'action' => 'importAction'
     ],
