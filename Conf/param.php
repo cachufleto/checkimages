@@ -7,11 +7,10 @@
  */
 define('RACINE' , dirname(__DIR__).'/');
 define('APP', RACINE . 'App/');
-define('FUNC', RACINE . 'Functions/');
 define('CONF', RACINE . 'Conf/');
-define('VUE', APP . 'Vues/');
-define('PHOTO', RACINE . 'photos/');
+define('FUNC', RACINE . 'Functions/');
+define('LIB', RACINE . 'Library/');
+define('MOD', APP . 'Modeles/');
 define('NUM', 16);
-
-include_once ('Bdd.inc.php');
-
+define('PHOTO', RACINE . 'photos/');
+define('VUE', APP . 'Vues/');

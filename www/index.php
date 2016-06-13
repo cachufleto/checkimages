@@ -8,8 +8,14 @@
 require dirname(__DIR__) . '/vendor/autoload.php';
 require dirname(__DIR__) . '/Conf/param.php';
 
-require dirname(__DIR__) . '/Class/App.php';
-require dirname(__DIR__) . '/Class/Bdd.php';
+if(file_exists(CONF . 'Bdd.inc.php')){
+    include_once (CONF . 'Bdd.inc.php');
+}else{
+    exit("<h2>L'Outil n'est pas instalé!<h2>");
+}
+
+require LIB . 'App.php';
+require LIB . 'Bdd.php';
 
 require FUNC . 'debug.inc.php';
 require FUNC . 'functions.inc.php';

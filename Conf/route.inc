@@ -1,4 +1,10 @@
 <?php
+/* 'medicament' => [
+       'controleur' => 'Site',
+        'action' => 'medicamentAction'
+    ],
+
+*/
 $_r = [
 'accueil' => [
     'controleur' => 'Site',
@@ -11,8 +17,13 @@ $_r = [
     ],
 
 'medicament' => [
-        'controleur' => 'Site',
-        'action' => 'medicamentAction'
+        'controleur' => 'Medicaments',
+        'action' => 'indexAction'
+    ],
+
+'parapharmacie' => [
+        'controleur' => 'Parapharmacie',
+        'action' => 'indexAction'
     ],
 
     'import' => [
