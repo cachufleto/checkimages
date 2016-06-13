@@ -325,8 +325,7 @@ class Import extends Bdd
             foreach($option as $_r){
                 $_option .= (empty($_option)? '' : ' OR ') . $_r;
             }
-            $recherche = ' AND ' . ((count($option) > 1 )? "( $_option )" : $_option);
-
+            $recherche = (!empty($_option))? ' AND ' . ((count($option) > 1 )? "( $_option )" : $_option) : '';
 
         } else {
 
@@ -344,7 +343,6 @@ class Import extends Bdd
                     (!empty($etat)? ' OR ' : '' ) . ' p.produit_actif = "n"' : '';
                 $etat .= isset($chercher['etat']['a'])?
                     (!empty($etat)? ' OR ' : '' ) . ' p.produit_actif = "a"' : '';
-
                 $option[] = (count($chercher['etat']) > 1 )? "( $etat )" : $etat;
             }
             // recherche partielle
@@ -355,7 +353,7 @@ class Import extends Bdd
             foreach($option as $_r){
                 $_option .= (empty($_option)? '' : ' AND ') . $_r;
             }
-            $recherche = ' AND ' . $_option;
+            $recherche = (!empty($_option))? ' AND ' . $_option : '';
         }
 
         return $recherche;
