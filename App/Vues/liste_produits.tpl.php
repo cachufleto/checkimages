@@ -1,5 +1,5 @@
 <div class ="ligne">
-    <h3>Liste des Médicaments</h3>
+    <h3>Liste des <?php  echo $this->_lib[$this->page]; ?></h3>
     <?php
 /**
  * Created by PhpStorm.
@@ -15,7 +15,6 @@ $l = 1;
 foreach($liste as $key=>$info){
     $l++;
     $row = "row".($l%2);
-    //$row .= $info['produit_actif'];
     $ligne = '
         <div class="'.$row.'">';
         foreach ($info as $champ=>$data){
@@ -23,11 +22,8 @@ foreach($liste as $key=>$info){
         }
     $ligne .= '
         </div>';
-
     echo $ligne;
-}
-
-?>
+} ?>
 </div>
 
 

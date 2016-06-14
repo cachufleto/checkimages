@@ -65,6 +65,7 @@ function remote_file_exists ($url)
 function afficheMenu($page, $numProduits = 0)
 {
 
+    include CONF . 'libelles.php';
     extract($_SESSION[$page]);
 
     $_arriere = ($display >= 1)? $display-1 : 0;
@@ -74,12 +75,12 @@ function afficheMenu($page, $numProduits = 0)
     $f = '&display=' . $display . '&nombre=' . $l;
     $link = '
     << <a href="?page=' . $page . '&display=' . $_arriere . '&nombre=' . $l .'"> page avant</a> ::
-    <a href="?page=' . $page . '&produit=ok"> Sélectionées  </a> :: 
-    <a href="?page=' . $page . '&produit=ko"> Ecartés </a> :: 
+    <a href="?page=' . $page . '&produit=ok"> Avec Images  </a> :: 
+    <a href="?page=' . $page . '&produit=ko"> Sans Images </a> :: 
     <a href="?page=' . $page . '"> à traiter </a>
     <a href="?page=' . $page . '&display=' . $_suivante . '&nombre=' . $l . '"> page suivante</a> >>  
     ';
-    $titre = ($p)? (($produit == 'ok')? "Produits Selectiones" : "Produits écartes") : 'Liste des produits avec images';
+    $titre = ($p)? (($produit == 'ok')? "Tous les produits" : "Liste des produits sans images") : 'Liste des produits avec images';
 
     include VUE . 'menu.tpl.php';
     return $f;

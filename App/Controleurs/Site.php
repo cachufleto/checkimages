@@ -56,7 +56,7 @@ class Site extends Import
 
         unset($_liste);
 
-        include_once VUE . 'liste_medicaments.tpl.php';
+        include_once VUE . 'liste_produits.tpl.php';
     }
 
     public function erreur404Action(){

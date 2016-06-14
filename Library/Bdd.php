@@ -12,11 +12,9 @@ namespace App;
 class Bdd
 {
     var $mysqli = false;
-    var $_lib = [];
 
     public function __construct()
     {
-        $this->_lib = file_contents_libelles();
     }
 
     public function connexion($bdd)
@@ -47,7 +45,7 @@ class Bdd
         while ($row = $data->fetch_assoc()) {
             $liste[] = $row;
         }
-
+        debug($sql, 'REQUETTE');
         /* free result set */
         $data->free();
         return $liste;

@@ -1,11 +1,4 @@
-<style>
-.form{
-    float: left;
-    width: 50%;
-}
-
-</style>
-<form name="recherche" method="POST">
+<form  class="recherche" name="recherche" method="POST">
     <div class="form">
         <div class="ligne">
             <label>Laboratoire:</label><div><?php echo $Laboratoire; ?></div>
@@ -27,6 +20,9 @@
         <div class="ligne">
             <label></label><div><input type="submit" name="chercher" value="Valider"></div>
         </div>
+    </div>
+    <div class="ligne">
+    <?php echo $listeRecherche; ?>
     </div>
 </form>
 

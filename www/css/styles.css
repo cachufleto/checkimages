@@ -29,6 +29,19 @@ body{
     background-color: aqua;
 }
 
+.form{
+    float: left;
+    width: 50%;
+}
+.recherche{
+    border: 1px solid gold;
+    height: 70px;
+    padding: 15px;
+}
+.ligne h2{
+    text-align: center;
+}
+
 .ligne,
 .debug {
     float: left;
@@ -36,13 +49,52 @@ body{
     width: 100%;
 }
 
-a{
-    padding: 10px;
-    border-radius: 10px;
+h1{
+    background-color: #5da550;
+    padding: 0px;
+    margin: 0px;
+    color: antiquewhite;
+    text-align: center;
+}
+.suite{
+    background-color: #5da550;
+    color: gold;
+    padding: 7px;
+    padding-bottom: 4px;
+    border: 1px solid gold;
 }
 
-a:hover{
-    background-color: coral;
+.suite>div{
+    padding-top: 7px;
+}
+
+a{
+    padding: 5px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    text-decoration: none;
+    color: white;
+}
+
+a:hover, a.actif {
+    background-color: gold;
+    color: lightslategrey;
+}
+
+a.page {
+    padding: 2px;
+    border-radius: 13px;
+    text-decoration: none;
+    color: white;
+    background-color: #ce3d05;
+    color: #e5ebec;
+    border: 1px solid;
+    font-weight: bold;
+}
+
+a.page:hover{
+    background-color: #e5ebec;
+    color: #d48e0f;
 }
 
 .existant {

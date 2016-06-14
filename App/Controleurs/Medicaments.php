@@ -8,24 +8,23 @@
 
 namespace Medicaments;
 
-require LIB . 'Medicaments/Produit.php';
-use Medicaments\Produit;
+require LIB . 'Produit.php';
+use App\Produit;
 
 class Medicaments extends Produit
 {
     public function __construct()
     {
-        $this->page = $_GET['page'];
-        $this->_lib = file_contents_libelles();
+        parent::__construct();
+        $this->link = 'https://www.pharmaplay.fr/m/produits/';
         $this->connexion(MEDICAMENTS);
     }
 
     public function indexAction()
     {
-        $this->afficheMenu($this->page, $this->count());
-        $this->afficheMoteurRecherche();
+        $this->afficheMenu();
         $liste = $this->getImages($this->produits());
-        
-        include_once VUE . 'liste_medicaments.tpl.php';
+
+        include_once VUE . 'liste_produits.tpl.php';
     }
 }

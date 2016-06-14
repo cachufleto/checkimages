@@ -8,15 +8,15 @@
 
 namespace Parapharmacie;
 
-require LIB . 'Parapharmacie/Produit.php';
-use Parapharmacie\Produit;
+require LIB . 'Produit.php';
+use App\Produit;
 
 class Parapharmacie extends Produit
 {
     public function __construct()
     {
-        $this->page = $_GET['page'];
-        $this->_lib = file_contents_libelles();
+        parent::__construct();
+        $this->link = 'https://www.pharmaplay.fr/p/produits/';
         $this->connexion(PARAPHARMACIE);
     }
 
@@ -26,6 +26,6 @@ class Parapharmacie extends Produit
         $this->afficheMoteurRecherche();
         $liste = $this->getImages($this->produits());
         
-        include_once VUE . 'liste_medicaments.tpl.php';
+        include_once VUE . 'liste_produits.tpl.php';
     }
 }
