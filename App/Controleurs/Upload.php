@@ -6,7 +6,7 @@
  * Time: 11:58
  */
 namespace Upload;
-require APP . 'Modeles/Image.php';
+require APP . 'Modeles/Images_old.php';
 
 use Upload\Images;
 

@@ -32,7 +32,7 @@ class Image extends Images
             ) . (
                 empty($recherche)? '': 'R'
             );
-        echo "</p>fonctionalité : $produit</p>";
+        
         switch ($produit) {
             case 'okR':
                 return $this->getCountOkR();
@@ -55,7 +55,7 @@ class Image extends Images
         }
     }
 
-    public function produits($recherche)
+    public function produits()
     {
         $debut = isset($_SESSION[$this->page]['a']) ? $_SESSION[$this->page]['a'] : 0;
         $limit = isset($_SESSION[$this->page]['b']) ? $_SESSION[$this->page]['b'] : NUM;
@@ -63,7 +63,7 @@ class Image extends Images
             isset($_SESSION[$this->page]['produit']) ?
                 $_SESSION[$this->page]['produit'] : ''
             ) . (
-            empty($recherche)? '': 'R'
+            ($this->recherche)? 'R': ''
             );
         
         switch ($produit) {
@@ -90,14 +90,13 @@ class Image extends Images
 
     function afficheMoteurRecherche()
     {
-        $Laboratoire = ''; //this->selectLaboratoires();
+        $libelle = $this->inputLibelle();
         $Etat = $this->listeEtat();
         $Code = $this->inputCip();
         $Nom = $this->inputNom();
-        $Fam = ''; // $this->listeFamilles();
         $listeRecherche = $this->listeRecherche;
 
-        include_once VUE . 'moteurRecherche.tpl.php';
+        include_once VUE . 'moteurRechercheImages.tpl.php';
     }
 
     public function selectLaboratoires()
@@ -127,10 +126,17 @@ class Image extends Images
     public function listeEtat()
     {
         $choix = isset($_SESSION['recherche'][$this->page]['etat']) ? $_SESSION['recherche'][$this->page]['etat'] : '';
-        var_dump($choix);
         $etat = '
-        Ecarté<input name="etat" type="checkbox" value="1" ' .
-            (!empty($choix) ? 'checked' : '')
+        Sans<input name="etat" type="radio" value="0" ' .
+            (empty($choix) ? 'checked' : '')
+            . ' >';
+        $etat .= '
+        Ecartés<input name="etat" type="radio" value="1" ' .
+            ((!empty($choix) && $choix == 1) ? 'checked' : '')
+            . ' >';
+        $etat .= '
+        Conservés<input name="etat" type="radio" value="2" ' .
+            ((!empty($choix) && $choix == 2) ? 'checked' : '')
             . ' >';
         $this->listeRecherche .= !empty($choix) ? ": Ecarté " : '';
         return $etat;
@@ -154,6 +160,16 @@ class Image extends Images
         }
 
         return '<input type="texte" name="nom" placeholder="' . $choix . '" >';
+    }
+
+    public function inputLibelle()
+    {
+        $choix = isset($_SESSION['recherche'][$this->page]['libelle']) ? $_SESSION['recherche'][$this->page]['libelle'] : '';
+        if($choix){
+            $this->listeRecherche = ": $choix ";
+        }
+
+        return '<input type="texte" name="libelle" placeholder="' . $choix . '" >';
     }
 
     public function listeFamilles()
@@ -229,6 +245,45 @@ class Image extends Images
         }
 
         return false;
+    }
+
+    public function criterMoteurRecherche()
+    {
+        $chercher = $_SESSION['recherche'][$this->page];
+        $recherche = '';
+        $option = [];
+        // recherche par cip
+        if (isset($chercher['cip13']) AND !empty($chercher['cip13'])){
+            $option[] = ' p.cip13 LIKE "%' . $chercher['cip13'] . '%"';
+        }
+
+        // recherche par libelle du produit
+        if (isset($chercher['nom']) AND !empty($chercher['nom'])) {
+            $this->rechercheNom = 'AND  i.nom LIKE "' . $chercher['nom'] . '%"';
+        }
+
+        // recherche par libelle du produit
+        if (isset($chercher['libelle']) AND !empty($chercher['libelle'])) {
+            $option[] = ' p.libelle LIKE "' . $chercher['libelle'] . '%"';
+        }
+
+        // agrementation du libelle du produit
+        $_nom = (isset($chercher['nom']) AND !empty($chercher['nom']))? explode(' ', $chercher['nom']) : '';
+
+        if(is_array($_nom) AND count($_nom) > 1){
+            foreach ($_nom as $mot){
+                $option[] = ' p.nom LIKE "%' . $mot .'%"';
+            }
+        }
+
+        $_option = '';
+        foreach($option as $_r){
+            $_option .= (empty($_option)? '' : ' OR ') . $_r;
+        }
+        $recherche .= (!empty($_option))? ' AND ' . ((count($option) > 1 )? "( $_option )" : $_option) : false;
+
+
+        return $recherche;
     }
 
 }

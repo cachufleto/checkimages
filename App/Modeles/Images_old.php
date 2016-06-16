@@ -6,7 +6,7 @@
  * Time: 12:19
  */
 
-namespace Model2;
+namespace Upload;
 use App\Bdd;
 
 class images extends Bdd

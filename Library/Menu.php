@@ -20,7 +20,7 @@ class Menu
         $data = [];
         $data['page'] = $this->info->page;
         $data['b'] = $_SESSION[$data['page']]['b'];
-        $data['numProduits'] = $this->info->count(criterMoteurRechercheImages($this->info->page));
+        $data['numProduits'] = $this->info->count($this->info->criterMoteurRecherche());
 
         $p = $_SESSION[$data['page']]['p'];
         $display = $_SESSION[$data['page']]['display'];
