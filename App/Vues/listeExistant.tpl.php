@@ -10,7 +10,7 @@ foreach ($liste as $key => $produit) {
         <a class="anchor" href="" id="$anchor"></a>
         <div class="ligne">
             <div class="existimg">
-                <img src="{$produit['site'].$produit['nom']}">
+                <img src="{$produit['site']}{$produit['nom']}">
             </div>
             <div>
                 image : {$produit['nom']} CIP: {$produit['cip13']}

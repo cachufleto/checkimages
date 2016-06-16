@@ -18,7 +18,7 @@ class Produits extends Bdd
         $sql = "SELECT count(*) as num
                 FROM produits p, familles f, s_familles s, ss_famille ss, laboratoires l
                 WHERE 1 " .
-                criterMoteurRecherche($this->page) . "
+                $this->criterMoteurRecherche() . "
                 AND p.id_famille = f.id_famille 
                 AND p.id_laboratoire = l.id_laboratoire
                 AND p.id_sfamille = s.id_sfamille 
@@ -35,7 +35,7 @@ class Produits extends Bdd
         $sql = "SELECT count(*) as num
                 FROM produits p, familles f, s_familles s, ss_famille ss, laboratoires l
                 WHERE p.cip13 NOT IN  (SELECT cip13 FROM control_images) ".
-                criterMoteurRecherche($this->page) . "
+                $this->criterMoteurRecherche() . "
                 AND p.id_laboratoire = l.id_laboratoire
                 AND p.id_famille = f.id_famille 
                 AND p.id_sfamille = s.id_sfamille 
@@ -52,7 +52,7 @@ class Produits extends Bdd
         $sql = "SELECT count(*) as num
                 FROM produits p, familles f, s_familles s, ss_famille ss, control_images i, laboratoires l
                 WHERE p.cip13 = i.cip13 ".
-                criterMoteurRecherche($this->page) . "
+                $this->criterMoteurRecherche() . "
                 AND p.id_famille = f.id_famille 
                 AND p.id_laboratoire = l.id_laboratoire
                 AND p.id_sfamille = s.id_sfamille 
@@ -69,7 +69,7 @@ class Produits extends Bdd
                         s.designation as sFamille, ss.designation as ssFamille, l.designation as laboratoire
                 FROM produits p, familles f, s_familles s, ss_famille ss, control_images i, laboratoires l
                 WHERE p.cip13 = i.cip13 " .
-                criterMoteurRecherche($this->page) . "
+                $this->criterMoteurRecherche() . "
                 AND p.id_famille = f.id_famille 
                 AND p.id_laboratoire = l.id_laboratoire
                 AND p.id_sfamille = s.id_sfamille 
@@ -86,7 +86,7 @@ class Produits extends Bdd
                         s.designation as sFamille, ss.designation as ssFamille, l.designation as laboratoire
                 FROM produits p, familles f, s_familles s, ss_famille ss, laboratoires l
                 WHERE p.cip13 NOT IN  (SELECT cip13 FROM control_images) " .
-                criterMoteurRecherche($this->page) . "
+                $this->criterMoteurRecherche() . "
                 AND p.id_laboratoire = l.id_laboratoire
                 AND p.id_famille = f.id_famille 
                 AND p.id_sfamille = s.id_sfamille 
@@ -103,7 +103,7 @@ class Produits extends Bdd
                         s.designation as sFamille, ss.designation as ssFamille, l.designation as laboratoire
                 FROM produits p, familles f, s_familles s, ss_famille ss, laboratoires l
                 WHERE 1 " .
-                criterMoteurRecherche($this->page) . "
+                $this->criterMoteurRecherche() . "
                 AND p.id_famille = f.id_famille 
                 AND p.id_laboratoire = l.id_laboratoire
                 AND p.id_sfamille = s.id_sfamille 
