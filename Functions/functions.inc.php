@@ -62,7 +62,7 @@ function remote_file_exists ($url)
     return $return;
 }
 
-function afficheMenu($page, $numProduits = 0)
+function afficheMenu_old($page, $numProduits = 0)
 {
 
     include CONF . 'libelles.php';
@@ -161,6 +161,45 @@ function criterMoteurRecherche($page)
         }
         $recherche = (!empty($_option))? ' AND ' . $_option : '';
     }
+
+    return $recherche;
+}
+
+function criterMoteurRechercheImages($page)
+{
+    $chercher = $_SESSION['recherche'][$page];
+    $recherche = '';
+    $option = [];
+    // recherche par cip
+    if (isset($chercher['cip13']) AND !empty($chercher['cip13'])){
+        $option[] = ' p.cip13 LIKE "%' . $chercher['cip13'] . '%"';
+    }
+
+    // recherche par écartes
+    if (isset($chercher['etat']) AND !empty($chercher['etat'])){
+        $option[] = ' i.zaper = 1 ';
+    }
+
+    // recherche par libelle du produit
+    if (isset($chercher['nom']) AND !empty($chercher['nom'])) {
+        $option[] = ' p.libelle LIKE "' . $chercher['nom'] . '%"';
+    }
+
+    // agrementation du libelle du produit
+    $_nom = (isset($chercher['nom']) AND !empty($chercher['nom']))? explode(' ', $chercher['nom']) : '';
+
+    if(is_array($_nom) AND count($_nom) > 1){
+        foreach ($_nom as $mot){
+            $option[] = ' p.libelle LIKE "%' . $mot .'%"';
+        }
+    }
+
+    $_option = '';
+    foreach($option as $_r){
+        $_option .= (empty($_option)? '' : ' OR ') . $_r;
+    }
+    $recherche .= (!empty($_option))? ' AND ' . ((count($option) > 1 )? "( $_option )" : $_option) : false;
+
 
     return $recherche;
 }

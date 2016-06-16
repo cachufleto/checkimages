@@ -25,5 +25,5 @@ $_libelle['bouttonAvecImage'] = "avec images";
 $_libelle['bouttonSansImage'] = "sans images";
 $_libelle['bouttonTousImage'] = "tous les produits";
 $_libelle['upload'] = "Alimenter la base des nouvelles images";
-$_libelle['existat'] = "Traiter les nouvelles images";
+$_libelle['existant'] = "Traiter les nouvelles images";
 $_libelle['accueil'] = "Page d'Accueil";

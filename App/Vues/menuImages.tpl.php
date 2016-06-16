@@ -11,7 +11,7 @@ echo <<<EOL
          page suivante <a class="page" href="?page={$data['page']}&display={$data['suivante']}&nombre={$data['l']}">>></a>  
     </div>
 EOL;
-$this->info->afficheMoteurRecherche();
+// $this->info->afficheMoteurRecherche();
 echo <<<EOL
     <div class="suite">
         <h1>{$data['titre']}</h1>
@@ -20,5 +20,3 @@ echo <<<EOL
             Affichage de {$data['b']} Images par pages ( TOTAL: {$data['numProduits']} )</div>
     </div>
 EOL;
-
-

@@ -1,4 +1,16 @@
+<div id="existant">
 <?php
+/*
+     array (size=8)
+      'id' => string '3' (length=1)
+      'site' => string 'http://www.infos-medicaments.com/monographie/images/' (length=52)
+      'nom' => string '178496' (length=6)
+      'produit' => null
+      'upload' => string '0' (length=1)
+      'zaper' => string '2' (length=1)
+      'cip13' => null
+      'image' => null
+ */
 $i = 1;
 foreach ($liste as $key => $produit){ ?>
 <div class="ligne">
@@ -79,6 +91,7 @@ foreach ($liste as $key => $produit){ ?>
 <?php
     $i++;
 }
-
+?>
+</div>
 
     

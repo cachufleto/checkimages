@@ -11,6 +11,9 @@ namespace Parapharmacie;
 require LIB . 'Produit.php';
 use App\Produit;
 
+require LIB . 'Menu.php';
+use App\Menu;
+
 class Parapharmacie extends Produit
 {
     public function __construct()
@@ -18,11 +21,14 @@ class Parapharmacie extends Produit
         parent::__construct();
         $this->link = 'https://www.pharmaplay.fr/p/produits/';
         $this->connexion(PARAPHARMACIE);
+        $this->menu = new Menu();
+        $this->menu->info = $this;
+        $this->menu->file = 'Produits';
     }
 
     public function indexAction()
     {
-        $this->afficheMenu($this->page, $this->count());
+        $this->menu->afficher();
         $this->afficheMoteurRecherche();
         $liste = $this->getImages($this->produits());
         

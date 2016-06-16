@@ -2,15 +2,15 @@
 /**
  * Created by PhpStorm.
  * User: User
- * Date: 13/06/2016
- * Time: 11:47
+ * Date: 15/06/2016
+ * Time: 13:41
  */
 
 namespace App;
-require MOD . 'Produits.php';
-use Model\Produits;
+require MOD . 'Images.php';
+use Model\Images;
 
-class Produit extends Produits
+class Image extends Images
 {
     var $link = '';
     var $_lib = [];
@@ -24,16 +24,30 @@ class Produit extends Produits
         $this->_lib = $_libelle;
     }
 
-    public function count()
+    public function count($recherche)
     {
-        $produit = isset($_SESSION[$this->page]['produit']) ? $_SESSION[$this->page]['produit'] : '';
-        
+        $produit = (
+            isset($_SESSION[$this->page]['produit']) ? 
+                $_SESSION[$this->page]['produit'] : ''
+            ) . (
+                empty($recherche)? '': 'R'
+            );
+        echo "</p>fonctionalité : $produit</p>";
         switch ($produit) {
+            case 'okR':
+                return $this->getCountOkR();
+                break;
             case 'ok':
                 return $this->getCountOk();
                 break;
+            case 'koR':
+                return $this->getCountKoR();
+                break;
             case 'ko':
                 return $this->getCountKo();
+                break;
+            case 'R':
+                return $this->getCountR();
                 break;
             case '':
                 return $this->getCount();
@@ -41,18 +55,32 @@ class Produit extends Produits
         }
     }
 
-    public function produits()
+    public function produits($recherche)
     {
-        $produit = isset($_SESSION[$this->page]['produit']) ? $_SESSION[$this->page]['produit'] : '';
         $debut = isset($_SESSION[$this->page]['a']) ? $_SESSION[$this->page]['a'] : 0;
         $limit = isset($_SESSION[$this->page]['b']) ? $_SESSION[$this->page]['b'] : NUM;
-
+        $produit = (
+            isset($_SESSION[$this->page]['produit']) ?
+                $_SESSION[$this->page]['produit'] : ''
+            ) . (
+            empty($recherche)? '': 'R'
+            );
+        
         switch ($produit) {
+            case 'okR':
+                return $this->getOkR($debut, $limit);
+                break;
             case 'ok':
                 return $this->getOk($debut, $limit);
                 break;
+            case 'koR':
+                return $this->getKoR($debut, $limit);
+                break;
             case 'ko':
                 return $this->getKo($debut, $limit);
+                break;
+            case 'R':
+                return $this->getR($debut, $limit);
                 break;
             case '':
                 return $this->get($debut, $limit);
@@ -62,11 +90,11 @@ class Produit extends Produits
 
     function afficheMoteurRecherche()
     {
-        $Laboratoire = $this->selectLaboratoires();
+        $Laboratoire = ''; //this->selectLaboratoires();
         $Etat = $this->listeEtat();
         $Code = $this->inputCip();
         $Nom = $this->inputNom();
-        $Fam = $this->listeFamilles();
+        $Fam = ''; // $this->listeFamilles();
         $listeRecherche = $this->listeRecherche;
 
         include_once VUE . 'moteurRecherche.tpl.php';
@@ -99,31 +127,12 @@ class Produit extends Produits
     public function listeEtat()
     {
         $choix = isset($_SESSION['recherche'][$this->page]['etat']) ? $_SESSION['recherche'][$this->page]['etat'] : '';
-
+        var_dump($choix);
         $etat = '
-        Inedit<input name="etat[i]" type="checkbox" value="1" ' .
-            (isset($choix['i']) ? 'checked' : '')
+        Ecarté<input name="etat" type="checkbox" value="1" ' .
+            (!empty($choix) ? 'checked' : '')
             . ' >';
-        $this->listeRecherche .= isset($choix['i']) ? ": Inedit " : '';
-
-        $etat .= '
-        On Line<input name="etat[o]" type="checkbox" value="1" ' .
-            (isset($choix['o']) ? 'checked' : '')
-            . ' >';
-        $this->listeRecherche .= isset($choix['o']) ? ": On line " : '';
-
-        $etat .= '
-        Off line<input name="etat[n]" type="checkbox" value="1" ' .
-            (isset($choix['n']) ? 'checked' : '')
-            . ' >';
-        $this->listeRecherche .= isset($choix['n']) ? ":  Off line " : '';
-
-        $etat .= '
-        Archivé<input name="etat[a]" type="checkbox" value="1" ' .
-            (isset($choix['a']) ? 'checked' : '')
-            . ' >';
-        $this->listeRecherche .= isset($choix['a']) ? ": Archivés " : '';
-
+        $this->listeRecherche .= !empty($choix) ? ": Ecarté " : '';
         return $etat;
     }
 
@@ -178,26 +187,27 @@ class Produit extends Produits
         $_liste = [];
         foreach($liste as $key =>$info){
 
-            if ($img = $this->getImage($info['cip13'])){
+            if ($img = $this->getImage($info['id'])){
                 $info['image'] = $this->imgProd($img, $info['cip13']);
             } else if (!($info['image'] = $this->testImage($info['cip13']))){
-                    $info['image'] = $info['cip13'];
-                }
+                $info['image'] = $info['cip13'];
+            }
             $_liste[] = $info;
         }
         return $_liste;
     }
 
     public function imgProd($_img, $nom){
-        $img = $_img[0];
+        /*$img = $_img[0];
         if ($img['image'] == 1 && $img['vignette'] == 1) {
             return '<img height="150px" src="' . $this->link . $nom . '_vig.jpg" alt="' . $nom . ' Vignette"  border="0" />'
             . '<img height="250px" src="' . $this->link . $nom . '.jpg" alt="' . $nom . ' Grande"  border="0" />';
-        } else if ($img['image'] == 1) {
-            return '<img height="150px" src="' . $this->link . $nom . '.jpg" alt="' . $nom . ' Grande"  border="0" />';
-        } else if ($img['vignette'] == 1) {
+        } else if ($img['image'] == 1) {*/
+            //return '<img height="150px" src="' . $this->link . $nom . '.jpg" alt="' . $nom . ' Grande"  border="0" />';
+            return '<img height="150px" src="' . $nom . '.jpg" alt="' . $nom . ' Grande"  border="0" />';
+        /*} else if ($img['vignette'] == 1) {
             return '<img height="150px" src="' . $this->link . $nom . '_vig.jpg" alt="' . $nom . ' Vignette"  border="0" />';
-        }
+        } */
         return false;
     }
 

@@ -6,11 +6,33 @@
  * Time: 11:58
  */
 namespace Upload;
-require APP . 'Modeles/Images.php';
+require APP . 'Modeles/Image.php';
 
 use Upload\Images;
 
+/*
 
+DROP TABLE IF EXISTS `produits`;
+CREATE TABLE IF NOT EXISTS `produits` (
+  `id_image` int(10) UNSIGNED NOT NULL,
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `cip13` char(15) DEFAULT NULL,
+  `denomination` longtext NOT NULL,
+  `presentation` text NOT NULL,
+  `type` int(1) DEFAULT NULL,
+  `date_traitement` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `libelle` char(200) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+  `cip13` char(15) DEFAULT NULL,
+  `denomination` longtext NOT NULL,
+  `presentation` text NOT NULL,
+  `type` int(1) DEFAULT NULL,
+  `libelle` char(200) DEFAULT NULL,
+
+
+ * */
 class Upload extends Images
 {
 
@@ -22,6 +44,7 @@ class Upload extends Images
         $f = afficheMenu('upload', $numProduits);
 
         $liste = $this->getListeImages($a, $b, $p);
+
         include(VUE . 'listeUpload.tpl.php');
 
     }
@@ -68,13 +91,36 @@ class Upload extends Images
         $this->zaper = $zaper;
         $data = $this->getExistImages($p);
         $data = $this->extractImages($data, $a, $b);
-        $liste = $data['liste'];
+        $listing = $data['liste'];
 
         $numProduits = $data['num'];
 
         $f = afficheMenu('existant', $numProduits);
+        $liste = [];
+        foreach ($listing as $key => $image) {
 
-        include(VUE . 'listeexistant.tpl.php');
+            $liste[$key]['existe'] = (file_exists(PHOTO . $image['nom'] . '.jpg')) ?
+                '<img src="' . PHOTO . $image['nom'] . '.jpg' . '">' : '';
+            $liste[$key]['existepng'] = (file_exists(PHOTO . $image['nom'] . '.png')) ?
+                '<img src="' . PHOTO . $image['nom'] . '.png' . '">' : '';
+            $liste[$key]['zaper2'] = ($image['zaper'] != 2) ?
+                '<input name="option" type="submit" value="conserver">' :
+                '<input name="option" type="submit" value="retirer">';
+            $liste[$key]['zaper1'] = ($image['zaper'] != 1) ? 
+                '<input name="option" type="submit" value="zaper">' : '';
+            $data = getExistProduit($image['id']);
+            $produit = $data->fetch_assoc();
+            $liste[$key]['cip13'] = isset($produit['cip13'])? $produit['cip13']:'';
+            $liste[$key]['denomination'] = isset($produit['denomination'])? $produit['denomination']:'';
+            $liste[$key]['libelle'] = isset($produit['libelle'])? $produit['libelle']:'';
+            $liste[$key]['presentation'] = isset($produit['presentation'])? $produit['presentation']:'';
+            $liste[$key]['date'] = isset($produit['date_traitement'])? $produit['date_traitement']:'';
+            $type = isset($produit['type'])? $produit['type']:'';
+            $liste[$key]['med'] = ($type == 1)? 'selected' : '';
+            $liste[$key]['para'] = ($type == 2)? 'selected' : '';
+        }
+        var_dump($liste);
+//        include(VUE . 'listeExistant.tpl.php');
     }
 
     public function extractImages($liste, $a=0, $b=5){

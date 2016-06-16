@@ -2,81 +2,161 @@
 /**
  * Created by PhpStorm.
  * User: User
- * Date: 06/06/2016
- * Time: 12:19
+ * Date: 13/06/2016
+ * Time: 13:20
  */
 
-namespace Upload;
+namespace Model;
 use App\Bdd;
 
-class images extends Bdd
+class Images extends Bdd
 {
-    var $_lib = [];
-    var $zaper = 0;
 
-    public function __construct()
+    public  function  getCountR()
     {
-        // on utilise la base de données pour les images
-        $this->connexion(SURFIMAGE);
-        $this->_lib = file_contents_libelles();
+        $sql = "SELECT count(*) as num
+                FROM images i, produits p
+                WHERE i.id = p.id_image ".
+                criterMoteurRechercheImages($this->page);
+
+        $num = $this->query($sql);
+
+        return ($num)? $num[0]['num'] : 0;
     }
 
-    public function getListeImages($a = 0, $b = NUM, $p = false){
+    public  function  getCount()
+    {
+        $sql = "SELECT count(*) as num
+                FROM images";
 
-        $sql = "SELECT * FROM images WHERE zaper = {$this->zaper} LIMIT $a, $b";
+        $num = $this->query($sql);
+
+        return ($num)? $num[0]['num'] : 0;
+    }
+
+    public  function  getCountKoR()
+    {
+
+        $sql = "SELECT count(*) as num
+                FROM images i, produits p
+                WHERE i.id NOT IN  (SELECT id_image FROM produits) ".
+                criterMoteurRechercheImages($this->page);
+        $num = $this->query($sql);
+
+        return ($num)? $num[0]['num'] : 0;
+    }
+
+    public  function  getCountKo()
+    {
+
+        $sql = "SELECT count(*) as num
+                FROM images i, produits p
+                WHERE i.id NOT IN  (SELECT id_image FROM produits) ".
+                criterMoteurRechercheImages($this->page);
+        $num = $this->query($sql);
+
+        return ($num)? $num[0]['num'] : 0;
+    }
+
+    public  function  getCountOkR()
+    {
+        
+        $sql = "SELECT count(*) as num
+                FROM images i, produits p
+                WHERE i.id = p.id_image 
+                AND i.upload = 0".
+                criterMoteurRechercheImages($this->page);
+
+        $num = $this->query($sql);
+
+        return ($num)? $num[0]['num'] : 0;
+    }
+
+    public  function  getCountOk()
+    {
+
+        $sql = "SELECT count(*) as num
+                FROM images i
+                WHERE i.upload = 1 ";
+
+        $num = $this->query($sql);
+
+        return ($num)? $num[0]['num'] : 0;
+    }
+
+    public function getOkR($debut, $limit)
+    {
+        $sql = "SELECT *
+                FROM images i, produits p
+                WHERE i.id = p.id_image " .
+                criterMoteurRechercheImages($this->page) . "
+                ORDER BY p.denomination ASC,  p.libelle ASC
+                LIMIT $debut, $limit";
+
+        return $this->query($sql);
+    }
+    
+    public function getOk($debut, $limit)
+    {
+        $sql = "SELECT *
+                FROM images i, produits p
+                WHERE i.upload = 1
+                LIMIT $debut, $limit";
 
         return $this->query($sql);
     }
 
-    public function getExistImages($p = false){
+    public function getKoR($debut, $limit)
+    {
+        $sql = "SELECT *
+                FROM images i, produits p
+                WHERE i.id = p.id_image
+                AND i.upload = 0 " .
+                criterMoteurRechercheImages($this->page) . "
+                ORDER BY p.libelle ASC,  p.denomination ASC
+                LIMIT $debut, $limit";
 
-        $sql = "SELECT * FROM images WHERE zaper = {$this->zaper} ";
-        
         return $this->query($sql);
     }
 
-    public function getNumImages(){
-        
-        $sql = "SELECT count(*) as num FROM images WHERE zaper = {$this->zaper}";
+    public function getKo($debut, $limit)
+    {
+        $sql = "SELECT *
+                FROM images i
+                WHERE i.upload = 0  
+                LIMIT $debut, $limit";
 
-        $data = $this->query($sql);
-
-        return $data[0]['num'];
+        return $this->query($sql);
     }
 
-    public function updateZaper(){
+    public function getR($debut, $limit)
+    {
+        $sql = "SELECT *
+                FROM images i, produits p
+                WHERE i.id = p.id_image ".
+                criterMoteurRechercheImages($this->page);
 
-        if($id = intval($_POST['id'])){
-            $sql = "UPDATE `images` SET `zaper` = '1' WHERE `images`.`id` = $id;";
-            $this->queryUpdate($sql);
-        }
-        return true;
+        return $this->query($sql);
     }
 
-    public function updateConserver(){
+    public function get($debut, $limit)
+    {
+        $sql = "SELECT *
+                FROM images
+                WHERE 1
+                LIMIT $debut, $limit;";
 
-        if($id = intval($_POST['id'])){
-            $sql = "UPDATE `images` SET `zaper` = '2' WHERE `images`.`id` = $id;";
-            $this->queryUpdate($sql);
-        }
-        return true;
+        return $this->query($sql);
     }
 
-    public function updateRetirer(){
-
-        if($id = intval($_POST['id'])){
-            $sql = "UPDATE `images` SET `zaper` = '0' WHERE `images`.`id` = $id;";
-            $this->queryUpdate($sql);
-        }
-        return true;
+    public function getImage($id){
+        $sql = "SELECT * FROM produits WHERE id_image = $id LIMIT 0, 1";
+        return $this->query($sql);
     }
 
-    public function updateCip(){
-
-        if($id = intval($_POST['id'])){
-            $sql = "UPDATE `images` SET `cip13` = '". htmlentities($_POST['cip13'])."' WHERE `images`.`id` = $id;";
-            $this->queryUpdate($sql);
-        }
-        return true;
+    public function setImage($id_image, $cip13){
+        $sql = "INSERT INTO produits (id_image, cip13) VALUES ($id_image, '$cip13');";
+        $this->queryInsert($sql);
     }
+
 }

@@ -11,6 +11,6 @@ define('CONF', RACINE . 'Conf/');
 define('FUNC', RACINE . 'Functions/');
 define('LIB', RACINE . 'Library/');
 define('MOD', APP . 'Modeles/');
-define('NUM', 16);
+define('NUM', 10);
 define('PHOTO', RACINE . 'photos/');
 define('VUE', APP . 'Vues/');

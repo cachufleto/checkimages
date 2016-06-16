@@ -34,7 +34,7 @@ body{
     width: 50%;
 }
 .recherche{
-    border: 1px solid gold;
+    border: 1px solid #667163;
     height: 70px;
     padding: 15px;
 }
@@ -49,23 +49,30 @@ body{
     width: 100%;
 }
 
-h1{
-    background-color: #5da550;
-    padding: 0px;
-    margin: 0px;
-    color: antiquewhite;
-    text-align: center;
+#upload{
 }
+
 .suite{
-    background-color: #5da550;
+    background-color: #667163;
     color: gold;
     padding: 7px;
     padding-bottom: 4px;
-    border: 1px solid gold;
+    border-bottom: 1px solid gold;
+}
+
+h1{
+    padding: 0;
+    margin: 0;
+    color: antiquewhite;
+    text-align: center;
 }
 
 .suite>div{
     padding-top: 7px;
+}
+
+.suite .resultat{
+    text-align: center;
 }
 
 a{
@@ -85,7 +92,6 @@ a.page {
     padding: 2px;
     border-radius: 13px;
     text-decoration: none;
-    color: white;
     background-color: #ce3d05;
     color: #e5ebec;
     border: 1px solid;
@@ -99,30 +105,36 @@ a.page:hover{
 
 .existant {
     float: left;
-    width: 100%;
+    /*width: 100%;*/
     padding: 10px;
-    height:360px;
+    /*height:360px;*/
 }
 
 .existant .ligne{
     float: left;
-    width: 25%;
+    /*width: 25%;*/
 }
 
 .existimg {
     float: left;
-    width: calc(100% - 20px);
+   /* width: calc(100% - 20px);*/
     padding: 5px;
-    height:calc(30% + 300px);
+   /* height:calc(30% + 300px);*/
 
 }
+
+#existant .ligne {
+    background-color: #667163;
+    color: #e5ebec;
+}
+
 .existimg .ligne{
     float: left;
     width: 100%;
 }
 .existant img {
     float: left;
-    height: 270px;
+    /*height: 270px;*/
     padding: 2px;
 }
 .existant a.anchor {
@@ -130,17 +142,20 @@ a.page:hover{
     position: absolute;
 }
 .produits img {
-    width: 600px;
-    height: auto;
+
 }
 
 .produits {
-    float: left;
-    width: 600px;
-    height: 650px;
-    padding:5px;
-    background-color: #BDBEE4;
+    padding: 15px;
+    background-color: #667163;
 }
+
+.produits form{
+    padding: 5px 0;
+    padding-left: 13px;
+    color: white;
+}
+
 .row1, .row0{
     float: left;
     width: calc(50% - 30px);

@@ -40,11 +40,18 @@ $_r = [
     'controleur' => 'Upload',
     'action' => 'listeAction'
     ],
-
+/*
 'existant' => [
-    'controleur' => 'Upload',
-    'action' => 'existantAction'
+        'controleur' => 'Upload',
+        'action' => 'existantAction'
     ],
+    */
+'existant' => [
+    'controleur' => 'Checkimages',
+    'action' => 'indexAction'
+    ],
+
+
 
 'photo' => [
     'controleur' => 'Upload',
