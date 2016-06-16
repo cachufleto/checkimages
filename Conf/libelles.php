@@ -27,3 +27,6 @@ $_libelle['bouttonTousImage'] = "tous les produits";
 $_libelle['upload'] = "Alimenter la base des nouvelles images";
 $_libelle['existant'] = "Traiter les nouvelles images";
 $_libelle['accueil'] = "Page d'Accueil";
+$_libelle['etat'][0] = "Sans";
+$_libelle['etat'][1] = "Ecarté";
+$_libelle['etat'][2] = "Conservé";

@@ -126,19 +126,19 @@ class Image extends Images
     public function listeEtat()
     {
         $choix = isset($_SESSION['recherche'][$this->page]['etat']) ? $_SESSION['recherche'][$this->page]['etat'] : '';
-        $etat = '
-        Sans<input name="etat" type="radio" value="0" ' .
+        $etat = $this->_lib['etat'][0].'
+        <input name="etat" type="radio" value="0" ' .
             (empty($choix) ? 'checked' : '')
             . ' >';
-        $etat .= '
-        Ecartés<input name="etat" type="radio" value="1" ' .
+        $etat .= $this->_lib['etat'][1].'
+        <input name="etat" type="radio" value="1" ' .
             ((!empty($choix) && $choix == 1) ? 'checked' : '')
             . ' >';
-        $etat .= '
-        Conservés<input name="etat" type="radio" value="2" ' .
+        $etat .= $this->_lib['etat'][2].'
+        <input name="etat" type="radio" value="2" ' .
             ((!empty($choix) && $choix == 2) ? 'checked' : '')
             . ' >';
-        $this->listeRecherche .= !empty($choix) ? ": Ecarté " : '';
+        $this->listeRecherche .= !empty($choix) ? ": " . $this->_lib['etat'][$choix] : '';
         return $etat;
     }
 
