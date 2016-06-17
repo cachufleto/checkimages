@@ -1,7 +1,7 @@
 <div id="homme">
     <div class="titre">
         <h2>CEIDO</h2>
-        Outil d'intégration d'images
+        <h4>Outil d'intégration d'images</h4>
     </div>
     <div class="liste">
         <ul>

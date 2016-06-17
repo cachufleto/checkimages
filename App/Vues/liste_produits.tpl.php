@@ -1,5 +1,4 @@
 <div class ="ligne">
-    <h3>Liste des <?php  echo $this->_lib[$this->page]; ?></h3>
     <?php
 /**
  * Created by PhpStorm.
@@ -18,7 +17,8 @@ foreach($liste as $key=>$info){
     $ligne = '
         <div class="'.$row.'">';
         foreach ($info as $champ=>$data){
-            $ligne .= '<div class="ligne"><label>' . $this->_lib[$champ] . ' : </label><div>'. utf8_encode($data) .'</div></div>';
+            $class = ($champ == 'image')? 'ligneimg' : 'ligne';
+            $ligne .= '<div class="' . $class . '"><label>' . $this->_lib[$champ] . ' : </label><div>'. utf8_encode($data) .'</div></div>';
         }
     $ligne .= '
         </div>';

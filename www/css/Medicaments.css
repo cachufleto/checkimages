@@ -1,0 +1,26 @@
+@import "Produits.css";
+
+body{
+    background-color: rgba(222,247,200,0.3);
+}
+
+.row0 span,
+.row1 span{
+    color: coral ;
+}
+
+.row0{
+    background-color: rgba(247,247,251,1);
+}
+
+.row1{
+    background-color: rgb(242, 245, 251);
+}
+
+.suite{
+    background-color: #667163;
+    color: gold;
+    padding: 7px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid gold;
+}

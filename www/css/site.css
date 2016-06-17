@@ -1,0 +1,38 @@
+#homme {
+    margin: 0 auto;
+    width: 30%;
+    margin-top: 150px ;
+}
+
+.titre{
+    float: left;
+    font-size: 1.8em;
+}
+
+h2,
+h4{
+    text-align: center;
+}
+
+a{
+    padding: 5px;
+    border-radius: 5px;
+    text-decoration: none;
+    color: white;
+}
+
+.liste{
+    width: 122px;
+    float: left;
+    margin: 0 35%;
+}
+ul li{
+    height: 30px;
+    font-size: 0.8em;
+    list-style: none;
+    margin-left: -50px;
+}
+
+ul li a:link {
+    background-color: #667163;
+}

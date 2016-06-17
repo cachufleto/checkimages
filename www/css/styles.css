@@ -7,41 +7,8 @@ body.Checkimages{
     background-color: rgba(127, 156, 119, 0.3);
 }
 
-body.Medicaments{
-    background-color: rgba(222,247,200,0.3);
-}
-
-body.Parapharmacie{
-    background-color: rgba(219, 221, 247, 0.3);
-}
 
 /* ------------------------------------------------------ */
-#homme {
-    margin: 0 auto;
-    width: 30%;
-    margin-top: 150px ;
-}
-#homme .titre{
-    width: 100%;
-    float: left;
-    height: 180px;
-    font-size: 1.8em;
-}
-
-#homme .liste{
-    width: 100%;
-    float: left;
-    height: 225px;
-}
-#homme ul li{
-    height: 50px;
-    font-size: 0.8em;
-    list-style: none;
-    margin-left: -50px;
-}
-#homme ul li a:link {
-    background-color: aqua;
-}
 
 .form{
     float: left;
@@ -64,14 +31,6 @@ body.Parapharmacie{
 }
 
 #upload{
-}
-
-.suite{
-    background-color: #667163;
-    color: gold;
-    padding: 7px;
-    padding-bottom: 4px;
-    border-bottom: 1px solid gold;
 }
 
 h1{
@@ -167,24 +126,6 @@ a.page:hover{
     padding: 5px 0;
     padding-left: 13px;
     color: white;
-}
-
-.row1, .row0{
-    float: left;
-    width: calc(50% - 30px);
-    margin: 10px;
-    border: 1px solid;
-    height: 420px;
-}
-
-.row1 img, .row0 img{
-    padding: 2px;
-    border: 1px solid;
-    border-color: darkcyan;
-}
-
-.row1 span, .row0 span{
-    color: coral ;
 }
 
 label {

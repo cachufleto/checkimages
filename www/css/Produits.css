@@ -1,0 +1,25 @@
+.row0,
+.row1 {
+    width: calc(100% - 20px);
+    float: left;
+    margin: 10px;
+    border: 1px solid;
+}
+
+.row0 .ligne,
+.row1 .ligne{
+    width: 50%;
+}
+
+.row0 .ligneimg,
+.row1 .ligneimg{
+    width: 100%;
+}
+
+.row0 img,
+.row1 img{
+    padding: 2px;
+    border: 1px solid;
+    border-color: darkcyan;
+    margin: 2px;
+}

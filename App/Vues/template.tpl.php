@@ -9,9 +9,10 @@ echo <<< EOL
     <meta charset="utf-8">
     <title>$titre</title>
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/$body.css">
     <script src="js/script.js"></script>
 </head>
-<body class="$body">
+<body>
 $contentPage;
 <div class="debug">
 $contentDebug;

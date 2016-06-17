@@ -1,0 +1,9 @@
+@import "Images.css";
+
+.suite{
+    background-color: #5a3232;
+    color: gold;
+    padding: 7px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid gold;
+}
