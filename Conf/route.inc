@@ -58,7 +58,7 @@ $_r = [
     'action' => 'photoAction'
     ],
 
-'image' => [
+'existantimage' => [
     'controleur' => 'Checkimages',
     'action' => 'imageAction'
     ]

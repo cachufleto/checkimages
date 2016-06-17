@@ -13,9 +13,9 @@ echo <<< EOL
     <script src="js/script.js"></script>
 </head>
 <body>
-$contentPage;
+$contentPage
 <div class="debug">
-$contentDebug;
+$contentDebug
 </div>
 </body>
 </html>

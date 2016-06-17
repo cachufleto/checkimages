@@ -26,7 +26,7 @@ foreach ($liste as $key => $image){
     echo <<<EOL
     <div class="produits">
     <a href="" id="$id"></a>
-    <form action="?page=image$f#$i" method="POST">
+    <form action="?page=existantimage$f#$i" method="POST">
         <input name="id" type="hidden" value="{$image['id']}">
         <br>image : {$image['nom']} 
         $zaper1

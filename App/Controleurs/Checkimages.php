@@ -40,37 +40,23 @@ class Checkimages extends Image
         //include_once VUE . 'listeExistant.tpl.php';
     }
 
-    public function indexAction88(){
-
-        extract($_SESSION['upload']);
-        $numProduits = $this->count($this->criterMoteurRecherche());
-        $f = afficheMenu($this->page, $this->session, $numProduits);
-
-        $liste = $this->getListeImages($a, $b, $p);
-
-        include(VUE . 'listeUpload.tpl.php');
-
-    }
-
-    public function imageAction(){
-
-        var_dump($_SESSION);
-        /*
-        if(isset($_POST['id'])){
+    public function imageAction()
+    {
+        if(isset($_POST['id']) and $id = intval($_POST['id'])){
             if($_POST['option'] == 'zaper'){
-                $this->updateZaper();
+                $this->updateZaper($id);
             } else if($_POST['option'] == 'conserver'){
-                $this->updateConserver();
+                $this->updateConserver($id);
             } else if($_POST['option'] == 'retirer'){
-                $this->updateRetirer();
+                $this->updateRetirer($id);
             }
         }
-        if(isset($_GET['mode']) && $_GET['mode'] == 'exist'){
+        /*if(isset($_GET['mode']) && $_GET['mode'] == 'exist'){
             $this->existantAction();
         }
-        else {
-            $this->listeAction();
-        } */
+        else { */
+        $this->indexAction();
+        //}
     }
 
 

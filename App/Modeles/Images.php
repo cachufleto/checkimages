@@ -182,4 +182,24 @@ class Images extends Bdd
         $this->queryInsert($sql);
     }
 
+    public function updateZaper($id)
+    {
+        $sql = "UPDATE `images` SET `zaper` = '1' WHERE `images`.`id` = $id;";
+        $this->queryUpdate($sql);
+        return true;
+    }
+
+    public function updateConserver($id)
+    {
+        $sql = "UPDATE `images` SET `zaper` = '2' WHERE `images`.`id` = $id;";
+        $this->queryUpdate($sql);
+        return true;
+    }
+
+    public function updateRetirer($id)
+    {
+        $sql = "UPDATE `images` SET `zaper` = '0' WHERE `images`.`id` = $id;";
+        $this->queryUpdate($sql);
+        return true;
+    }
 }
