@@ -18,12 +18,13 @@ class Checkimages extends Image
 {
     var $menu = false;
     var $recherche = false;
-
+    var $session = 'Checkimages';
+    
     public function __construct()
     {
         parent::__construct();
         $this->connexion(SURFIMAGE);
-        $this->zaper = isset($_SESSION['recherche'][$this->page]['etat'])? $_SESSION['recherche'][$this->page]['etat'] : 0;
+        $this->zaper = isset($_SESSION['recherche'][$this->session]['etat'])? $_SESSION['recherche'][$this->session]['etat'] : 0;
         $this->menu = new Menu();
         $this->menu->info = $this;
         $this->recherche = !empty($this->criterMoteurRecherche())? true : false ;
@@ -32,8 +33,8 @@ class Checkimages extends Image
     public function indexAction(){
         $this->menu->afficher();
         $liste = $this->getImages($this->produits());
-        $display = isset($_SESSION[$this->page]['display'])? $_SESSION[$this->page]['display'] : 0;
-        $l = isset($_SESSION[$this->page]['l'])? $_SESSION[$this->page]['l'] : NUM;
+        $display = isset($_SESSION[$this->session]['display'])? $_SESSION[$this->session]['display'] : 0;
+        $l = isset($_SESSION[$this->session]['l'])? $_SESSION[$this->session]['l'] : NUM;
         $f = '&display=' . $display . '&nombre=' . $l;
         include_once VUE . 'listeUpload.tpl.php';
         //include_once VUE . 'listeExistant.tpl.php';
@@ -43,7 +44,7 @@ class Checkimages extends Image
 
         extract($_SESSION['upload']);
         $numProduits = $this->count($this->criterMoteurRecherche());
-        $f = afficheMenu('upload', $numProduits);
+        $f = afficheMenu('update', 'Upload', $numProduits);
 
         $liste = $this->getListeImages($a, $b, $p);
 
@@ -51,8 +52,10 @@ class Checkimages extends Image
 
     }
 
-    public function zaperAction(){
+    public function imageAction(){
 
+        var_dump($_SESSION);
+        /*
         if(isset($_POST['id'])){
             if($_POST['option'] == 'zaper'){
                 $this->updateZaper();
@@ -67,7 +70,7 @@ class Checkimages extends Image
         }
         else {
             $this->listeAction();
-        }
+        } */
     }
 
 

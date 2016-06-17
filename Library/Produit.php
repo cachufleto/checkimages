@@ -26,7 +26,7 @@ class Produit extends Produits
 
     public function count()
     {
-        $produit = isset($_SESSION[$this->page]['produit']) ? $_SESSION[$this->page]['produit'] : '';
+        $produit = isset($_SESSION[$this->session]['produit']) ? $_SESSION[$this->session]['produit'] : '';
         
         switch ($produit) {
             case 'ok':
@@ -43,9 +43,9 @@ class Produit extends Produits
 
     public function produits()
     {
-        $produit = isset($_SESSION[$this->page]['produit']) ? $_SESSION[$this->page]['produit'] : '';
-        $debut = isset($_SESSION[$this->page]['a']) ? $_SESSION[$this->page]['a'] : 0;
-        $limit = isset($_SESSION[$this->page]['b']) ? $_SESSION[$this->page]['b'] : NUM;
+        $produit = isset($_SESSION[$this->session]['produit']) ? $_SESSION[$this->session]['produit'] : '';
+        $debut = isset($_SESSION[$this->session]['a']) ? $_SESSION[$this->session]['a'] : 0;
+        $limit = isset($_SESSION[$this->session]['b']) ? $_SESSION[$this->session]['b'] : NUM;
 
         switch ($produit) {
             case 'ok':
@@ -80,7 +80,7 @@ class Produit extends Produits
         $balise .= '
             <option value="0">---</option>';
 
-        $choix = isset($_SESSION['recherche'][$this->page]['labo']) ? $_SESSION['recherche'][$this->page]['labo'] : 0;
+        $choix = isset($_SESSION['recherche'][$this->session]['labo']) ? $_SESSION['recherche'][$this->session]['labo'] : 0;
         foreach ($data as $info) {
             $select = '';
             if($info['id'] == $choix){
@@ -98,7 +98,7 @@ class Produit extends Produits
 
     public function listeEtat()
     {
-        $choix = isset($_SESSION['recherche'][$this->page]['etat']) ? $_SESSION['recherche'][$this->page]['etat'] : '';
+        $choix = isset($_SESSION['recherche'][$this->session]['etat']) ? $_SESSION['recherche'][$this->session]['etat'] : '';
 
         $etat = '
         Inedit<input name="etat[i]" type="checkbox" value="1" ' .
@@ -129,7 +129,7 @@ class Produit extends Produits
 
     public function inputCip()
     {
-        $choix = isset($_SESSION['recherche'][$this->page]['cip13']) ? $_SESSION['recherche'][$this->page]['cip13'] : '';
+        $choix = isset($_SESSION['recherche'][$this->session]['cip13']) ? $_SESSION['recherche'][$this->session]['cip13'] : '';
         if($choix){
             $this->listeRecherche = ": $choix ";
         }
@@ -139,7 +139,7 @@ class Produit extends Produits
 
     public function inputNom()
     {
-        $choix = isset($_SESSION['recherche'][$this->page]['nom']) ? $_SESSION['recherche'][$this->page]['nom'] : '';
+        $choix = isset($_SESSION['recherche'][$this->session]['nom']) ? $_SESSION['recherche'][$this->session]['nom'] : '';
         if($choix){
             $this->listeRecherche = ": $choix ";
         }
@@ -154,7 +154,7 @@ class Produit extends Produits
         $balise = '<select name="famille">';
         $balise .= '
             <option value="0">---</option>';
-        $choix = isset($_SESSION['recherche'][$this->page]['famille']) ? $_SESSION['recherche'][$this->page]['famille'] : 0;
+        $choix = isset($_SESSION['recherche'][$this->session]['famille']) ? $_SESSION['recherche'][$this->session]['famille'] : 0;
         foreach ($data as $info) {
             if($info['id'] == 0){
                 continue;
@@ -223,7 +223,7 @@ class Produit extends Produits
 
     public function criterMoteurRecherche()
     {
-        $chercher = $_SESSION['recherche'][$this->page];
+        $chercher = $_SESSION['recherche'][$this->session];
         $recherche = '';
         $option = [];
         if( (

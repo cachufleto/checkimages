@@ -35,13 +35,14 @@ CREATE TABLE IF NOT EXISTS `produits` (
  * */
 class Upload extends Images
 {
+    var $session = 'Upload';
 
     public function listeAction(){
 
-        extract($_SESSION['upload']);
+        extract($_SESSION['Upload']);
         $this->zaper = $zaper;
         $numProduits = $this->getNumImages();
-        $f = afficheMenu('upload', $numProduits);
+        $f = afficheMenu('update', 'Upload', $numProduits);
 
         $liste = $this->getListeImages($a, $b, $p);
 
@@ -95,7 +96,7 @@ class Upload extends Images
 
         $numProduits = $data['num'];
 
-        $f = afficheMenu('existant', $numProduits);
+        $f = afficheMenu('existant', 'Checkimages', $numProduits);
         $liste = [];
         foreach ($listing as $key => $image) {
 

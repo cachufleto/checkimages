@@ -27,8 +27,8 @@ class Image extends Images
     public function count($recherche)
     {
         $produit = (
-            isset($_SESSION[$this->page]['produit']) ? 
-                $_SESSION[$this->page]['produit'] : ''
+            isset($_SESSION[$this->session]['produit']) ? 
+                $_SESSION[$this->session]['produit'] : ''
             ) . (
                 empty($recherche)? '': 'R'
             );
@@ -57,11 +57,11 @@ class Image extends Images
 
     public function produits()
     {
-        $debut = isset($_SESSION[$this->page]['a']) ? $_SESSION[$this->page]['a'] : 0;
-        $limit = isset($_SESSION[$this->page]['b']) ? $_SESSION[$this->page]['b'] : NUM;
+        $debut = isset($_SESSION[$this->session]['a']) ? $_SESSION[$this->session]['a'] : 0;
+        $limit = isset($_SESSION[$this->session]['b']) ? $_SESSION[$this->session]['b'] : NUM;
         $produit = (
-            isset($_SESSION[$this->page]['produit']) ?
-                $_SESSION[$this->page]['produit'] : ''
+            isset($_SESSION[$this->session]['produit']) ?
+                $_SESSION[$this->session]['produit'] : ''
             ) . (
             ($this->recherche)? 'R': ''
             );
@@ -107,7 +107,7 @@ class Image extends Images
         $balise .= '
             <option value="0">---</option>';
 
-        $choix = isset($_SESSION['recherche'][$this->page]['labo']) ? $_SESSION['recherche'][$this->page]['labo'] : 0;
+        $choix = isset($_SESSION['recherche'][$this->session]['labo']) ? $_SESSION['recherche'][$this->session]['labo'] : 0;
         foreach ($data as $info) {
             $select = '';
             if($info['id'] == $choix){
@@ -125,7 +125,7 @@ class Image extends Images
 
     public function listeEtat()
     {
-        $choix = isset($_SESSION['recherche'][$this->page]['etat']) ? $_SESSION['recherche'][$this->page]['etat'] : '';
+        $choix = isset($_SESSION['recherche'][$this->session]['etat']) ? $_SESSION['recherche'][$this->session]['etat'] : '';
         $etat = $this->_lib['etat'][0].'
         <input name="etat" type="radio" value="0" ' .
             (empty($choix) ? 'checked' : '')
@@ -144,7 +144,7 @@ class Image extends Images
 
     public function inputCip()
     {
-        $choix = isset($_SESSION['recherche'][$this->page]['cip13']) ? $_SESSION['recherche'][$this->page]['cip13'] : '';
+        $choix = isset($_SESSION['recherche'][$this->session]['cip13']) ? $_SESSION['recherche'][$this->session]['cip13'] : '';
         if($choix){
             $this->listeRecherche = ": $choix ";
         }
@@ -154,7 +154,7 @@ class Image extends Images
 
     public function inputNom()
     {
-        $choix = isset($_SESSION['recherche'][$this->page]['nom']) ? $_SESSION['recherche'][$this->page]['nom'] : '';
+        $choix = isset($_SESSION['recherche'][$this->session]['nom']) ? $_SESSION['recherche'][$this->session]['nom'] : '';
         if($choix){
             $this->listeRecherche = ": $choix ";
         }
@@ -164,7 +164,7 @@ class Image extends Images
 
     public function inputLibelle()
     {
-        $choix = isset($_SESSION['recherche'][$this->page]['libelle']) ? $_SESSION['recherche'][$this->page]['libelle'] : '';
+        $choix = isset($_SESSION['recherche'][$this->session]['libelle']) ? $_SESSION['recherche'][$this->session]['libelle'] : '';
         if($choix){
             $this->listeRecherche = ": $choix ";
         }
@@ -179,7 +179,7 @@ class Image extends Images
         $balise = '<select name="famille">';
         $balise .= '
             <option value="0">---</option>';
-        $choix = isset($_SESSION['recherche'][$this->page]['famille']) ? $_SESSION['recherche'][$this->page]['famille'] : 0;
+        $choix = isset($_SESSION['recherche'][$this->session]['famille']) ? $_SESSION['recherche'][$this->session]['famille'] : 0;
         foreach ($data as $info) {
             if($info['id'] == 0){
                 continue;
@@ -249,7 +249,7 @@ class Image extends Images
 
     public function criterMoteurRecherche()
     {
-        $chercher = $_SESSION['recherche'][$this->page];
+        $chercher = $_SESSION['recherche'][$this->session];
         $recherche = '';
         $option = [];
         // recherche par cip

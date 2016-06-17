@@ -19,7 +19,7 @@ class Import extends Bdd
     
     public  function  countMedicamentOk(){
 
-        extract($_SESSION[$this->page]);
+        extract($_SESSION[$this->session]);
 
         $sql = "SELECT count(*) as num
                 FROM produits p, familles f, s_familles s, ss_famille ss, control_images i, laboratoires l
@@ -40,7 +40,7 @@ class Import extends Bdd
         $a = 0;
         $b = NUM;
 
-        extract($_SESSION[$this->page]);
+        extract($_SESSION[$this->session]);
 
         $sql = "SELECT p.produit_actif, p.id_produit, p.cip13, p.libelle_ospharm, f.designation as famille, 
                         s.designation as sFamille, ss.designation as ssFamille, l.designation as laboratoire
@@ -59,7 +59,7 @@ class Import extends Bdd
 
     public  function  countMedicamentKo(){
 
-        extract($_SESSION[$this->page]);
+        extract($_SESSION[$this->session]);
 
         $sql = "SELECT count(*) as num
                 FROM produits p, familles f, s_familles s, ss_famille ss, laboratoires l
@@ -80,7 +80,7 @@ class Import extends Bdd
         $a = 0;
         $b = NUM;
 
-        extract($_SESSION[$this->page]);
+        extract($_SESSION[$this->session]);
 
         $sql = "SELECT p.produit_actif, p.id_produit, p.cip13, p.libelle_ospharm, f.designation as famille, 
                         s.designation as sFamille, ss.designation as ssFamille, l.designation as laboratoire
@@ -99,7 +99,7 @@ class Import extends Bdd
 
     public  function  countMedicament(){
 
-        extract($_SESSION[$this->page]);
+        extract($_SESSION[$this->session]);
 
         $sql = "SELECT count(*) as num
                 FROM produits p, familles f, s_familles s, ss_famille ss, laboratoires l
@@ -189,7 +189,7 @@ class Import extends Bdd
         $balise .= '
             <option value="0">---</option>';
 
-        $choix = isset($_SESSION['recherche'][$this->page]['labo'])? $_SESSION['recherche'][$this->page]['labo'] : 0;
+        $choix = isset($_SESSION['recherche'][$this->session]['labo'])? $_SESSION['recherche'][$this->session]['labo'] : 0;
         foreach ($data as $info) {
             $select = ($info['id'] == $choix)? 'selected' : '' ;
             $balise .= '
@@ -203,7 +203,7 @@ class Import extends Bdd
 
     public function getEtat()
     {
-        $choix = isset($_SESSION['recherche'][$this->page]['etat'])? $_SESSION['recherche'][$this->page]['etat'] : '';
+        $choix = isset($_SESSION['recherche'][$this->session]['etat'])? $_SESSION['recherche'][$this->session]['etat'] : '';
         $etat = '
         Inedit<input name="etat[i]" type="checkbox" value="1" ' .
             (isset($choix['i'])? 'checked' : '')
@@ -226,13 +226,13 @@ class Import extends Bdd
 
     public function getCip()
     {
-        $choix = isset($_SESSION['recherche'][$this->page]['cip'])? $_SESSION['recherche'][$this->page]['cip'] : '';
+        $choix = isset($_SESSION['recherche'][$this->session]['cip'])? $_SESSION['recherche'][$this->session]['cip'] : '';
         return '<input type="texte" name="cip13" placeholder="' . $choix . '" >';
     }
 
     public function getNoms()
     {
-        $choix = isset($_SESSION['recherche'][$this->page]['nom'])? $_SESSION['recherche'][$this->page]['nom'] : '';
+        $choix = isset($_SESSION['recherche'][$this->session]['nom'])? $_SESSION['recherche'][$this->session]['nom'] : '';
         return '<input type="texte" name="nom" placeholder="' . $choix . '" >';
     }
 
@@ -242,7 +242,7 @@ class Import extends Bdd
 
         $balise = '<select name="famille">';
 
-        $choix = isset($_SESSION['recherche'][$this->page]['famille'])? $_SESSION['recherche'][$this->page]['famille'] : 0;
+        $choix = isset($_SESSION['recherche'][$this->session]['famille'])? $_SESSION['recherche'][$this->session]['famille'] : 0;
         foreach ($data as $info) {
             $select = ($info['id'] == $choix)? 'selected' : '' ;
             $balise .= '

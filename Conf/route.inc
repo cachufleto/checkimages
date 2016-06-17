@@ -26,7 +26,7 @@ $_r = [
         'action' => 'indexAction'
     ],
 
-    'import' => [
+'import' => [
     'controleur' => 'Import',
     'action' => 'importAction'
     ],
@@ -58,8 +58,8 @@ $_r = [
     'action' => 'photoAction'
     ],
 
-'select' => [
-    'controleur' => 'Upload',
-    'action' => 'selectAction'
+'image' => [
+    'controleur' => 'Checkimages',
+    'action' => 'imageAction'
     ]
 ];

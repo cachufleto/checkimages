@@ -17,14 +17,15 @@ class Menu
     public function afficher()
     {
         // extract($_SESSION[$this->info->page]);
+        $session = $this->info->session;
         $data = [];
         $data['page'] = $this->info->page;
-        $data['b'] = $_SESSION[$data['page']]['b'];
+        $data['b'] = $_SESSION[$session]['b'];
         $data['numProduits'] = $this->info->count($this->info->criterMoteurRecherche());
 
-        $p = $_SESSION[$data['page']]['p'];
-        $display = $_SESSION[$data['page']]['display'];
-        $produit = $_SESSION[$data['page']]['produit'];
+        $p = $_SESSION[$session]['p'];
+        $display = $_SESSION[$session]['display'];
+        $produit = $_SESSION[$session]['produit'];
 
         $data['titre'] = ($p)? (
         ($produit == 'ok')?

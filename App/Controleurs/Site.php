@@ -15,6 +15,7 @@ use Site\Import;
 class Site extends Import
 {
     var $page = '';
+    var $session = 'Site';
 
     public function indexAction(){
 
@@ -27,7 +28,7 @@ class Site extends Import
 
         $this->connexion(MEDICAMENTS);
         $produit='';
-        extract($_SESSION[$this->page]);
+        extract($_SESSION[$this->session]);
         
         if($produit == 'ok'){
             testPagination($this->page, $num = $this->countMedicamentOk());

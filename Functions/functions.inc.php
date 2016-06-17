@@ -62,11 +62,11 @@ function remote_file_exists ($url)
     return $return;
 }
 
-function afficheMenu($page, $numProduits = 0)
+function afficheMenu($page, $session, $numProduits = 0)
 {
 
     include CONF . 'libelles.php';
-    extract($_SESSION[$page]);
+    extract($_SESSION[$session]);
 
     $_arriere = ($display >= 1)? $display-1 : 0;
     $_suivante = ($display == intval($numProduits/$b))? $display : $display+1 ;
@@ -86,13 +86,13 @@ function afficheMenu($page, $numProduits = 0)
     return $f;
 }
 
-function testPagination($page, $num){
+function testPagination($session, $num){
 
-    if($num < $_SESSION[$page]['a']){
-        $_SESSION[$page]['display'] = intval( $num / $_SESSION[$page]['b']);
-        header('Location:?page='.$page.'&display='.$_SESSION[$page]['display']);
+    if($num < $_SESSION[$session]['a']){
+        $_SESSION[$session]['display'] = intval( $num / $_SESSION[$session]['b']);
+        header('Location:?page='.$page.'&display='.$_SESSION[$session]['display']);
         exit();
     }
 
-    $_SESSION[$page]['a'] = $_SESSION[$page]['b'] * $_SESSION[$page]['display'];
+    $_SESSION[$session]['a'] = $_SESSION[$session]['b'] * $_SESSION[$session]['display'];
 }

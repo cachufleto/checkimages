@@ -17,6 +17,8 @@ use App\Menu;
 
 class Medicaments extends Produit
 {
+    var $session = 'Medicaments';
+
     public function __construct()
     {
         parent::__construct();
