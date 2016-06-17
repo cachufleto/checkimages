@@ -24,10 +24,8 @@ foreach ($liste as $key => $image){
     $para = '';
 
     echo <<<EOL
-    <div class="produits"><a href="" id="$id"></a>
-    <img src="{$image['site']}/{$image['nom']}">
-    $existe
-    $existepng
+    <div class="produits">
+    <a href="" id="$id"></a>
     <form action="?page=select$f#$i" method="POST">
         <input name="id" type="hidden" value="{$image['id']}">
         <br>image : {$image['nom']} 
@@ -43,6 +41,9 @@ foreach ($liste as $key => $image){
        </select>
        <input name="option" type="submit" value="valider">
     </form>
+    <img src="{$image['site']}/{$image['nom']}">
+    $existe
+    $existepng
     </div>
 EOL;
     $i++;

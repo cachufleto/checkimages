@@ -114,19 +114,6 @@ a.page:hover{
     margin-top: 0;
     position: absolute;
 }
-.produits img {
-
-}
-
-.produits {
-    padding: 15px;
-}
-
-.produits form{
-    padding: 5px 0;
-    padding-left: 13px;
-    color: white;
-}
 
 label {
     float: left;

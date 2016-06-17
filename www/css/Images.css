@@ -1,0 +1,19 @@
+.produits img {
+    border: 1px solid;
+    margin: 10px;
+}
+
+.produits a{
+    padding: 0;
+    border-radius: inherit;
+    display: none;
+}
+
+.produits {
+    padding: 15px;
+    border: 1px solid;
+    margin: 10px;
+}
+
+.produits form{
+}
