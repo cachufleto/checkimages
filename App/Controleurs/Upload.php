@@ -39,10 +39,10 @@ class Upload extends Images
 
     public function listeAction(){
 
-        extract($_SESSION['Upload']);
+        extract($_SESSION[$this->session]);
         $this->zaper = $zaper;
         $numProduits = $this->getNumImages();
-        $f = afficheMenu('update', 'Upload', $numProduits);
+        $f = afficheMenu($this->page, $this->session, $numProduits);
 
         $liste = $this->getListeImages($a, $b, $p);
 
@@ -96,7 +96,7 @@ class Upload extends Images
 
         $numProduits = $data['num'];
 
-        $f = afficheMenu('existant', 'Checkimages', $numProduits);
+        $f = afficheMenu($this->page, $this->session, $numProduits);
         $liste = [];
         foreach ($listing as $key => $image) {
 

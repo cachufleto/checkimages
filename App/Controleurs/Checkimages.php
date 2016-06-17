@@ -44,7 +44,7 @@ class Checkimages extends Image
 
         extract($_SESSION['upload']);
         $numProduits = $this->count($this->criterMoteurRecherche());
-        $f = afficheMenu('update', 'Upload', $numProduits);
+        $f = afficheMenu($this->page, $this->session, $numProduits);
 
         $liste = $this->getListeImages($a, $b, $p);
 

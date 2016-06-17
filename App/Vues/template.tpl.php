@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="fr">
 <?php
-$body = $__app->routeur[$__app->page]['controleur'];
+$body = isset($__app->routeur[$__app->page])? $__app->routeur[$__app->page]['controleur'] : 'Site';
 $titre = $app->_lib['titre'][$body];
 
 echo <<< EOL
