@@ -1,7 +1,7 @@
 <form  class="recherche" name="recherche" method="POST">
     <div class="form">
         <div class="ligne">
-            <label>Nom:</label><div><?php echo $Nom; ?></div>
+            <label>Image:</label><div><?php echo $Nom; ?></div>
         </div>
         <div class="ligne">
             <label>Etat:</label><div><?php echo $Etat; ?></div>

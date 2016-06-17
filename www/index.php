@@ -30,8 +30,6 @@ $app->{$__app->action}();
 $contentPage = ob_get_contents();
 ob_end_clean();
 
-//debug(get_class_methods ( $app ), 'APP');
-//debug(get_class_methods ( $app ), 'APP');
 ob_start();
     getDebug();
     $contentDebug = ob_get_contents();

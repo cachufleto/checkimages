@@ -1,7 +1,21 @@
 body{
     background-color: rgba(140, 135, 222, 0.04);
+    margin: 0;
 }
 
+body.Checkimages{
+    background-color: rgba(127, 156, 119, 0.3);
+}
+
+body.Medicaments{
+    background-color: rgba(222,247,200,0.3);
+}
+
+body.Parapharmacie{
+    background-color: rgba(219, 221, 247, 0.3);
+}
+
+/* ------------------------------------------------------ */
 #homme {
     margin: 0 auto;
     width: 30%;
@@ -147,7 +161,6 @@ a.page:hover{
 
 .produits {
     padding: 15px;
-    background-color: #667163;
 }
 
 .produits form{

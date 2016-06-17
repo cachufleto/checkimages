@@ -30,3 +30,9 @@ $_libelle['accueil'] = "Page d'Accueil";
 $_libelle['etat'][0] = "Sans";
 $_libelle['etat'][1] = "Ecarté";
 $_libelle['etat'][2] = "Conservé";
+
+$_libelle['titre']['Checkimages'] = 'CEIDO :: Gestion d\'images';
+$_libelle['titre']['Site'] = 'CEIDO Imports';
+$_libelle['titre']['Medicaments'] = 'CEIDO :: Medicaments';
+$_libelle['titre']['Parapharmacie'] = 'CEIDO :: Parapharmacie';
+$_libelle['titre']['Upload'] = 'CEIDO :: Data';
