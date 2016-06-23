@@ -1,0 +1,297 @@
+
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <title>CEIDO :: Medicaments</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/Medicaments.css">
+    <script src="js/script.js"></script>
+</head>
+<body>
+<div class="suite">
+    <a  href="?page=accueil"> Page d'Accueil</a><a  href="?page=upload"> Alimenter la base des nouvelles images</a><a  href="?page=existant"> Traiter les nouvelles images</a><a class="actif" href="?page=medicament"> Medicaments</a><a  href="?page=parapharmacie"> produits de Parapharmacie</a>
+</div>
+<div class="suite">
+    <a class="page" href="?page=medicament&display=0&nombre=10"><<</a> page précédente
+    <a  href="?page=medicament&produit=ok"> avec images  </a>
+    <a  href="?page=medicament&produit=ko"> sans images </a>
+    <a class="actif" href="?page=medicament"> tous les produits </a>
+    page suivante <a class="page" href="?page=medicament&display=1&nombre=10">>></a>
+</div><form  class="recherche" name="recherche" method="POST">
+    <div class="form">
+        <div class="ligne">
+            <label>Laboratoire:</label><div><select name="labo">
+            <option value="0">---</option>
+            <option value="48" >ABBOTT</option>
+            <option value="112" >AEROCID</option>
+            <option value="64" >ALCON SA</option>
+            <option value="55" >ALLERGAN FRANCE</option>
+            <option value="51" >ALMIRALL SAS</option>
+            <option value="66" >ALMUS FRANCE</option>
+            <option value="80" >ALTER</option>
+            <option value="84" >AMDIPHARM</option>
+            <option value="69" >APTALIS PHARMA SAS</option>
+            <option value="86" >ARKOPHARMA</option>
+            <option value="27" >ARROW GENERIQUES</option>
+            <option value="90" >ASTELLAS PHARMA</option>
+            <option value="116" >B BRAUN MEDICAL SAS</option>
+            <option value="81" >BAILLEUL BIORGA</option>
+            <option value="103" >BAILLY-CREAT</option>
+            <option value="148" >BAYER HEALTHCARE</option>
+            <option value="17" >BAYER SANTE FAMILIALE</option>
+            <option value="94" >BESINS INTERNATIONAL</option>
+            <option value="37" >BIOCODEX</option>
+            <option value="121" >BIODIM</option>
+            <option value="10" >BIOGARAN</option>
+            <option value="129" >BIOPROJET PHARMA</option>
+            <option value="13" >BOEHRINGER INGELHEIM FRANCE</option>
+            <option value="3" >BOIRON DOLISOS</option>
+            <option value="25" >BOUCHARA RECORDATI</option>
+            <option value="126" >BRIDE</option>
+            <option value="2" >BRISTOL MYERS SQUIBB / UPSA</option>
+            <option value="75" >BROTHIER NOGUES</option>
+            <option value="18" >CENTRAL CHIMIOTHERAPIE DERMOC.</option>
+            <option value="152" >CHAIX ET DU MARAIS</option>
+            <option value="52" >CHAUVIN BAUSCH LOMB</option>
+            <option value="100" >CHIESI SA</option>
+            <option value="41" >COOPER</option>
+            <option value="36" >CRINEX SA</option>
+            <option value="62" >CRISTERS</option>
+            <option value="110" >DB PHARMA</option>
+            <option value="154" >DERMATERRA</option>
+            <option value="109" >DERMOPHIL INDIEN</option>
+            <option value="136" >DEXO SA</option>
+            <option value="141" >DIETETIQUE ET SANTE</option>
+            <option value="95" >DISSOLVUROL</option>
+            <option value="104" >DOLIAGE</option>
+            <option value="61" >DUCRAY</option>
+            <option value="57" >EFFIK</option>
+            <option value="26" >ELERTE</option>
+            <option value="43" >EREMPHARMA</option>
+            <option value="53" >EUROPHTA</option>
+            <option value="137" >EXPANPHARM INTERNATIONAL</option>
+            <option value="7" >EXPANSCIENCE</option>
+            <option value="60" >FERRIER</option>
+            <option value="101" >FERRING SA</option>
+            <option value="150" >FRESENIUS KABI FRANCE</option>
+            <option value="117" >FUCA</option>
+            <option value="85" >GALDERMA</option>
+            <option value="22" >GENEVRIER SA</option>
+            <option value="93" >GERDA</option>
+            <option value="42" >GIFRER BARBEZAT</option>
+            <option value="149" >GILBERT (GR. BATTEUR)</option>
+            <option value="147" >GLAXOSMITHKLINE</option>
+            <option value="83" >GLAXOSMITHKLINE SANTE GRD PUB.</option>
+            <option value="113" >GOMENOL</option>
+            <option value="38" >GRIMBERG</option>
+            <option value="70" >GRUNENTHAL</option>
+            <option value="102" >GUERBET</option>
+            <option value="99" >HEPATOUM</option>
+            <option value="114" >HOMME DE FER</option>
+            <option value="107" >HORUS PHARMA</option>
+            <option value="72" >HRA-PHARMA</option>
+            <option value="78" >INNOTECH INTERNATIONAL</option>
+            <option value="157" >INNOTHERA</option>
+            <option value="105" >IPRAD</option>
+            <option value="33" >IPRAD - ALFA WASSERMANN PHARMA</option>
+            <option value="16" >IPSEN PHARMA</option>
+            <option value="96" >JANSSEN CILAG SA</option>
+            <option value="20" >JOHNSON JOHNSON SANTE BEAUTE</option>
+            <option value="21" >JOLLY JATEL</option>
+            <option value="142" >JUVISE PHARMACEUTICALS</option>
+            <option value="159" >KREUSSLER PHARMA</option>
+            <option value="56" >LABCATAL</option>
+            <option value="89" >LABORATOIRE DES GRANIONS</option>
+            <option value="88" >LAPHI PPDH</option>
+            <option value="59" >LEHNING</option>
+            <option value="45" >LEO PHARMA</option>
+            <option value="132" >LISAPHARM</option>
+            <option value="119" >M. RICHARD SAS</option>
+            <option value="5" >MAYOLY SPINDLER</option>
+            <option value="15" >MEDAPHARMA</option>
+            <option value="144" >MEDIWIN LIMITED</option>
+            <option value="35" >MENARINI FRANCE</option>
+            <option value="47" >MERCK MEDICATION FAMILIALE SAS</option>
+            <option value="133" >MERCK SERONO</option>
+            <option value="97" >MOLNLYCKE HEALTH CARE</option>
+            <option value="91" >MSD FRANCE</option>
+            <option value="9" >MYLAN</option>
+            <option value="98" >NATURACTIVE PLANTES MEDECINES</option>
+            <option value="65" >NEGMA - LERADS</option>
+            <option value="14" >NORGINE FRANCE</option>
+            <option value="49" >NOVARTIS SANTE FAMILIALE SAS</option>
+            <option value="76" >OMEGA PHARMA</option>
+            <option value="23" >PFIZER</option>
+            <option value="130" >PHARMA DEVELOPPEMENT</option>
+            <option value="124" >PHARMA LAB</option>
+            <option value="156" >PHARMACIE CENTRALE DES ARMEES</option>
+            <option value="106" >PHARMASTRA</option>
+            <option value="28" >PIERRE FABRE DERMATOLOGIE</option>
+            <option value="6" >PIERRE FABRE MEDICAMENT</option>
+            <option value="29" >PIERRE FABRE SANTE</option>
+            <option value="134" >PIONNEAU</option>
+            <option value="50" >PROCTER GAMBLE PHARMACEUTICALS</option>
+            <option value="11" >RECKITT BENCKISER HEALTHCARE</option>
+            <option value="153" >ROCHE</option>
+            <option value="143" >ROGE CAVAILLES SAS</option>
+            <option value="40" >ROTTAPHARM - MADAUS</option>
+            <option value="31" >SANDOZ SAS</option>
+            <option value="1" >SANOFI AVENTIS FRANCE</option>
+            <option value="155" >SANOFI PASTEUR MSD</option>
+            <option value="108" >SERP</option>
+            <option value="30" >SERVIER</option>
+            <option value="71" >SIGMA-TAU FRANCE</option>
+            <option value="82" >SINCLAIR PHARMA</option>
+            <option value="63" >SOCIETE ETUDES RECH. BIO. SERB</option>
+            <option value="131" >SODIA</option>
+            <option value="115" >SOFIBEL FUMOUZE</option>
+            <option value="19" >SUNSTAR PHARMADENT</option>
+            <option value="111" >SUPER DIET</option>
+            <option value="32" >TECHNI PHARMA</option>
+            <option value="77" >TEOFARMA</option>
+            <option value="58" >THEA</option>
+            <option value="8" >THERABEL LUCIEN PHARMA</option>
+            <option value="128" >TISANE PROVENCALE</option>
+            <option value="39" >TONIPHARM</option>
+            <option value="118" >TOULADE</option>
+            <option value="92" >TRADIPHAR</option>
+            <option value="12" >UCB PHARMA SA</option>
+            <option value="24" >URGO</option>
+            <option value="54" >WARNER CHILCOTT</option>
+            <option value="122" >WELEDA</option>
+            <option value="34" >ZAMBON FRANCE</option>
+        </select></div>
+        </div>
+        <div class="ligne">
+            <label>Etat</label><div>
+            Inedit<input name="etat[i]" type="checkbox" value="1"  >
+            On Line<input name="etat[o]" type="checkbox" value="1"  >
+            Off line<input name="etat[n]" type="checkbox" value="1"  >
+            Archivé<input name="etat[a]" type="checkbox" value="1"  ></div>
+        </div>
+        <div class="ligne">
+            <label>Fam.:</label><div><select name="famille">
+            <option value="0">---</option>
+            <option value="3" >Circulation veineuse</option>
+            <option value="4" >Digestion</option>
+            <option value="5" >Douleurs et Fièvre</option>
+            <option value="1" >Hygiène, Intimité</option>
+            <option value="10" >Peau et Cheveux</option>
+            <option value="11" >Rhume, Gorge et Toux</option>
+            <option value="2" >Soins dentaires</option>
+            <option value="6" >Vitalité</option>
+            <option value="8" >Yeux et Oreilles</option>
+        </select></div>
+        </div>
+    </div>
+    <div class="form">
+        <div class="ligne">
+            <label>Nom:</label><div><input type="texte" name="nom" placeholder="" ></div>
+        </div>
+        <div class="ligne">
+            <label>Code CIP</label><div><input type="texte" name="cip13" placeholder="" ></div>
+        </div>
+        <div class="ligne">
+            <label></label><div><input type="submit" name="chercher" value="Valider"></div>
+        </div>
+    </div>
+    <div class="ligne">
+        Recherche     </div>
+</form>
+
+<div class="suite">
+    <h1>Liste de tous les produits</h1>
+    <div class="resultat">Images : 0 &aacute; 10
+        [ page: 1 / 195]
+        Affichage de 10 Images par pages ( TOTAL: 1947 )</div>
+</div><div class ="ligne">
+
+    <div class="row0">
+        <div class="ligne"><label>Code CIP : </label><div>3400932924400</div></div>
+        <div class="ligne"><label>Famille : </label><div>Digestion</div></div>
+        <div class="ligne"><label>Nom : </label><div>DUPHALAC 10G/15ML SOLUTION BUVABLE SACHET 20</div></div>
+        <div class="ligne"><label>Sous Fam. : </label><div>Constipation</div></div>
+        <div class="ligne"><label>Laboratoire : </label><div>ABBOTT</div></div>
+        <div class="ligne"><label>Sous-Sous Fam. : </label><div>---</div></div>
+        <div class="ligne"><label>Produit : </label><div>528</div></div>
+        <div class="ligne"><label>On Line : </label><div>n</div></div>
+        <div class="ligneimg">
+            <label>Photo : </label>
+            <div><img src="https://www.pharmaplay.fr/m/produits/3400932924400_vig.jpg"
+                      alt="3400932924400 Vignette"  border="0" />
+                <img src="https://www.pharmaplay.fr/m/produits/3400932924400.jpg"
+                     alt="3400932924400 Grande"  border="0" /></div>
+        </div>
+    </div>
+    <div class="row1">
+        <div class="ligne"><label>On Line : </label><div>i</div></div><div class="ligne"><label>Produit : </label><div>4006</div></div><div class="ligne"><label>Code CIP : </label><div>3400931875659</div></div><div class="ligne"><label>Nom : </label><div>VEINOBIASE COMPRIME EFFERVESCENT 30</div></div><div class="ligne"><label>Famille : </label><div>Circulation veineuse</div></div><div class="ligne"><label>Sous Fam. : </label><div>Circulation</div></div><div class="ligne"><label>Sous-Sous Fam. : </label><div>---</div></div><div class="ligne"><label>Laboratoire : </label><div>ABBOTT</div></div><div class="ligneimg"><label>Photo : </label><div>3400931875659</div></div>
+    </div>
+    <div class="row0"><div class="ligne"><label>On Line : </label><div>i</div></div><div class="ligne"><label>Produit : </label><div>3900</div></div><div class="ligne"><label>Code CIP : </label><div>3400931834618</div></div><div class="ligne"><label>Nom : </label><div>INTRAIT MARRON INDE P SOLUT BUVABLE GOUTTES 60ML</div></div><div class="ligne"><label>Famille : </label><div>Circulation veineuse</div></div><div class="ligne"><label>Sous Fam. : </label><div>Hémorroïdes</div></div><div class="ligne"><label>Sous-Sous Fam. : </label><div>---</div></div><div class="ligne"><label>Laboratoire : </label><div>AEROCID</div></div><div class="ligneimg"><label>Photo : </label><div>3400931834618</div></div>
+    </div>
+    <div class="row1"><div class="ligne"><label>On Line : </label><div>i</div></div><div class="ligne"><label>Produit : </label><div>3923</div></div><div class="ligne"><label>Code CIP : </label><div>3400934304392</div></div><div class="ligne"><label>Nom : </label><div>POTASSIUM GLUCONATE H3 SANTE SIROP 250ML</div></div><div class="ligne"><label>Famille : </label><div>Vitalité</div></div><div class="ligne"><label>Sous Fam. : </label><div>Carence</div></div><div class="ligne"><label>Sous-Sous Fam. : </label><div>---</div></div><div class="ligne"><label>Laboratoire : </label><div>AEROCID</div></div><div class="ligneimg"><label>Photo : </label><div>3400934304392</div></div>
+    </div>
+    <div class="row0"><div class="ligne"><label>On Line : </label><div>i</div></div><div class="ligne"><label>Produit : </label><div>3642</div></div><div class="ligne"><label>Code CIP : </label><div>3400931118695</div></div><div class="ligne"><label>Nom : </label><div>VEGETOSERUM ADULTE SIROP 150ML</div></div><div class="ligne"><label>Famille : </label><div>Rhume, Gorge et Toux</div></div><div class="ligne"><label>Sous Fam. : </label><div>Toux</div></div><div class="ligne"><label>Sous-Sous Fam. : </label><div>---</div></div><div class="ligne"><label>Laboratoire : </label><div>AEROCID</div></div><div class="ligneimg"><label>Photo : </label><div><img src="https://www.pharmaplay.fr/m/produits/3400931118695_vig.jpg" alt="3400931118695 Vignette"  border="0" /><img src="https://www.pharmaplay.fr/m/produits/3400931118695.jpg" alt="3400931118695 Grande"  border="0" /></div></div>
+    </div>
+    <div class="row1"><div class="ligne"><label>On Line : </label><div>i</div></div><div class="ligne"><label>Produit : </label><div>3666</div></div><div class="ligne"><label>Code CIP : </label><div>3400934001833</div></div><div class="ligne"><label>Nom : </label><div>ALMIDE 0.1% COLLYRE 0ML4 UNIDOSE 20</div></div><div class="ligne"><label>Famille : </label><div>Yeux et Oreilles</div></div><div class="ligne"><label>Sous Fam. : </label><div>Soins</div></div><div class="ligne"><label>Sous-Sous Fam. : </label><div>---</div></div><div class="ligne"><label>Laboratoire : </label><div>ALCON SA</div></div><div class="ligneimg"><label>Photo : </label><div>3400934001833</div></div>
+    </div>
+    <div class="row0"><div class="ligne"><label>On Line : </label><div>i</div></div><div class="ligne"><label>Produit : </label><div>3675</div></div><div class="ligne"><label>Code CIP : </label><div>3400931305941</div></div><div class="ligne"><label>Nom : </label><div>CATACOL COLLYRE 10ML</div></div><div class="ligne"><label>Famille : </label><div>Yeux et Oreilles</div></div><div class="ligne"><label>Sous Fam. : </label><div>Soins</div></div><div class="ligne"><label>Sous-Sous Fam. : </label><div>---</div></div><div class="ligne"><label>Laboratoire : </label><div>ALCON SA</div></div><div class="ligneimg"><label>Photo : </label><div>3400931305941</div></div>
+    </div>
+    <div class="row1"><div class="ligne"><label>On Line : </label><div>i</div></div><div class="ligne"><label>Produit : </label><div>3932</div></div><div class="ligne"><label>Code CIP : </label><div>3400934241956</div></div><div class="ligne"><label>Nom : </label><div>CIVIGEL 0.2% GEL OPHTALMIQUE 10G</div></div><div class="ligne"><label>Famille : </label><div>Yeux et Oreilles</div></div><div class="ligne"><label>Sous Fam. : </label><div>Soins</div></div><div class="ligne"><label>Sous-Sous Fam. : </label><div>---</div></div><div class="ligne"><label>Laboratoire : </label><div>ALCON SA</div></div><div class="ligneimg"><label>Photo : </label><div>3400934241956</div></div>
+    </div>
+    <div class="row0"><div class="ligne"><label>On Line : </label><div>i</div></div><div class="ligne"><label>Produit : </label><div>3925</div></div><div class="ligne"><label>Code CIP : </label><div>3400931946311</div></div><div class="ligne"><label>Nom : </label><div>CORRECTOL 0.1% COLLYRE 10ML</div></div><div class="ligne"><label>Famille : </label><div>Yeux et Oreilles</div></div><div class="ligne"><label>Sous Fam. : </label><div>Soins</div></div><div class="ligne"><label>Sous-Sous Fam. : </label><div>---</div></div><div class="ligne"><label>Laboratoire : </label><div>ALCON SA</div></div><div class="ligneimg"><label>Photo : </label><div>3400931946311</div></div>
+    </div>
+    <div class="row1"><div class="ligne"><label>On Line : </label><div>i</div></div><div class="ligne"><label>Produit : </label><div>4255</div></div><div class="ligne"><label>Code CIP : </label><div>3400930853917</div></div><div class="ligne"><label>Nom : </label><div>ISOPTO HOMATROPINE 1% COLLYRE 10ML</div></div><div class="ligne"><label>Famille : </label><div>Yeux et Oreilles</div></div><div class="ligne"><label>Sous Fam. : </label><div>Soins</div></div><div class="ligne"><label>Sous-Sous Fam. : </label><div>---</div></div><div class="ligne"><label>Laboratoire : </label><div>ALCON SA</div></div><div class="ligneimg"><label>Photo : </label><div>3400930853917</div></div>
+    </div></div>
+
+
+
+
+<div class="debug">
+<pre><br>REQUETTE<br><pre class='xdebug-var-dump' dir='ltr'>
+<small>S:\httpd\developpement\testcheck\Functions\debug.inc.php:21:</small>
+<b>array</b> <i>(size=14)</i>
+  0 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'SELECT count(*) as num&#13;&#10;                FROM produits p, familles f, s_familles s, ss_famille ss, laboratoires l&#13;&#10;                WHERE 1 &#13;&#10;                AND p.id_famille = f.id_famille &#13;&#10;                AND p.id_laboratoire = l.id_laboratoire&#13;&#10;                AND p.id_sfamille = s.id_sfamille &#13;&#10;                AND p.id_ssfamille = ss.id_ssfamille '</font> <i>(length=352)</i>
+  1 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'SELECT DISTINCT l.id_laboratoire as id, l.designation &#13;&#10;                FROM laboratoires l, produits p &#13;&#10;                WHERE l.id_laboratoire = p.id_laboratoire  ORDER BY l.designation ASC'</font> <i>(length=191)</i>
+  2 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'SELECT DISTINCT f.id_famille as id, f.designation as nom&#13;&#10;                FROM familles f, produits p &#13;&#10;                WHERE f.id_famille = p.id_famille  ORDER BY F.designation ASC'</font> <i>(length=181)</i>
+  3 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'SELECT p.produit_actif, p.id_produit, p.cip13, p.libelle_ospharm, f.designation as famille, &#13;&#10;                        s.designation as sFamille, ss.designation as ssFamille, l.designation as laboratoire&#13;&#10;                FROM produits p, familles f, s_familles s, ss_famille ss, laboratoires l&#13;&#10;                WHERE 1 &#13;&#10;                AND p.id_famille = f.id_famille &#13;&#10;                AND p.id_laboratoire = l.id_laboratoire&#13;&#10;                AND p.id_sfamille = s.id_sfamille &#13;&#10;                AND p.id_ssfamill'...</font> <i>(length=629)</i>
+  4 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'SELECT * FROM control_images WHERE cip13 = 3400932924400 LIMIT 0, 1'</font> <i>(length=67)</i>
+  5 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'SELECT * FROM control_images WHERE cip13 = 3400931875659 LIMIT 0, 1'</font> <i>(length=67)</i>
+  6 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'SELECT * FROM control_images WHERE cip13 = 3400931834618 LIMIT 0, 1'</font> <i>(length=67)</i>
+  7 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'SELECT * FROM control_images WHERE cip13 = 3400934304392 LIMIT 0, 1'</font> <i>(length=67)</i>
+  8 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'SELECT * FROM control_images WHERE cip13 = 3400931118695 LIMIT 0, 1'</font> <i>(length=67)</i>
+  9 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'SELECT * FROM control_images WHERE cip13 = 3400934001833 LIMIT 0, 1'</font> <i>(length=67)</i>
+  10 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'SELECT * FROM control_images WHERE cip13 = 3400931305941 LIMIT 0, 1'</font> <i>(length=67)</i>
+  11 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'SELECT * FROM control_images WHERE cip13 = 3400934241956 LIMIT 0, 1'</font> <i>(length=67)</i>
+  12 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'SELECT * FROM control_images WHERE cip13 = 3400931946311 LIMIT 0, 1'</font> <i>(length=67)</i>
+  13 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'SELECT * FROM control_images WHERE cip13 = 3400930853917 LIMIT 0, 1'</font> <i>(length=67)</i>
+</pre><br>REQUIERED<br><pre class='xdebug-var-dump' dir='ltr'>
+<small>S:\httpd\developpement\testcheck\Functions\debug.inc.php:21:</small>
+<b>array</b> <i>(size=1)</i>
+  0 <font color='#888a85'>=&gt;</font>
+    <b>array</b> <i>(size=21)</i>
+      0 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'S:\httpd\developpement\testcheck\www\index.php'</font> <i>(length=46)</i>
+      1 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'S:\httpd\developpement\testcheck\vendor\autoload.php'</font> <i>(length=52)</i>
+      2 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'S:\httpd\developpement\testcheck\vendor\composer\autoload_real.php'</font> <i>(length=66)</i>
+      3 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'S:\httpd\developpement\testcheck\vendor\composer\ClassLoader.php'</font> <i>(length=64)</i>
+      4 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'S:\httpd\developpement\testcheck\vendor\composer\autoload_static.php'</font> <i>(length=68)</i>
+      5 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'S:\httpd\developpement\testcheck\Conf\param.php'</font> <i>(length=47)</i>
+      6 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'S:\httpd\developpement\testcheck\Conf\Bdd.inc.php'</font> <i>(length=49)</i>
+      7 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'S:\httpd\developpement\testcheck\Library\App.php'</font> <i>(length=48)</i>
+      8 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'S:\httpd\developpement\testcheck\Library\Bdd.php'</font> <i>(length=48)</i>
+      9 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'S:\httpd\developpement\testcheck\Functions\debug.inc.php'</font> <i>(length=56)</i>
+      10 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'S:\httpd\developpement\testcheck\Functions\functions.inc.php'</font> <i>(length=60)</i>
+      11 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'S:\httpd\developpement\testcheck\Conf\route.inc'</font> <i>(length=47)</i>
+      12 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'S:\httpd\developpement\testcheck\App\Controleurs\Medicaments.php'</font> <i>(length=64)</i>
+      13 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'S:\httpd\developpement\testcheck\Library\Produit.php'</font> <i>(length=52)</i>
+      14 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'S:\httpd\developpement\testcheck\App\Modeles\Produits.php'</font> <i>(length=57)</i>
+      15 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'S:\httpd\developpement\testcheck\Library\Menu.php'</font> <i>(length=49)</i>
+      16 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'S:\httpd\developpement\testcheck\Conf\libelles.php'</font> <i>(length=50)</i>
+      17 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'S:\httpd\developpement\testcheck\Conf\nav.inc'</font> <i>(length=45)</i>
+      18 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'S:\httpd\developpement\testcheck\App\Vues\menu.tpl.php'</font> <i>(length=54)</i>
+      19 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'S:\httpd\developpement\testcheck\App\Vues\moteurRecherche.tpl.php'</font> <i>(length=65)</i>
+      20 <font color='#888a85'>=&gt;</font> <small>string</small> <font color='#cc0000'>'S:\httpd\developpement\testcheck\App\Vues\liste_produits.tpl.php'</font> <i>(length=64)</i>
+</pre></pre>
+</div>
+</body>
+</html>

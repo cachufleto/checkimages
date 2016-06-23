@@ -191,12 +191,14 @@ class Produit extends Produits
     public function imgProd($_img, $nom){
         $img = $_img[0];
         if ($img['image'] == 1 && $img['vignette'] == 1) {
-            return '<img src="' . $this->link . $nom . '_vig.jpg" alt="' . $nom . ' Vignette"  border="0" />'
-            . '<img src="' . $this->link . $nom . '.jpg" alt="' . $nom . ' Grande"  border="0" />';
+            return ['vignette'=>'<img src="' . $this->link . $nom . '_vig.jpg" alt="' . $nom . ' Vignette"  border="0" />',
+                'image'=>'<img src="' . $this->link . $nom . '.jpg" alt="' . $nom . ' Grande"  border="0" />'];
         } else if ($img['image'] == 1) {
-            return '<img src="' . $this->link . $nom . '.jpg" alt="' . $nom . ' Grande"  border="0" />';
+            return ['vignette'=>'', 
+                'image'=>'<img src="' . $this->link . $nom . '.jpg" alt="' . $nom . ' Grande"  border="0" />'];
         } else if ($img['vignette'] == 1) {
-            return '<img src="' . $this->link . $nom . '_vig.jpg" alt="' . $nom . ' Vignette"  border="0" />';
+            return ['vignette'=>'<img src="' . $this->link . $nom . '_vig.jpg" alt="' . $nom . ' Vignette"  border="0" />',
+                'image'=> ''];
         }
         return false;
     }
@@ -208,14 +210,16 @@ class Produit extends Produits
 
         if ($_grand && $_vignette) {
             $this->setImage($nom, 1, 1);
-            return '<img src="' . $this->link . $nom . '_vig.jpg" alt="' . $nom . ' Vignette"  border="0" />'
-            . '<img src="' . $this->link . $nom . '.jpg" alt="' . $nom . ' Grande"  border="0" />';
+            return ['vignette'=>'<img src="' . $this->link . $nom . '_vig.jpg" alt="' . $nom . ' Vignette"  border="0" />',
+                'image'=>'<img src="' . $this->link . $nom . '.jpg" alt="' . $nom . ' Grande"  border="0" />'];
         } else if ($_grand) {
             $this->setImage($nom, 1, 0);
-            return '<img src="' . $this->link . $nom . '.jpg" alt="' . $nom . ' Grande"  border="0" />';
+            return ['vignette'=>'',
+                'image'=>'<img src="' . $this->link . $nom . '.jpg" alt="' . $nom . ' Grande"  border="0" />'];
         } else if ($_vignette) {
             $this->setImage($nom, 0, 1);
-            return '<img src="' . $this->link . $nom . '_vig.jpg" alt="' . $nom . ' Vignette"  border="0" />';
+            return ['vignette'=>'<img src="' . $this->link . $nom . '_vig.jpg" alt="' . $nom . ' Vignette"  border="0" />',
+                'image'=>''];
         }
 
         return false;

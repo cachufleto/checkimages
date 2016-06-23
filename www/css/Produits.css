@@ -9,7 +9,7 @@
 
 .row0 .ligne,
 .row1 .ligne{
-    width: 50%;
+    width: 100%;
 }
 
 .row0 .ligneimg,
@@ -22,5 +22,5 @@
     padding: 2px;
     border: 1px solid;
     border-color: darkcyan;
-    margin: 2px;
+    margin: 20px;
 }
