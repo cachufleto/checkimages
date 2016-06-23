@@ -3,31 +3,34 @@
 <?php
 $i = 1;
 foreach ($liste as $key => $image){
-    //var_dump($image);
+    //var_dump($liste);
     $imageid = $i + 1;
     $id = $image['id'];
     $nom = $image['nom'];
+    $zap = isset($image['zaper'])? $image['zaper'] : 0;
     $existe = (file_exists(PHOTO . $image['nom']. '.jpg'))?
         '<img src="'. PHOTO . $image['nom'] . '.jpg' . '">' : '';
 
     $existepng = (file_exists(PHOTO . $image['nom']. '.png'))?
         '<img src="'. PHOTO . $image['nom'] . '.png' . '">' : '';
 
-    $zaper2 = ($image['zaper'] != 2)?
+    $zaper2 = ($zap != 2)?
         '<input name="option" type="submit" value="conserver">' :
         '<input name="option" type="submit" value="retirer">';
 
-    $zaper1 = ($image['zaper'] != 1)? "<input name='option' type='submit' value='zaper'>" : "";
+    $zaper1 = ($zap != 1)? "<input name='option' type='submit' value='zaper'>" : "";
 
-    $denomination = (isset($image['data']['denomination']))? $image['data']['denomination'] : '';
-    $presentation = (isset($image['data']['presentation']))? $image['data']['presentation'] : '';
+    $denomination = (isset($image['data']['denomination']))? utf8_encode($image['data']['denomination']) : '';
+    $presentation = (isset($image['data']['presentation']))? utf8_encode($image['data']['presentation']) : '';
     $cip13 = (isset($image['data']['cip13']))? $image['data']['cip13'] : '';
     $med = (isset($image['data']['type']) && $image['data']['type'] == '1')? 'selected="selected"' : '';
     $para = (isset($image['data']['type']) && $image['data']['type'] == '2')? 'selected="selected"' : '';
     $image = str_replace('//'.$image['nom'], '/'.$image['nom'], $image['site'] . $image['nom']);
+    $_zap = ['sans', 'ecarte', 'conserve'];
+    $traitement = $_zap[$zap];
 
     echo <<<EOL
-    <div class="produits">
+    <div class="produits $traitement">
     <a href="" id="$imageid"></a>
     <form action="?page=existantimage$f#$i" method="POST">
         <input name="id" type="hidden" value="$id">

@@ -40,7 +40,7 @@ class Upload extends Images
     public function listeAction(){
 
         extract($_SESSION[$this->session]);
-        $this->zaper = $zaper;
+        $this->zaper = "= $zaper";
         $numProduits = $this->getNumImages();
         $f = afficheMenu($this->page, $this->session, $numProduits);
 
@@ -88,8 +88,8 @@ class Upload extends Images
 
     public function existantAction(){
 
-        extract($_SESSION['existant']);
-        $this->zaper = $zaper;
+        extract($_SESSION[$this->session]);
+        $this->zaper = "= $zaper";
         $data = $this->getExistImages($p);
         $data = $this->extractImages($data, $a, $b);
         $listing = $data['liste'];
@@ -120,7 +120,6 @@ class Upload extends Images
             $liste[$key]['med'] = ($type == 1)? 'selected' : '';
             $liste[$key]['para'] = ($type == 2)? 'selected' : '';
         }
-        var_dump($liste);
 //        include(VUE . 'listeExistant.tpl.php');
     }
 

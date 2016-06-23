@@ -12,11 +12,13 @@ use App\Bdd;
 class Images extends Bdd
 {
     var $rechercheNom = '';
+    var $rechercheCip = '';
     public  function  getCountR()
     {
         $sql = "SELECT count(*) as num
                 FROM images i, produits p
-                WHERE  i.zaper = {$this->zaper}
+                WHERE  i.zaper  {$this->zaper}
+                {$this->rechercheCip}
                 {$this->rechercheNom}
                 AND i.id = p.id_image ".
                 $this->criterMoteurRecherche();
@@ -30,7 +32,8 @@ class Images extends Bdd
     {
         $sql = "SELECT count(*) as num
                 FROM images i
-                WHERE i.zaper = {$this->zaper}
+                WHERE i.zaper  {$this->zaper}
+                {$this->rechercheCip}
                 {$this->rechercheNom}";
 
         $num = $this->query($sql);
@@ -43,7 +46,8 @@ class Images extends Bdd
 
         $sql = "SELECT count(*) as num
                 FROM images i, produits p
-                WHERE  i.zaper = {$this->zaper}
+                WHERE  i.zaper  {$this->zaper}
+                {$this->rechercheCip}
                 {$this->rechercheNom}
                 AND i.id NOT IN  (SELECT id_image FROM produits) ".
                 $this->criterMoteurRecherche();
@@ -57,7 +61,8 @@ class Images extends Bdd
 
         $sql = "SELECT count(*) as num
                 FROM images i, produits p
-                WHERE  i.zaper = {$this->zaper}
+                WHERE  i.zaper  {$this->zaper}
+                {$this->rechercheCip}
                 {$this->rechercheNom}
                 AND i.id NOT IN  (SELECT id_image FROM produits) ".
                 $this->criterMoteurRecherche();
@@ -71,7 +76,8 @@ class Images extends Bdd
         
         $sql = "SELECT count(*) as num
                 FROM images i, produits p
-                WHERE  i.zaper = {$this->zaper}
+                WHERE  i.zaper  {$this->zaper}
+                {$this->rechercheCip}
                 {$this->rechercheNom}
                 AND i.id = p.id_image 
                 AND i.upload = 0".
@@ -87,7 +93,8 @@ class Images extends Bdd
 
         $sql = "SELECT count(*) as num
                 FROM images i
-                WHERE  i.zaper = {$this->zaper}
+                WHERE  i.zaper  {$this->zaper}
+                {$this->rechercheCip}
                 {$this->rechercheNom}
                 AND i.upload = 1 ";
 
@@ -98,9 +105,13 @@ class Images extends Bdd
 
     public function getOkR($debut, $limit)
     {
-        $sql = "SELECT *
+        $sql = "SELECT 
+                    i.id, i.site, i.nom, i.produit, i.upload, i.zaper, i.cip13, 
+                    p.id_image, p.denomination, p.presentation, 
+                    p.type, p.date_traitement, p.libelle
                 FROM images i, produits p
-                WHERE  i.zaper = {$this->zaper}
+                WHERE  i.zaper  {$this->zaper}
+                {$this->rechercheCip}
                 {$this->rechercheNom}
                 AND i.id = p.id_image " .
                 $this->criterMoteurRecherche() . "
@@ -112,9 +123,13 @@ class Images extends Bdd
     
     public function getOk($debut, $limit)
     {
-        $sql = "SELECT *
+        $sql = "SELECT 
+                    i.id, i.site, i.nom, i.produit, i.upload, i.zaper, i.cip13, 
+                    p.id_image, p.denomination, p.presentation, 
+                    p.type, p.date_traitement, p.libelle
                 FROM images i, produits p
-                WHERE  i.zaper = {$this->zaper}
+                WHERE  i.zaper  {$this->zaper}
+                {$this->rechercheCip}
                 {$this->rechercheNom}
                 AND i.upload = 1
                 LIMIT $debut, $limit";
@@ -124,9 +139,13 @@ class Images extends Bdd
 
     public function getKoR($debut, $limit)
     {
-        $sql = "SELECT *
+        $sql = "SELECT 
+                    i.id, i.site, i.nom, i.produit, i.upload, i.zaper, i.cip13, 
+                    p.id_image, p.denomination, p.presentation, 
+                    p.type, p.date_traitement, p.libelle
                 FROM images i, produits p
-                WHERE  i.zaper = {$this->zaper}
+                WHERE  i.zaper  {$this->zaper}
+                {$this->rechercheCip}
                 {$this->rechercheNom}
                 AND i.id = p.id_image
                 AND i.upload = 0 " .
@@ -141,7 +160,8 @@ class Images extends Bdd
     {
         $sql = "SELECT *
                 FROM images i
-                WHERE  i.zaper = {$this->zaper}
+                WHERE  i.zaper  {$this->zaper}
+                {$this->rechercheCip}
                 {$this->rechercheNom}
                 AND i.upload = 0  
                 LIMIT $debut, $limit";
@@ -151,9 +171,13 @@ class Images extends Bdd
 
     public function getR($debut, $limit)
     {
-        $sql = "SELECT *
+        $sql = "SELECT 
+                    i.id, i.site, i.nom, i.produit, i.upload, i.zaper, i.cip13, 
+                    p.id_image, p.denomination, p.presentation, 
+                    p.type, p.date_traitement, p.libelle
                 FROM images i, produits p
-                WHERE  i.zaper = {$this->zaper}
+                WHERE  i.zaper  {$this->zaper}
+                {$this->rechercheCip}
                 {$this->rechercheNom}
                 AND i.id = p.id_image ".
                 $this->criterMoteurRecherche();
@@ -165,7 +189,8 @@ class Images extends Bdd
     {
         $sql = "SELECT *
                 FROM images i
-                WHERE i.zaper = {$this->zaper}
+                WHERE i.zaper  {$this->zaper}
+                {$this->rechercheCip}
                 {$this->rechercheNom}
                 LIMIT $debut, $limit;";
 
@@ -173,7 +198,14 @@ class Images extends Bdd
     }
 
     public function getProduit($id){
-        $sql = "SELECT * FROM produits WHERE id_image = $id LIMIT 0, 1";
+        $sql = "SELECT 
+                    i.id, i.site, i.nom, i.produit, i.upload, i.zaper, i.cip13, 
+                    p.id_image, p.denomination, p.presentation, 
+                    p.type, p.date_traitement, p.libelle
+                FROM images i
+                LEFT JOIN produits p ON i.id = p.id_image
+                WHERE i.id = $id
+                LIMIT 0, 1";
         return $this->query($sql);
     }
 
@@ -211,6 +243,7 @@ class Images extends Bdd
                     SET `cip13` = '$cip13', `denomination` = '$denomination', 
                         `presentation` = '$presentation', `type` = '$type', `libelle` = '$libelle' 
                     WHERE id_image = $id;";
+
         $this->queryUpdate($sql);
     }
 

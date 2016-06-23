@@ -4,15 +4,18 @@
             <label>Image:</label><div><?php echo $Nom; ?></div>
         </div>
         <div class="ligne">
+            <label>Code CIP:</label><div><?php echo $Code; ?></div>
+        </div>
+        <div class="ligne">
             <label>Etat:</label><div><?php echo $Etat; ?></div>
         </div>
     </div>
     <div class="form">
         <div class="ligne">
-            <label>Libellé:</label><div><?php echo $libelle; ?></div>
+            <label>Dénomination:</label><div><?php echo $denomination; ?></div>
         </div>
         <div class="ligne">
-            <label>Code CIP:</label><div><?php echo $Code; ?></div>
+            <label>Présentation:</label><div><?php echo $presentation; ?></div>
         </div>
         <div class="ligne">
             <label></label><div><input type="submit" name="chercher" value="Valider"></div>

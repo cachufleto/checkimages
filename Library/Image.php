@@ -90,7 +90,8 @@ class Image extends Images
 
     function afficheMoteurRecherche()
     {
-        $libelle = $this->inputLibelle();
+        $presentation = $this->inputPresentation();
+        $denomination = $this->inputDenomination();
         $Etat = $this->listeEtat();
         $Code = $this->inputCip();
         $Nom = $this->inputNom();
@@ -172,6 +173,26 @@ class Image extends Images
         return '<input type="texte" name="libelle" placeholder="' . $choix . '" >';
     }
 
+    public function inputDenomination()
+    {
+        $choix = isset($_SESSION['recherche'][$this->session]['denomination']) ? $_SESSION['recherche'][$this->session]['denomination'] : '';
+        if($choix){
+            $this->listeRecherche = ": $choix ";
+        }
+
+        return '<input type="texte" name="denomination" placeholder="' . $choix . '" >';
+    }
+
+    public function inputPresentation()
+    {
+        $choix = isset($_SESSION['recherche'][$this->session]['presentation']) ? $_SESSION['recherche'][$this->session]['presentation'] : '';
+        if($choix){
+            $this->listeRecherche = ": $choix ";
+        }
+
+        return '<input type="texte" name="presentation" placeholder="' . $choix . '" >';
+    }
+
     public function listeFamilles()
     {
         $data = $this->getFamilles();
@@ -202,7 +223,8 @@ class Image extends Images
     {
         $_liste = [];
         foreach($liste as $key =>$info){
-
+            $info['image'] = '';
+            $info['data'] = '';
             if ($img = $this->getProduit($info['id'])){
                 $info['image'] = $this->imgProd($img, $info['cip13']);
                 $info['data'] = $img[0];
@@ -255,25 +277,41 @@ class Image extends Images
         $option = [];
         // recherche par cip
         if (isset($chercher['cip13']) AND !empty($chercher['cip13'])){
-            $option[] = ' p.cip13 LIKE "%' . $chercher['cip13'] . '%"';
+            $this->zaper = ">= 0 ";
+            $this->rechercheCip = " AND i.cip13 LIKE '%{$chercher['cip13']}%' ";
         }
 
         // recherche par libelle du produit
         if (isset($chercher['nom']) AND !empty($chercher['nom'])) {
-            $this->rechercheNom = 'AND  i.nom LIKE "' . $chercher['nom'] . '%"';
+            $this->zaper = ">= 0 ";
+            $this->rechercheNom = " AND  i.nom LIKE '%{$chercher['nom']}%' ";
         }
 
         // recherche par libelle du produit
-        if (isset($chercher['libelle']) AND !empty($chercher['libelle'])) {
-            $option[] = ' p.libelle LIKE "' . $chercher['libelle'] . '%"';
+        if (isset($chercher['denomination']) AND !empty($chercher['denomination'])) {
+            $option[] = " p.denomination LIKE '%" . utf8_decode($chercher['denomination']) . "%' ";
         }
 
         // agrementation du libelle du produit
-        $_nom = (isset($chercher['nom']) AND !empty($chercher['nom']))? explode(' ', $chercher['nom']) : '';
+        $_nom = (isset($chercher['denomination']) AND !empty($chercher['denomination']))? explode(' ', $chercher['denomination']) : '';
 
         if(is_array($_nom) AND count($_nom) > 1){
             foreach ($_nom as $mot){
-                $option[] = ' p.nom LIKE "%' . $mot .'%"';
+                $option[] = " p.denomination LIKE '%" . utf8_decode($mot) . "%'";
+            }
+        }
+
+        // recherche par libelle du produit
+        if (isset($chercher['presentation']) AND !empty($chercher['presentation'])) {
+            $option[] = " p.presentation LIKE '%" . utf8_decode($chercher['presentation']) . "%' ";
+        }
+
+        // agrementation du libelle du produit
+        $_nom = (isset($chercher['presentation']) AND !empty($chercher['presentation']))? explode(' ', $chercher['presentation']) : '';
+
+        if(is_array($_nom) AND count($_nom) > 1){
+            foreach ($_nom as $mot){
+                $option[] = " p.presentation LIKE '%" . utf8_decode($mot) . "%'";
             }
         }
 

@@ -234,12 +234,12 @@ class Produit extends Produits
         {
             // recherche par cip
             if (isset($chercher['cip13']) AND !empty($chercher['cip13'])){
-                $option[] = ' p.cip13 LIKE "%' . $chercher['cip13'] . '%"';
+                $option[] = " p.cip13 LIKE '%{$chercher['cip13']}%'";
             }
 
             // recherche par libelle du produit
             if (isset($chercher['nom']) AND !empty($chercher['nom'])) {
-                $option[] = ' p.libelle_ospharm LIKE "' . $chercher['nom'] . '%"';
+                $option[] = " p.libelle_ospharm LIKE '{$chercher['nom']}%'";
             }
 
             // agrementation du libelle du produit
@@ -247,7 +247,7 @@ class Produit extends Produits
 
             if(is_array($_nom) AND count($_nom) > 1){
                 foreach ($_nom as $mot){
-                    $option[] = ' p.libelle_ospharm LIKE "%' . $mot .'%"';
+                    $option[] = " p.libelle_ospharm LIKE '%$mot%'";
                 }
             }
 
@@ -260,7 +260,7 @@ class Produit extends Produits
         } else {
 
             if (isset($chercher['labo']) && $chercher['labo'] > 0){
-                $option[] = ' p.id_laboratoire = ' . $chercher['labo'];
+                $option[] = " p.id_laboratoire = {$chercher['labo']} ";
             }
 
             if(isset($chercher['etat'])){

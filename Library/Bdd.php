@@ -36,7 +36,7 @@ class Bdd
             /* Note, that we can't execute any functions which interact with the
                server until result set was closed. All calls will return an
                'out of sync' error */
-                printf("Error: %s\n", $this->mysqli->error);
+                printf("Error: %s\n", $sql, $this->mysqli->error);
         }
 
         /* fetch associative array */

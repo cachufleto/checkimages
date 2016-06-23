@@ -50,9 +50,7 @@ $_r = [
     'controleur' => 'Checkimages',
     'action' => 'indexAction'
     ],
-
-
-
+    
 'photo' => [
     'controleur' => 'Upload',
     'action' => 'photoAction'

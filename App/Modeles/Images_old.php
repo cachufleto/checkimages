@@ -23,14 +23,14 @@ class images extends Bdd
 
     public function getListeImages($a = 0, $b = NUM, $p = false){
 
-        $sql = "SELECT * FROM images WHERE zaper = {$this->zaper} LIMIT $a, $b";
+        $sql = "SELECT * FROM images WHERE zaper  {$this->zaper} LIMIT $a, $b";
 
         return $this->query($sql);
     }
 
     public function getExistImages($p = false){
 
-        $sql = "SELECT * FROM images WHERE zaper = {$this->zaper} ";
+        $sql = "SELECT * FROM images WHERE zaper  {$this->zaper} ";
         
         return $this->query($sql);
     }
@@ -44,7 +44,7 @@ class images extends Bdd
 
     public function getNumImages(){
         
-        $sql = "SELECT count(*) as num FROM images WHERE zaper = {$this->zaper}";
+        $sql = "SELECT count(*) as num FROM images WHERE zaper {$this->zaper}";
 
         $data = $this->query($sql);
 
