@@ -203,8 +203,9 @@ class Image extends Images
         $_liste = [];
         foreach($liste as $key =>$info){
 
-            if ($img = $this->getImage($info['id'])){
+            if ($img = $this->getProduit($info['id'])){
                 $info['image'] = $this->imgProd($img, $info['cip13']);
+                $info['data'] = $img[0];
             } else if (!($info['image'] = $this->testImage($info['cip13']))){
                 $info['image'] = $info['cip13'];
             }

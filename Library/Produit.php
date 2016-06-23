@@ -289,4 +289,111 @@ class Produit extends Produits
         return $recherche;
     }
 
+    public function criterMoteurRechercheLaboratoires()
+    {
+        $chercher = $_SESSION['recherche'][$this->session];
+        $recherche = '';
+        $option = [];
+        if( isset($chercher['nom']) AND !empty($chercher['nom']))
+        {
+            // recherche par libelle du produit
+            if (isset($chercher['nom']) AND !empty($chercher['nom'])) {
+                $option[] = ' p.libelle_ospharm LIKE "' . $chercher['nom'] . '%"';
+            }
+
+            // agrementation du libelle du produit
+            $_nom = (isset($chercher['nom']) AND !empty($chercher['nom']))? explode(' ', $chercher['nom']) : '';
+
+            if(is_array($_nom) AND count($_nom) > 1){
+                foreach ($_nom as $mot){
+                    $option[] = ' p.libelle_ospharm LIKE "%' . $mot .'%"';
+                }
+            }
+
+            $_option = '';
+            foreach($option as $_r){
+                $_option .= (empty($_option)? '' : ' OR ') . $_r;
+            }
+            $recherche = (!empty($_option))? ' AND ' . ((count($option) > 1 )? "( $_option )" : $_option) : '';
+
+        } else {
+
+            if(isset($chercher['etat'])){
+                $etat = '';
+                $etat .= isset($chercher['etat']['i'])?
+                    ' p.produit_actif = "i"' : '';
+                $etat .= isset($chercher['etat']['o'])?
+                    (!empty($etat)? ' OR ' : '' ) . ' p.produit_actif = "o"' : '';
+                $etat .= isset($chercher['etat']['n'])?
+                    (!empty($etat)? ' OR ' : '' ) . ' p.produit_actif = "n"' : '';
+                $etat .= isset($chercher['etat']['a'])?
+                    (!empty($etat)? ' OR ' : '' ) . ' p.produit_actif = "a"' : '';
+                $option[] = (count($chercher['etat']) > 1 )? "( $etat )" : $etat;
+            }
+            // recherche partielle
+            if (isset($chercher['famille']) && !empty($chercher['famille'])){
+                $option[] = ' p.id_famille = ' . $chercher['famille'];
+            }
+            $_option = '';
+            foreach($option as $_r){
+                $_option .= (empty($_option)? '' : ' AND ') . $_r;
+            }
+            $recherche = (!empty($_option))? ' AND ' . $_option : '';
+        }
+
+        return $recherche;
+    }
+
+    public function criterMoteurRechercheFamilles()
+    {
+        $chercher = $_SESSION['recherche'][$this->session];
+        $recherche = '';
+        $option = [];
+        if( isset($chercher['nom']) AND !empty($chercher['nom']))
+        {
+            // recherche par libelle du produit
+            if (isset($chercher['nom']) AND !empty($chercher['nom'])) {
+                $option[] = ' p.libelle_ospharm LIKE "' . $chercher['nom'] . '%"';
+            }
+
+            // agrementation du libelle du produit
+            $_nom = (isset($chercher['nom']) AND !empty($chercher['nom']))? explode(' ', $chercher['nom']) : '';
+
+            if(is_array($_nom) AND count($_nom) > 1){
+                foreach ($_nom as $mot){
+                    $option[] = ' p.libelle_ospharm LIKE "%' . $mot .'%"';
+                }
+            }
+
+            $_option = '';
+            foreach($option as $_r){
+                $_option .= (empty($_option)? '' : ' OR ') . $_r;
+            }
+            $recherche = (!empty($_option))? ' AND ' . ((count($option) > 1 )? "( $_option )" : $_option) : '';
+
+        } else {
+
+            if(isset($chercher['etat'])){
+                $etat = '';
+                $etat .= isset($chercher['etat']['i'])?
+                    ' p.produit_actif = "i"' : '';
+                $etat .= isset($chercher['etat']['o'])?
+                    (!empty($etat)? ' OR ' : '' ) . ' p.produit_actif = "o"' : '';
+                $etat .= isset($chercher['etat']['n'])?
+                    (!empty($etat)? ' OR ' : '' ) . ' p.produit_actif = "n"' : '';
+                $etat .= isset($chercher['etat']['a'])?
+                    (!empty($etat)? ' OR ' : '' ) . ' p.produit_actif = "a"' : '';
+                $option[] = (count($chercher['etat']) > 1 )? "( $etat )" : $etat;
+            }
+            // recherche partielle
+            $_option = '';
+            foreach($option as $_r){
+                $_option .= (empty($_option)? '' : ' AND ') . $_r;
+            }
+            $recherche = (!empty($_option))? ' AND ' . $_option : '';
+        }
+
+        return $recherche;
+    }
+
 }

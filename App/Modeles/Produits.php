@@ -116,13 +116,21 @@ class Produits extends Bdd
 
     public function getLaboratoires()
     {
-        $sql = "SELECT id_laboratoire as id, designation FROM laboratoires ORDER BY designation ASC";
+        $sql = "SELECT DISTINCT l.id_laboratoire as id, l.designation 
+                FROM laboratoires l, produits p 
+                WHERE l.id_laboratoire = p.id_laboratoire " .
+                $this->criterMoteurRechercheLaboratoires()
+                . " ORDER BY l.designation ASC";
         return $this->query($sql);
     }
 
     public function getFamilles()
     {
-        $sql = "SELECT id_famille as id, designation as nom FROM familles ORDER BY designation";
+        $sql = "SELECT DISTINCT f.id_famille as id, f.designation as nom
+                FROM familles f, produits p 
+                WHERE f.id_famille = p.id_famille " .
+                $this->criterMoteurRechercheFamilles()
+                . " ORDER BY F.designation ASC";
         return $this->query($sql);
     }
 

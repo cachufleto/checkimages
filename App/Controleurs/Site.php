@@ -31,19 +31,19 @@ class Site extends Import
         extract($_SESSION[$this->session]);
         
         if($produit == 'ok'){
-            testPagination($this->page, $num = $this->countMedicamentOk());
+            testPagination($this->session, $num = $this->countMedicamentOk());
             $_liste = $this->selectMedicamentOk();
         
         } else if ($produit == 'ko') {
-            testPagination($this->page, $num = $this->countMedicamentKo());
+            testPagination($this->session, $num = $this->countMedicamentKo());
             $_liste = $this->selectMedicamentKo();
         
         } else {
-            testPagination($this->page, $num = $this->countMedicament());
+            testPagination($this->session, $num = $this->countMedicament());
             $_liste = $this->selectMedicament();
         }
 
-        afficheMenu($this->page, $num);
+        afficheMenu($this->page, $this->session, $num);
 
         $this->afficheMoteurRecherche();
 

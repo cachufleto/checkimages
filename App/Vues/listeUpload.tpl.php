@@ -3,9 +3,10 @@
 <?php
 $i = 1;
 foreach ($liste as $key => $image){
-
-    $id = $i + 1;
-
+    //var_dump($image);
+    $imageid = $i + 1;
+    $id = $image['id'];
+    $nom = $image['nom'];
     $existe = (file_exists(PHOTO . $image['nom']. '.jpg'))?
         '<img src="'. PHOTO . $image['nom'] . '.jpg' . '">' : '';
 
@@ -18,20 +19,22 @@ foreach ($liste as $key => $image){
 
     $zaper1 = ($image['zaper'] != 1)? "<input name='option' type='submit' value='zaper'>" : "";
 
-    $denomination = '';
-    $presentation = '';
-    $med = '';
-    $para = '';
+    $denomination = (isset($image['data']['denomination']))? $image['data']['denomination'] : '';
+    $presentation = (isset($image['data']['presentation']))? $image['data']['presentation'] : '';
+    $cip13 = (isset($image['data']['cip13']))? $image['data']['cip13'] : '';
+    $med = (isset($image['data']['type']) && $image['data']['type'] == '1')? 'selected="selected"' : '';
+    $para = (isset($image['data']['type']) && $image['data']['type'] == '2')? 'selected="selected"' : '';
+    $image = str_replace('//'.$image['nom'], '/'.$image['nom'], $image['site'] . $image['nom']);
 
     echo <<<EOL
     <div class="produits">
-    <a href="" id="$id"></a>
+    <a href="" id="$imageid"></a>
     <form action="?page=existantimage$f#$i" method="POST">
-        <input name="id" type="hidden" value="{$image['id']}">
-        <br>image : {$image['nom']} 
+        <input name="id" type="hidden" value="$id">
+        <br>image : $nom 
         $zaper1
         $zaper2
-      <input type="text" name="cip13" placeholder="CIP" value="{$image['cip13']}" >
+      <input type="text" name="cip13" placeholder="CIP" value="$cip13" >
       <input type="text" name="denomination" placeholder="Dénomination" value="$denomination" >
       <input type="text" name="presentation" placeholder="Présentation" value="$presentation" >
       <select name="type">
@@ -41,7 +44,7 @@ foreach ($liste as $key => $image){
        </select>
        <input name="option" type="submit" value="valider">
     </form>
-    <img src="{$image['site']}/{$image['nom']}">
+    <img src="$image">
     $existe
     $existepng
     </div>
@@ -51,6 +54,9 @@ EOL;
 ?>
     </div>
 </div>
-
-
+<?php
+if(!empty($this->msg)){
+    echo "<script type='text/javascript'>alert('{$this->msg}');</script>";
+}
+?>
     

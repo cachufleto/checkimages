@@ -172,13 +172,15 @@ class Images extends Bdd
         return $this->query($sql);
     }
 
-    public function getImage($id){
+    public function getProduit($id){
         $sql = "SELECT * FROM produits WHERE id_image = $id LIMIT 0, 1";
         return $this->query($sql);
     }
 
-    public function setImage($id_image, $cip13){
-        $sql = "INSERT INTO produits (id_image, cip13) VALUES ($id_image, '$cip13');";
+    public function setProduit($id, $cip13, $denomination='', $presentation='', $type=1, $libelle = ''){
+        $sql = "INSERT INTO `produits` 
+                  (`id_image`, `id`, `cip13`, `denomination`, `presentation`, `type`, `date_traitement`, `libelle`)
+                  VALUES ($id, NULL, '$cip13', '$denomination', '$presentation', '$type', CURRENT_TIMESTAMP, '$libelle')";
         $this->queryInsert($sql);
     }
 
@@ -202,4 +204,22 @@ class Images extends Bdd
         $this->queryUpdate($sql);
         return true;
     }
+
+    public function updateProduit($id, $cip13, $denomination='', $presentation='', $type=1, $libelle = '')
+    {
+        $sql = "UPDATE `produits` 
+                    SET `cip13` = '$cip13', `denomination` = '$denomination', 
+                        `presentation` = '$presentation', `type` = '$type', `libelle` = '$libelle' 
+                    WHERE id_image = $id;";
+        $this->queryUpdate($sql);
+    }
+
+    public function updateImage($id, $cip13)
+    {
+        $sql = "UPDATE `images` 
+                    SET `cip13` = '$cip13', `zaper` = '2'
+                    WHERE id = $id;";
+        $this->queryUpdate($sql);
+    }
+
 }

@@ -116,7 +116,11 @@ class Parapharmacie extends Bdd
 
     public function getLaboratoires()
     {
-        $sql = "SELECT id_laboratoire as id, designation FROM laboratoires ORDER BY designation ASC";
+        $sql = "SELECT DISTINCT l.id_laboratoire as id, l.designation 
+                FROM laboratoires l, produits p 
+                WHERE l.id_laboratoire = p.id_laboratoire " .
+                $this->criterMoteurRecherche()
+                . " ORDER BY l.designation ASC";
         return $this->query($sql);
     }
 
