@@ -12,7 +12,7 @@ use App\Bdd;
 class images extends Bdd
 {
     var $_lib = [];
-    var $zaper = 0;
+    var $zapper = 0;
 
     public function __construct()
     {
@@ -23,14 +23,14 @@ class images extends Bdd
 
     public function getListeImages($a = 0, $b = NUM, $p = false){
 
-        $sql = "SELECT * FROM images WHERE zaper  {$this->zaper} LIMIT $a, $b";
+        $sql = "SELECT * FROM images WHERE zapper  {$this->zapper} LIMIT $a, $b";
 
         return $this->query($sql);
     }
 
     public function getExistImages($p = false){
 
-        $sql = "SELECT * FROM images WHERE zaper  {$this->zaper} ";
+        $sql = "SELECT * FROM images WHERE zapper  {$this->zapper} ";
         
         return $this->query($sql);
     }
@@ -44,17 +44,17 @@ class images extends Bdd
 
     public function getNumImages(){
         
-        $sql = "SELECT count(*) as num FROM images WHERE zaper {$this->zaper}";
+        $sql = "SELECT count(*) as num FROM images WHERE zapper {$this->zapper}";
 
         $data = $this->query($sql);
 
         return $data[0]['num'];
     }
 
-    public function updateZaper(){
+    public function updateZapper(){
 
         if($id = intval($_POST['id'])){
-            $sql = "UPDATE `images` SET `zaper` = '1' WHERE `images`.`id` = $id;";
+            $sql = "UPDATE `images` SET `zapper` = '1' WHERE `images`.`id` = $id;";
             $this->queryUpdate($sql);
         }
         return true;
@@ -63,7 +63,7 @@ class images extends Bdd
     public function updateConserver(){
 
         if($id = intval($_POST['id'])){
-            $sql = "UPDATE `images` SET `zaper` = '2' WHERE `images`.`id` = $id;";
+            $sql = "UPDATE `images` SET `zapper` = '2' WHERE `images`.`id` = $id;";
             $this->queryUpdate($sql);
         }
         return true;
@@ -72,7 +72,7 @@ class images extends Bdd
     public function updateRetirer(){
 
         if($id = intval($_POST['id'])){
-            $sql = "UPDATE `images` SET `zaper` = '0' WHERE `images`.`id` = $id;";
+            $sql = "UPDATE `images` SET `zapper` = '0' WHERE `images`.`id` = $id;";
             $this->queryUpdate($sql);
         }
         return true;

@@ -18,13 +18,13 @@ foreach ($liste as $key => $produit) {
                     <input name="id" type="hidden" value="{$produit['id']}">
 EOL;
 
-    echo ($produit['zaper'] != 2)? '
+    echo ($produit['zapper'] != 2)? '
                     <input name="option" type="submit" value="conserver">' : '
                     <input name="option" type="submit" value="retirer">';
 
-    if($produit['zaper'] != 1){
+    if($produit['zapper'] != 1){
         echo '
-                    <input name="option" type="submit" value="zaper">
+                    <input name="option" type="submit" value="zapper">
                     <input name="option" type="submit" value="CIP">
                     <input name="cip13" type="text" value="">';
     }

@@ -25,7 +25,7 @@ class Checkimages extends Image
     {
         parent::__construct();
         $this->connexion(SURFIMAGE);
-        $this->zaper = isset($_SESSION['recherche'][$this->session]['etat'])? "= ".$_SESSION['recherche'][$this->session]['etat'] : "= 0";
+        $this->zapper = isset($_SESSION['recherche'][$this->session]['etat'])? "= ".$_SESSION['recherche'][$this->session]['etat'] : "= 0";
         $this->menu = new Menu();
         $this->menu->info = $this;
         $this->recherche = !empty($this->criterMoteurRecherche())? true : false ;
@@ -45,8 +45,8 @@ class Checkimages extends Image
     public function imageAction()
     {
         if(isset($_POST['id']) and $id = intval($_POST['id'])){
-            if($_POST['option'] == 'zaper'){
-                $this->updateZaper($id);
+            if($_POST['option'] == 'zapper'){
+                $this->updateZapper($id);
             } else if($_POST['option'] == 'conserver'){
                 $this->updateConserver($id);
             } else if($_POST['option'] == 'retirer'){

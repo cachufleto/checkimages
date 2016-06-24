@@ -77,7 +77,7 @@ class App
                     'p' => false,
                     'produit'=> "",
                     'a' => 0,
-                    'zaper' => '0'
+                    'zapper' => '0'
                 ];
             }
 
@@ -96,7 +96,7 @@ class App
                 $_SESSION[$this->session]['produit'] = isset($_GET['produit'])? $_GET['produit'] : "";
                 $_SESSION[$this->session]['b'] = isset($_GET['nombre'])? ( ($_GET['nombre']>0)? $_GET['nombre'] : NUM ) : NUM;
                 $_SESSION[$this->session]['a'] = $_SESSION[$this->session]['b'] * $_SESSION[$this->session]['display'];
-                $_SESSION[$this->session]['zaper'] = ($_SESSION[$this->session]['p'])? (
+                $_SESSION[$this->session]['zapper'] = ($_SESSION[$this->session]['p'])? (
                                                         ($_SESSION[$this->session]['produit'] == 'ok')? 2 : (
                                                         ($_SESSION[$this->session]['produit'] == 'ko')? 1 : 0)
                                                         ) : 0;

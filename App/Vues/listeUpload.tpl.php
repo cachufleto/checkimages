@@ -7,18 +7,18 @@ foreach ($liste as $key => $image){
     $imageid = $i + 1;
     $id = $image['id'];
     $nom = $image['nom'];
-    $zap = isset($image['zaper'])? $image['zaper'] : 0;
+    $zap = isset($image['zapper'])? $image['zapper'] : 0;
     $existe = (file_exists(PHOTO . $image['nom']. '.jpg'))?
         '<img src="'. PHOTO . $image['nom'] . '.jpg' . '">' : '';
 
     $existepng = (file_exists(PHOTO . $image['nom']. '.png'))?
         '<img src="'. PHOTO . $image['nom'] . '.png' . '">' : '';
 
-    $zaper2 = ($zap != 2)?
+    $zapper2 = ($zap != 2)?
         '<input name="option" type="submit" value="conserver">' :
         '<input name="option" type="submit" value="retirer">';
 
-    $zaper1 = ($zap != 1)? "<input name='option' type='submit' value='zaper'>" : "";
+    $zapper1 = ($zap != 1)? "<input name='option' type='submit' value='zapper'>" : "";
 
     $denomination = (isset($image['data']['denomination']))? utf8_encode($image['data']['denomination']) : '';
     $presentation = (isset($image['data']['presentation']))? utf8_encode($image['data']['presentation']) : '';
@@ -35,8 +35,8 @@ foreach ($liste as $key => $image){
     <form action="?page=existantimage$f#$i" method="POST">
         <input name="id" type="hidden" value="$id">
         <br>image : $nom 
-        $zaper1
-        $zaper2
+        $zapper1
+        $zapper2
       <input type="text" name="cip13" placeholder="CIP" value="$cip13" >
       <input type="text" name="denomination" placeholder="Dénomination" value="$denomination" >
       <input type="text" name="presentation" placeholder="Présentation" value="$presentation" >

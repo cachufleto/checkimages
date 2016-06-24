@@ -277,13 +277,13 @@ class Image extends Images
         $option = [];
         // recherche par cip
         if (isset($chercher['cip13']) AND !empty($chercher['cip13'])){
-            $this->zaper = ">= 0 ";
+            $this->zapper = ">= 0 ";
             $this->rechercheCip = " AND i.cip13 LIKE '%{$chercher['cip13']}%' ";
         }
 
         // recherche par libelle du produit
         if (isset($chercher['nom']) AND !empty($chercher['nom'])) {
-            $this->zaper = ">= 0 ";
+            $this->zapper = ">= 0 ";
             $this->rechercheNom = " AND  i.nom LIKE '%{$chercher['nom']}%' ";
         }
 

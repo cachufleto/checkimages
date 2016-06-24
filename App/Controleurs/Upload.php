@@ -40,7 +40,7 @@ class Upload extends Images
     public function listeAction(){
 
         extract($_SESSION[$this->session]);
-        $this->zaper = "= $zaper";
+        $this->zapper = "= $zapper";
         $numProduits = $this->getNumImages();
         $f = afficheMenu($this->page, $this->session, $numProduits);
 
@@ -53,8 +53,8 @@ class Upload extends Images
     public function selectAction(){
 
         if(isset($_POST['id'])){
-            if($_POST['option'] == 'zaper'){
-                $this->updateZaper();
+            if($_POST['option'] == 'zapper'){
+                $this->updateZapper();
             } else if($_POST['option'] == 'conserver'){
                 $this->updateConserver();
             } else if($_POST['option'] == 'retirer'){
@@ -72,8 +72,8 @@ class Upload extends Images
     public function photoAction(){
 
         if(isset($_POST['id'])){
-            if($_POST['option'] == 'zaper'){
-                $this->updateZaper();
+            if($_POST['option'] == 'zapper'){
+                $this->updateZapper();
             } else if($_POST['option'] == 'conserver'){
                 $this->updateConserver();
             } else if($_POST['option'] == 'retirer'){
@@ -89,7 +89,7 @@ class Upload extends Images
     public function existantAction(){
 
         extract($_SESSION[$this->session]);
-        $this->zaper = "= $zaper";
+        $this->zapper = "= $zapper";
         $data = $this->getExistImages($p);
         $data = $this->extractImages($data, $a, $b);
         $listing = $data['liste'];
@@ -104,11 +104,11 @@ class Upload extends Images
                 '<img src="' . PHOTO . $image['nom'] . '.jpg' . '">' : '';
             $liste[$key]['existepng'] = (file_exists(PHOTO . $image['nom'] . '.png')) ?
                 '<img src="' . PHOTO . $image['nom'] . '.png' . '">' : '';
-            $liste[$key]['zaper2'] = ($image['zaper'] != 2) ?
+            $liste[$key]['zapper2'] = ($image['zapper'] != 2) ?
                 '<input name="option" type="submit" value="conserver">' :
                 '<input name="option" type="submit" value="retirer">';
-            $liste[$key]['zaper1'] = ($image['zaper'] != 1) ? 
-                '<input name="option" type="submit" value="zaper">' : '';
+            $liste[$key]['zapper1'] = ($image['zapper'] != 1) ? 
+                '<input name="option" type="submit" value="zapper">' : '';
             $data = getExistProduit($image['id']);
             $produit = $data->fetch_assoc();
             $liste[$key]['cip13'] = isset($produit['cip13'])? $produit['cip13']:'';
