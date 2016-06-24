@@ -209,6 +209,18 @@ class Images extends Bdd
         return $this->query($sql);
     }
 
+    public function getProduitCip($cip13, $id){
+        $sql = "SELECT 
+                    i.id, i.site, i.nom, i.produit, i.upload, i.zaper, i.cip13, 
+                    p.id_image, p.denomination, p.presentation, 
+                    p.type, p.date_traitement, p.libelle
+                FROM images i
+                LEFT JOIN produits p ON i.id = p.id_image
+                WHERE i.id != $id AND i.cip13 = $cip13
+                LIMIT 0, 1";
+        return $this->query($sql);
+    }
+
     public function setProduit($id, $cip13, $denomination='', $presentation='', $type=1, $libelle = ''){
         $sql = "INSERT INTO `produits` 
                   (`id_image`, `id`, `cip13`, `denomination`, `presentation`, `type`, `date_traitement`, `libelle`)

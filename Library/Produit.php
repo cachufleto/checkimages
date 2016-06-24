@@ -182,13 +182,19 @@ class Produit extends Produits
                 $info['image'] = $this->imgProd($img, $info['cip13']);
             } else if (!($info['image'] = $this->testImage($info['cip13']))){
                     $info['image'] = $info['cip13'];
-                }
+            }
+
+            if (file_exists(PHOTO . "en_cours/{$info['cip13']}.jpg")) {
+                    $info['image']['encours'] = "<img src='photos/en_cours/{$info['cip13']}.jpg' alt='{$info['cip13']} EN COURS'  border='0' />";
+            }
+
             $_liste[] = $info;
         }
         return $_liste;
     }
 
-    public function imgProd($_img, $nom){
+    public function imgProd($_img, $nom)
+    {
         $img = $_img[0];
         if ($img['image'] == 1 && $img['vignette'] == 1) {
             return ['vignette'=>'<img src="' . $this->link . $nom . '_vig.jpg" alt="' . $nom . ' Vignette"  border="0" />',
@@ -203,7 +209,8 @@ class Produit extends Produits
         return false;
     }
 
-    public function testImage($nom){
+    public function testImage($nom)
+    {
 
         $_grand = remote_file_exists('' . $this->link . $nom . '.jpg');
         $_vignette = remote_file_exists('' . $this->link . $nom . '_vig.jpg');
@@ -221,7 +228,6 @@ class Produit extends Produits
             return ['vignette'=>'<img src="' . $this->link . $nom . '_vig.jpg" alt="' . $nom . ' Vignette"  border="0" />',
                 'image'=>''];
         }
-
         return false;
     }
 
@@ -289,7 +295,6 @@ class Produit extends Produits
             }
             $recherche = (!empty($_option))? ' AND ' . $_option : '';
         }
-
         return $recherche;
     }
 

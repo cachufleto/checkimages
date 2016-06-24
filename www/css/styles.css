@@ -128,3 +128,8 @@ label {
     float: left;
     width: 530px;
 }
+
+.encours img {
+    border: 2px solid green;
+    width: 150px;
+}

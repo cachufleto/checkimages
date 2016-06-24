@@ -12,11 +12,12 @@ $entete = '
 $_ent = true;
 $l = 1;
 foreach($liste as $key=>$info){
-    //var_dump($info);
+    var_dump($info);
     $l++;
     $row = "row".($l%2);
     $vignette = isset($info['image']['vignette'])? $info['image']['vignette'] : '';
     $image = isset($info['image']['image'])? $info['image']['image'] : '';
+    $encours = isset($info['image']['encours'])? $info['image']['encours'] : '';
     $ligne = "
     <div class='$row'>
         <div class='ligne'>
@@ -32,12 +33,12 @@ foreach($liste as $key=>$info){
             <div class='ligne'><label>{$this->_lib['id_produit']} : </label><div>{$info['id_produit']}</div></div>
             <div class='ligne'><label>{$this->_lib['produit_actif']} : </label><div>{$this->_lib['actif'][$info['produit_actif']]}</div></div>
             <div class='ligne'><label>{$this->_lib['image']} : </label><div></div></div>
-            <div class='ligne'>
-                $vignette
-            </div>
+            <div class='ligne'><div class='vignette'>$vignette</div></div>
+            <div class='ligne'><label>EN COURS : </label><div></div></div>
+            <div class='ligne'><div class='encours'>$encours</div></div>
         </div>
         <div class='ligneimg' style='float:left; width:30%;'>
-            <div>$image</div>
+            <div class='image'>$image</div>
         </div>
     </div>
     </div>";

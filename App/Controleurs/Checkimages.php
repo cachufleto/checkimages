@@ -40,7 +40,6 @@ class Checkimages extends Image
         $f = '&display=' . $display . '&nombre=' . $l;
         //var_dump($liste);
         include_once VUE . 'listeUpload.tpl.php';
-        //include_once VUE . 'listeExistant.tpl.php';
     }
 
     public function imageAction()
@@ -66,22 +65,31 @@ class Checkimages extends Image
         $denomination = utf8_decode($_POST['denomination']);
         $presentation = utf8_decode($_POST['presentation']);
         $type = intval($_POST['type']);
+        
         if(empty($cip13) OR empty($denomination) OR empty($presentation)){
             $this->msg = 'Le Formulaire est incomplet!';
             return false;
         }
+
         $produit = $this->getProduit($id);
+
+        if($cip = $this->getProduitCip($cip13, $id)){
+            $this->msg = "ATTENTION !!!! Ce produit existe déjà sous le nom de : {$cip[0]['denomination']}";
+            return false;
+        }
 
         if($produit[0]['id_image']){
             $this->msg = "Mise à Jour du produit: $cip13";
+            $this->updateImageJpg($produit[0], $cip13);
             $this->updateProduit($id, $cip13, $denomination, $presentation, $type);
         } else {
             $this->msg = "Isertion Nouveau Produit: $cip13";
             $this->setProduit($id, $cip13, $denomination, $presentation, $type);
+            $this->enregistrerImageJpg($produit[0]);
         }
 
         $this->updateImage($id, $cip13);
+            
         return true;
     }
-
 }
