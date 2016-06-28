@@ -10,6 +10,8 @@ namespace App;
 require MOD . 'Images.php';
 use Model\Images;
 
+debug($_SERVER, 'SERVER');
+debug($_REQUEST, 'REQUEST');
 class Image extends Images
 {
     var $link = '';
@@ -329,8 +331,9 @@ class Image extends Images
         $origine = $produit['cip13'];
 
         if(file_exists(PHOTO . "en_cours/$origine.jpg")){
-            unlink(PHOTO . "en_cours/$origine.jpg");
+            //unlink(PHOTO . "en_cours/$origine.jpg");
         }
+
         $produit['cip13'] = $new;
         $this->enregistrerImageJpg($produit);
 
@@ -338,10 +341,12 @@ class Image extends Images
 
     public function enregistrerImageJpg($produit)
     {
-        $url = str_replace('//'.$produit['nom'], '/'.$produit['nom'], $produit['site'] . '/' . $produit['nom']);
-        if($produit['upload'] == 1 AND file_exists(SITE . $url)){
-            $_url = $url;
+        $_url = $url = str_replace('//'.$produit['nom'], '/'.$produit['nom'], $produit['site'] . '/' . $produit['nom']);
+
+        if(file_exists(SITE . $_url)){
             $url = LINK . $url;
+        } else if(file_exists(SITE . $_url . '.jpg')){
+            $url = LINK . $url . '.jpg';
         }
 
         $image = $this->open_image($url);
@@ -391,8 +396,13 @@ class Image extends Images
             }
         }
 
+        //var_dump($produit);
         imagejpeg($im2, PHOTO. "en_cours/{$produit['cip13']}.jpg");
-        if($produit['upload'] == 1 AND file_exists(SITE . $_url)){
+        $this->updateImageURL($produit['id'], 'photos/en_cours', $produit['cip13'].'.jpg');
+
+        if(!preg_match('/(photos.en_cours)/', $_url) AND file_exists(SITE . $_url)){
+            unlink(SITE . $_url);
+        } else if(file_exists(SITE . $_url) AND $produit['cip13'].'.jpg' != $produit['nom']){
             unlink(SITE . $_url);
         }
     }
@@ -462,7 +472,20 @@ class Image extends Images
                             // injection en base de données
                             // $liste .= '<img src="'.(str_replace(__DIR__.'/', '', $test)).'">' . "\n";
                             //$this->listeLocal .= '<br>INSERT INTO '.(str_replace(__DIR__.'/', '', $test))."\n";
-                            $this->uploadImageExist(str_replace(SITE, '', dirname($test)), basename($test));
+                            $name = str_replace('×', '',
+                                    str_replace(' ', '',
+                                    str_replace('(', '',
+                                    str_replace(')', '',
+                                    utf8_encode(basename($test))))));
+
+                            //exit($test . " ---> " . dirname($test) . '/'. $name);
+                            if($name != basename($test) ) {
+                                copy($test, dirname($test) . '/'. $name);
+                                unlink($test);
+                            }
+
+                            $this->uploadImageExist(str_replace(SITE, '', dirname($test)), $name);
+                            
                         }else if($type != 'dir'){
                             // suppression de la source
                             unlink($test);

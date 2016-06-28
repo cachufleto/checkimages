@@ -16,6 +16,30 @@ class Menu
 
     public function afficher()
     {
+        $data = $this->afficherDATA();
+        $data['bouttonAvec'] = $this->info->_lib['bouttonAvecImage'];
+        $data['bouttonSans'] = $this->info->_lib['bouttonSansImage'];
+        $data['bouttonTous'] = $this->info->_lib['bouttonTousImage'];
+
+        include VUE . 'menu.tpl.php';
+
+        return;
+    }
+
+    public function afficherUpload()
+    {
+        $data = $this->afficherDATA();
+        $data['bouttonAvec'] = $this->info->_lib['bouttonAvecInfo'];
+        $data['bouttonSans'] = $this->info->_lib['bouttonSansInfo'];
+        $data['bouttonTous'] = $this->info->_lib['bouttonTousImage'];
+
+        include VUE . 'menuUpload.tpl.php';
+
+        return;
+    }
+
+    public function afficherDATA()
+    {
         // extract($_SESSION[$this->info->page]);
         $session = $this->info->session;
         $data = [];
@@ -53,13 +77,7 @@ class Menu
         $data['num'] = (((($data['suivante'])? $data['suivante'] : 1)-1) * $data['b']) . " &aacute; " . ((($data['suivante'])? $data['suivante'] : 1) * $data['b']);
         $data['p'] = (($data['suivante'])? $data['suivante'] : 1) . ' / ' . intval($data['numProduits']/$data['b'] +1);
 
-        $data['bouttonAvecImage'] = $this->info->_lib['bouttonAvecImage'];
-        $data['bouttonSansImage'] = $this->info->_lib['bouttonSansImage'];
-        $data['bouttonTousImage'] = $this->info->_lib['bouttonTousImage'];
-
-        include VUE . 'menu.tpl.php';
-
-        return;
+        return $data;
     }
 
 

@@ -35,7 +35,7 @@ class Checkimages extends Image
 
     public function indexAction()
     {
-        $this->menu->afficher();
+        $this->menu->afficherUpload();
         $liste = $this->getImages($this->produits());
         $display = isset($_SESSION[$this->session]['display'])? $_SESSION[$this->session]['display'] : 0;
         $b = isset($_SESSION[$this->session]['b'])? $_SESSION[$this->session]['b'] : NUM;
@@ -72,7 +72,7 @@ class Checkimages extends Image
     public function setData()
     {
         $id = intval($_POST['id']);
-        $cip13 = utf8_decode($_POST['cip13']);
+        $cip13 = trim(utf8_decode($_POST['cip13']));
         $denomination = utf8_decode($_POST['denomination']);
         $presentation = utf8_decode($_POST['presentation']);
         $type = intval($_POST['type']);
@@ -96,6 +96,7 @@ class Checkimages extends Image
         } else {
             $this->msg = "Isertion Nouveau Produit: $cip13";
             $this->setProduit($id, $cip13, $denomination, $presentation, $type);
+            $produit[0]['cip13'] = $cip13;
             $this->enregistrerImageJpg($produit[0]);
         }
 
@@ -105,16 +106,13 @@ class Checkimages extends Image
     }
     
     public function uploadImagesLocal(){
-        // importer importer en BDD les images existantes en local
-        //$liste = 'LISTE:<br>';
+        $this->menu->afficher();
         $this->listerReperoires(REP_TRAITEMETN);
         header('content-type image/jpeg');
         
         $data = $this->listeLocal;
         $liste = $this->getListeNewImages($data['id'], $data['nom']);
         $f = '';
-        var_dump($data);
-        var_dump($liste);
-        include_once VUE . 'listeUpload.tpl.php';
+        include_once VUE . 'listeUploadNouvelles.tpl.php';
     }
 }

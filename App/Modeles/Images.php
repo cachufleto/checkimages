@@ -131,6 +131,7 @@ class Images extends Bdd
                 WHERE  i.zapper  {$this->zapper}
                 {$this->rechercheCip}
                 {$this->rechercheNom}
+                AND i.id = p.id_image
                 AND i.upload = 1
                 ORDER BY p.denomination ASC, i.nom ASC
                 LIMIT $debut, $limit";
@@ -271,6 +272,15 @@ class Images extends Bdd
         $this->queryUpdate($sql);
     }
 
+    public function updateImageURL($id, $site, $nom)
+    {
+        $sql = "UPDATE `images` 
+                    SET `site` = '$site', nom = '$nom', upload = 1
+                    WHERE id = $id;";
+
+        $this->queryUpdate($sql);
+    }
+
     public function getImage($id)
     {
         $sql = "SELECT * FROM images WHERE id = $id;";
@@ -297,7 +307,7 @@ class Images extends Bdd
     public function setImageLocal($link, $nom)
     {
         $sql = "INSERT INTO `images` (`id`, `site`, `nom`, `produit`, `upload`, `zapper`, `cip13`) 
-                VALUES (NULL, '$link', '".$nom."', NULL, '1', '0', NULL);";
+                VALUES (NULL, '$link', '".$nom."', NULL, '0', '0', NULL);";
         return $this->queryInsert($sql);
     }
 

@@ -16,4 +16,4 @@ define('SITE', RACINE . 'www/');
 define('PHOTO', RACINE . 'www/photos/');
 define('REP_TRAITEMETN', PHOTO . 'traitement');
 define('VUE', APP . 'Vues/');
-define('LINK', $_SERVER['HTTP_ORIGIN'].$_SERVER['CONTEXT_PREFIX']);
+define('LINK', 'http://'. str_replace('//', '/', $_SERVER['HTTP_HOST'].'/'.$_SERVER['CONTEXT_PREFIX']));
