@@ -177,7 +177,7 @@ class Produit extends Produits
     {
         $_liste = [];
         foreach($liste as $key =>$info){
-
+            $info['image'] = isset($info['image'])? [] : $info['image'];
             if ($img = $this->getImage($info['cip13'])){
                 $info['image'] = $this->imgProd($img, $info['cip13']);
             } else if (!($info['image'] = $this->testImage($info['cip13']))){
