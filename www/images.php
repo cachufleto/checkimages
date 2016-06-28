@@ -84,12 +84,6 @@ if (isset($_SERVER['HTTP_IF_MODIFIED_SINCE']) && (strtotime($_SERVER['HTTP_IF_MO
     }
 
     imagejpeg($im2, 'testIMAGE.jpg');
-    var_dump([$w,$h]);
-    var_dump([$new_w,$new_h]);
-    var_dump($im2);
-
-
-
     echo "<img style=\"-webkit-user-select: none\" src=\"http://localhost/testimport/testIMAGE.jpg\">";
     exit('JODER');
 

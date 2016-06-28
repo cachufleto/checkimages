@@ -20,6 +20,7 @@ function typeMime($file){
     if(preg_match('#^image#', $typeFile))
         return true;
 }
+
 function listerReperoires($dir, &$liste){
 // Ouvre un dossier bien connu, et liste tous les fichiers
     if (is_dir($dir)) {
@@ -31,9 +32,13 @@ function listerReperoires($dir, &$liste){
                     if($type == 'dir'){
                         listerReperoires($test, $liste);
                     }
-                        $liste .= (typeMime($test))? '<img src="'.(str_replace(__DIR__.'/', '', $test)).'">' . "\n" : "";
 
-
+                    if (typeMime($test)) {
+                        $liste .= '<img src="'.(str_replace(__DIR__.'/', '', $test)).'">' . "\n";
+                    }else if($type != 'dir'){
+                        // suppression de la source
+                        unlink($test);
+                    }
                 }
             }
             closedir($dh);
@@ -41,38 +46,8 @@ function listerReperoires($dir, &$liste){
     }
 }
 
-$dir = __DIR__ . '/photos';
-$liste = 'LISTE:<br>';
+$dir = __DIR__ . '/photos/traitement';
+//$liste = 'LISTE:<br>';
 listerReperoires($dir, $liste);
-// Création d'une image vide et ajout d'un texte
-// $im = imagecreatetruecolor(120, 20);
-//$text_color = imagecolorallocate($im, 233, 14, 91);
-// imagestring($im, 1, 5, 5,  'Un texte simple', $text_color);
-// Définit le contenu de l'en-tête - dans ce cas, image/vnd.wap.wbmp
-// Hint: see image_type_to_mime_type() for content-types
-// header('Content-Type: image/vnd.wap.wbmp');
 header('content-type image/jpeg');
-/*// Affichage de l'image
-//imagejpeg($im);
-// echo image_type_to_mime_type ( int $imagetype )
-//header("Content-type: " . image_type_to_mime_type(IMAGETYPE_JPEG));*/
-$filename = 'S:/httpd/developpement/testcheck/www/photos/Cache/f_00290e';
-/*$im = imagecreatefromjpeg ( $filename );
-echo '<img src="'.(str_replace('S:/httpd/developpement/testcheck/www/', '', $filename)).'" width="72" height="72">';
-// Libération de la mémoire
-imagedestroy($im);
-*/
-$finfo = finfo_open(FILEINFO_MIME); // Retourne le type mime
-
-if (!$finfo) {
-    echo "Échec de l'ouverture de la base de données fileinfo";
-    exit();
-}
-
-/* Récupère le mime-type d'un fichier spécifique */
-//$filename = "/usr/local/something.txt";
-echo finfo_file($finfo, $filename);
-
-/* Fermeture de la connexion */
-finfo_close($finfo);
 echo $liste;

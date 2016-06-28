@@ -267,4 +267,32 @@ class Images extends Bdd
         $this->queryUpdate($sql);
     }
 
+    public function getImage($id)
+    {
+        $sql = "SELECT * FROM images WHERE id = $id;";
+        return $this->query($sql);
+    }
+    
+    public function deleteUdate($id)
+    {
+        $sql = "DELETE FROM `images` WHERE id = $id;";
+        debug($sql, 'SUPPRIMER');
+        return $this->queryUpdate($sql);
+    }
+
+    public function getImageUpload($repertoire, $nom)
+    {
+        $sql = "SELECT * FROM images WHERE site LIKE '$repertoire' AND nom LIKE '$nom';";
+        return $this->query($sql);
+    }
+    
+    public function setImageLocal($link, $nom)
+    {
+        $sql = "INSERT INTO `images` (`id`, `site`, `nom`, `produit`, `upload`, `zapper`, `cip13`) 
+                              VALUES (NULL, '$link', '".$nom."', NULL, '1', '0', NULL);";
+        echo "<br>", $sql;
+        $this->queryInsert($sql);
+    }
+
+
 }

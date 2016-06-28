@@ -6,7 +6,7 @@
 .produits a{
     padding: 0;
     border-radius: inherit;
-    display: none;
+    color: #ce3d05;
 }
 
 .produits {
@@ -16,5 +16,9 @@
 }
 
 .produits form{
+
 }
 
+.produits .ligne{
+    float: none;
+}

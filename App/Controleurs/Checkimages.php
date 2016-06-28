@@ -20,6 +20,7 @@ class Checkimages extends Image
     var $recherche = false;
     var $session = 'Checkimages';
     var $msg = '';
+    var $listeLocal = '';
 
     public function __construct()
     {
@@ -36,9 +37,8 @@ class Checkimages extends Image
         $this->menu->afficher();
         $liste = $this->getImages($this->produits());
         $display = isset($_SESSION[$this->session]['display'])? $_SESSION[$this->session]['display'] : 0;
-        $l = isset($_SESSION[$this->session]['l'])? $_SESSION[$this->session]['l'] : NUM;
-        $f = '&display=' . $display . '&nombre=' . $l;
-        //var_dump($liste);
+        $b = isset($_SESSION[$this->session]['b'])? $_SESSION[$this->session]['b'] : NUM;
+        $f = '&display=' . $display . '&nombre=' . $b;
         include_once VUE . 'listeUpload.tpl.php';
     }
 
@@ -51,6 +51,17 @@ class Checkimages extends Image
                 $this->updateConserver($id);
             } else if($_POST['option'] == 'retirer'){
                 $this->updateRetirer($id);
+            } else if($_POST['option'] == 'supprimer'){
+                if($image = $this->getImage($id)){
+                    $image = SITE . $image[0]['site'] . '/' .$image[0]['nom'];
+                    //$image = str_replace('/', '\\', SITE . $image[0]['site'] . '/' . $image[0]['nom']);
+                    $this->deleteUdate($id);
+                    if(file_exists($image)){
+                        unlink($image);
+                    } else {
+                        echo $image;
+                    }
+                }
             } else if($_POST['option'] == 'valider'){
                 $this->setData($id);
             }
@@ -91,5 +102,14 @@ class Checkimages extends Image
         $this->updateImage($id, $cip13);
             
         return true;
+    }
+    
+    public function uploadImagesLocal(){
+        // importer importer en BDD les images existantes en local
+        //$liste = 'LISTE:<br>';
+        $this->listerReperoires(REP_TRAITEMETN);
+        header('content-type image/jpeg');
+        echo $this->listeLocal;
+
     }
 }

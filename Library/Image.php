@@ -338,6 +338,8 @@ class Image extends Images
 
     public function enregistrerImageJpg($produit)
     {
+        var_dump($produit);
+
         $url = $produit['site'] . $produit['nom'];
         $image = $this->open_image($url);
 
@@ -411,6 +413,60 @@ class Image extends Images
         return $im;
     }
 
+    public function typeMime($file){
+        //$liste .= '<img src="'.(str_replace(__DIR__.'/', '', $test)).'" width="72" height="72">' . "\n";
+        $finfo = finfo_open(FILEINFO_MIME); // Retourne le type mime
+
+        if (!$finfo) {
+            echo "Échec de l'ouverture de la base de données fileinfo";
+            exit();
+        }
+        $typeFile = finfo_file($finfo, $file);
+
+        /* Fermeture de la connexion */
+        finfo_close($finfo);
+        if(preg_match('#^image#', $typeFile))
+            return true;
+    }
+
+    public function uploadImageExist($repertoire, $nom)
+    {
+        if($images = $this->getImageUpload($repertoire, $nom))
+        {
+            return false;
+        }
+        $this->setImageLocal($repertoire, $nom);
+    }
+    //+
+    public function listerReperoires($dir){
+        // Ouvre un dossier bien connu, et liste tous les fichiers
+        $dir = str_replace('\\', '/', $dir);
+        if (is_dir($dir)) {
+            
+            if ($dh = opendir($dir)) {
+                while (($file = readdir($dh)) !== false) {
+                    if($file != '.' AND $file != '..'){
+                        $test = $dir . '/' . $file;
+                        $type = filetype($test);
+                        if($type == 'dir'){
+                            $this->listerReperoires($test);
+                        }
+
+                        if ( $this->typeMime($test)) {
+                            // injection en base de données
+                            // $liste .= '<img src="'.(str_replace(__DIR__.'/', '', $test)).'">' . "\n";
+                            //$this->listeLocal .= '<br>INSERT INTO '.(str_replace(__DIR__.'/', '', $test))."\n";
+                            $this->uploadImageExist(str_replace(SITE, '', dirname($test)), basename($test));
+                        }else if($type != 'dir'){
+                            // suppression de la source
+                            unlink($test);
+                        }
+                    }
+                }
+                closedir($dh);
+            }
+        }
+    }
 
 }
 

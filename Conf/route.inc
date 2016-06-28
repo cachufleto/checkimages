@@ -37,9 +37,14 @@ $_r = [
     ],
 
 'upload' => [
+    'controleur' => 'Checkimages',
+    'action' => 'uploadImagesLocal'
+    ],
+/*
+'upload' => [
     'controleur' => 'Upload',
     'action' => 'listeAction'
-    ],
+    ],*/
 /*
 'existant' => [
         'controleur' => 'Upload',

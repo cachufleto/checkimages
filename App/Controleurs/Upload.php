@@ -11,7 +11,6 @@ require APP . 'Modeles/Images_old.php';
 use Upload\Images;
 
 /*
-
 DROP TABLE IF EXISTS `produits`;
 CREATE TABLE IF NOT EXISTS `produits` (
   `id_image` int(10) UNSIGNED NOT NULL,
@@ -30,9 +29,8 @@ CREATE TABLE IF NOT EXISTS `produits` (
   `presentation` text NOT NULL,
   `type` int(1) DEFAULT NULL,
   `libelle` char(200) DEFAULT NULL,
-
-
  * */
+
 class Upload extends Images
 {
     var $session = 'Upload';
