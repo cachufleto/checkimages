@@ -20,7 +20,7 @@ class Checkimages extends Image
     var $recherche = false;
     var $session = 'Checkimages';
     var $msg = '';
-    var $listeLocal = '';
+    var $listeLocal = [];
 
     public function __construct()
     {
@@ -30,6 +30,7 @@ class Checkimages extends Image
         $this->menu = new Menu();
         $this->menu->info = $this;
         $this->recherche = !empty($this->criterMoteurRecherche())? true : false ;
+        $this->listeLocal = ['id'=>'-1','nom'=>"'_'"];
     }
 
     public function indexAction()
@@ -54,7 +55,6 @@ class Checkimages extends Image
             } else if($_POST['option'] == 'supprimer'){
                 if($image = $this->getImage($id)){
                     $image = SITE . $image[0]['site'] . '/' .$image[0]['nom'];
-                    //$image = str_replace('/', '\\', SITE . $image[0]['site'] . '/' . $image[0]['nom']);
                     $this->deleteUdate($id);
                     if(file_exists($image)){
                         unlink($image);
@@ -63,13 +63,13 @@ class Checkimages extends Image
                     }
                 }
             } else if($_POST['option'] == 'valider'){
-                $this->setData($id);
+                $this->setData();
             }
         }
         $this->indexAction();
     }
 
-    public function setData($id)
+    public function setData()
     {
         $id = intval($_POST['id']);
         $cip13 = utf8_decode($_POST['cip13']);
@@ -109,7 +109,12 @@ class Checkimages extends Image
         //$liste = 'LISTE:<br>';
         $this->listerReperoires(REP_TRAITEMETN);
         header('content-type image/jpeg');
-        echo $this->listeLocal;
-
+        
+        $data = $this->listeLocal;
+        $liste = $this->getListeNewImages($data['id'], $data['nom']);
+        $f = '';
+        var_dump($data);
+        var_dump($liste);
+        include_once VUE . 'listeUpload.tpl.php';
     }
 }

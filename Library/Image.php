@@ -338,9 +338,12 @@ class Image extends Images
 
     public function enregistrerImageJpg($produit)
     {
-        var_dump($produit);
+        $url = str_replace('//'.$produit['nom'], '/'.$produit['nom'], $produit['site'] . '/' . $produit['nom']);
+        if($produit['upload'] == 1 AND file_exists(SITE . $url)){
+            $_url = $url;
+            $url = LINK . $url;
+        }
 
-        $url = $produit['site'] . $produit['nom'];
         $image = $this->open_image($url);
 
         if ($image === false) { die ('Unable to open image'); }
@@ -389,7 +392,9 @@ class Image extends Images
         }
 
         imagejpeg($im2, PHOTO. "en_cours/{$produit['cip13']}.jpg");
-
+        if($produit['upload'] == 1 AND file_exists(SITE . $_url)){
+            unlink(SITE . $_url);
+        }
     }
 
     public function open_image ($file) {
@@ -435,9 +440,10 @@ class Image extends Images
         {
             return false;
         }
-        $this->setImageLocal($repertoire, $nom);
+        $this->listeLocal['id'] .= ", ".$this->setImageLocal($repertoire, $nom);
+        $this->listeLocal['nom'] .= ", '$nom'";
     }
-    //+
+
     public function listerReperoires($dir){
         // Ouvre un dossier bien connu, et liste tous les fichiers
         $dir = str_replace('\\', '/', $dir);

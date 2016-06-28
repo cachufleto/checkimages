@@ -115,7 +115,7 @@ class Images extends Bdd
                 {$this->rechercheNom}
                 AND i.id = p.id_image " .
                 $this->criterMoteurRecherche() . "
-                ORDER BY p.denomination ASC,  p.libelle ASC
+                ORDER BY p.denomination ASC, i.nom ASC
                 LIMIT $debut, $limit";
 
         return $this->query($sql);
@@ -132,6 +132,7 @@ class Images extends Bdd
                 {$this->rechercheCip}
                 {$this->rechercheNom}
                 AND i.upload = 1
+                ORDER BY p.denomination ASC, i.nom ASC
                 LIMIT $debut, $limit";
 
         return $this->query($sql);
@@ -150,7 +151,7 @@ class Images extends Bdd
                 AND i.id = p.id_image
                 AND i.upload = 0 " .
                 $this->criterMoteurRecherche() . "
-                ORDER BY p.libelle ASC,  p.denomination ASC
+                ORDER BY p.denomination ASC, i.nom ASC
                 LIMIT $debut, $limit";
 
         return $this->query($sql);
@@ -164,6 +165,7 @@ class Images extends Bdd
                 {$this->rechercheCip}
                 {$this->rechercheNom}
                 AND i.upload = 0  
+                ORDER BY i.nom ASC
                 LIMIT $debut, $limit";
 
         return $this->query($sql);
@@ -179,7 +181,8 @@ class Images extends Bdd
                 WHERE  i.zapper  {$this->zapper}
                 {$this->rechercheCip}
                 {$this->rechercheNom}
-                AND i.id = p.id_image ".
+                AND i.id = p.id_image 
+                ORDER BY p.denomination ASC, i.nom ASC ".
                 $this->criterMoteurRecherche();
 
         return $this->query($sql);
@@ -192,6 +195,7 @@ class Images extends Bdd
                 WHERE i.zapper  {$this->zapper}
                 {$this->rechercheCip}
                 {$this->rechercheNom}
+                ORDER BY i.nom ASC
                 LIMIT $debut, $limit;";
 
         return $this->query($sql);
@@ -282,17 +286,30 @@ class Images extends Bdd
 
     public function getImageUpload($repertoire, $nom)
     {
-        $sql = "SELECT * FROM images WHERE site LIKE '$repertoire' AND nom LIKE '$nom';";
+        $sql = "SELECT * 
+                FROM images 
+                WHERE site LIKE '$repertoire' 
+                AND nom LIKE '$nom'
+                ORDER BY nom ASC;";
         return $this->query($sql);
     }
     
     public function setImageLocal($link, $nom)
     {
         $sql = "INSERT INTO `images` (`id`, `site`, `nom`, `produit`, `upload`, `zapper`, `cip13`) 
-                              VALUES (NULL, '$link', '".$nom."', NULL, '1', '0', NULL);";
-        echo "<br>", $sql;
-        $this->queryInsert($sql);
+                VALUES (NULL, '$link', '".$nom."', NULL, '1', '0', NULL);";
+        return $this->queryInsert($sql);
     }
 
+    public function getListeNewImages($listeID, $listeNom){
 
+        $sql = "SELECT * 
+                FROM images 
+                WHERE id IN ($listeID)
+                OR nom IN ($listeNom)
+                ORDER BY nom ASC";
+        debug($sql, 'UPLOAD');
+        return $this->query($sql);
+    }
+    
 }

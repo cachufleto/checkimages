@@ -58,7 +58,7 @@ class Bdd
 
     public function queryInsert($sql){
         $this->mysqli->query($sql) or die ('ERREUR 802 de mise à jours de la BDD : <br>'.$sql);
-        return true;
+        return $this->mysqli->insert_id;
     }
 
     public function __destruct()

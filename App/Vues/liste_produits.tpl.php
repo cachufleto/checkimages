@@ -12,7 +12,6 @@ $entete = '
 $_ent = true;
 $l = 1;
 foreach($liste as $key=>$info){
-    var_dump($info);
     $l++;
     $row = "row".($l%2);
     $vignette = isset($info['image']['vignette'])? $info['image']['vignette'] : '';

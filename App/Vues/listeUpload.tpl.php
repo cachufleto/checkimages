@@ -14,6 +14,9 @@ foreach ($liste as $key => $image){
     $existepng = (file_exists(PHOTO . $image['nom']. '.png'))?
         '<img src="'. PHOTO . $image['nom'] . '.png' . '">' : '';
 
+    $existesans = (file_exists(PHOTO . $image['nom']))?
+        '<img src="'. PHOTO . $image['nom'] . '">' : '';
+
     $zapper2 = ($zap != 2)?
         '<input name="option" type="submit" value="conserver">' :
         '<input name="option" type="submit" value="retirer">';
@@ -54,6 +57,7 @@ foreach ($liste as $key => $image){
     <img src="$image">
     $existe
     $existepng
+    $existesans
     </div>
         <div class="ligne">
             <a href="#" id="$imageid" >&nbsp;</a>
