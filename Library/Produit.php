@@ -10,6 +10,9 @@ namespace App;
 require MOD . 'Produits.php';
 use Model\Produits;
 
+require APP . 'Controleurs/Checkimages.php';
+use Checkimages\Checkimages;
+
 class Produit extends Produits
 {
     var $link = '';
@@ -123,6 +126,12 @@ class Produit extends Produits
             (isset($choix['a']) ? 'checked' : '')
             . ' >';
         $this->listeRecherche .= isset($choix['a']) ? ": Archivés " : '';
+
+        $etat .= '
+        En cours<input name="etat[e]" type="checkbox" value="1" ' .
+            (isset($choix['e']) ? 'checked' : '')
+            . ' >';
+        $this->listeRecherche .= isset($choix['e']) ? ": En Cours " : '';
 
         return $etat;
     }
@@ -280,6 +289,18 @@ class Produit extends Produits
                 $etat .= isset($chercher['etat']['a'])?
                     (!empty($etat)? ' OR ' : '' ) . ' p.produit_actif = "a"' : '';
                 $option[] = (count($chercher['etat']) > 1 )? "( $etat )" : $etat;
+
+                if(isset($chercher['etat']['e'])){
+                    $images = New Checkimages();
+                    $listeNew = $images->getProduitCipOK();
+                    $liste = '';
+                    if(is_array($listeNew)){
+                        foreach ($listeNew as $key=>$cip){
+                            $liste .= (empty($liste)? "" : ", ") . "'{$cip['cip13']}'";
+                        }
+                    }
+                    $option[] = !empty($liste)? "p.cip13 IN ($liste)" : "";
+                }
             }
             // recherche partielle
             if (isset($chercher['famille']) && !empty($chercher['famille'])){
@@ -287,9 +308,11 @@ class Produit extends Produits
             }
             $_option = '';
             foreach($option as $_r){
-                $_option .= (empty($_option)? '' : ' AND ') . $_r;
+                $_option .= (empty($_option)? '' : '
+             AND ') . $_r;
             }
-            return (!empty($_option))? ' AND ' . $_option : '';
+            return (!empty($_option))? '
+             AND ' . $_option : '';
         }
     }
 

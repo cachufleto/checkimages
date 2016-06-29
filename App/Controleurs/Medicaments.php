@@ -8,10 +8,10 @@
 
 namespace Medicaments;
 
-require LIB . 'Produit.php';
+require_once LIB . 'Produit.php';
 use App\Produit;
 
-require LIB . 'Menu.php';
+require_once LIB . 'Menu.php';
 use App\Menu;
 
 

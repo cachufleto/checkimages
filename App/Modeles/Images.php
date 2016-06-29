@@ -226,6 +226,13 @@ class Images extends Bdd
         return $this->query($sql);
     }
 
+    public function getProduitCipOK(){
+        $sql = "SELECT cip13
+                FROM produits
+                WHERE 1";
+        return $this->query($sql);
+    }
+
     public function setProduit($id, $cip13, $denomination='', $presentation='', $type=1, $libelle = ''){
         $sql = "INSERT INTO `produits` 
                   (`id_image`, `id`, `cip13`, `denomination`, `presentation`, `type`, `date_traitement`, `libelle`)

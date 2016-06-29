@@ -8,10 +8,10 @@
 
 namespace Checkimages;
 
-require LIB . 'Image.php';
+require_once LIB . 'Image.php';
 use App\Image;
 
-require LIB . 'Menu.php';
+require_once LIB . 'Menu.php';
 use App\Menu;
 
 class Checkimages extends Image
