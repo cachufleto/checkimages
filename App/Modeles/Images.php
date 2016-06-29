@@ -206,7 +206,7 @@ class Images extends Bdd
         $sql = "SELECT 
                     i.id, i.site, i.nom, i.produit, i.upload, i.zapper, i.cip13, 
                     p.id_image, p.denomination, p.presentation, 
-                    p.type, p.date_traitement, p.libelle
+                    p.type, p.date_traitement, p.libelle, p.id as id_produit
                 FROM images i
                 LEFT JOIN produits p ON i.id = p.id_image
                 WHERE i.id = $id
@@ -282,7 +282,7 @@ class Images extends Bdd
     public function updateImageURL($id, $site, $nom)
     {
         $sql = "UPDATE `images` 
-                    SET `site` = '$site', nom = '$nom', upload = 1
+                    SET `site` = '$site', cip13 = '$nom', upload = 1
                     WHERE id = $id;";
 
         $this->queryUpdate($sql);
@@ -297,7 +297,12 @@ class Images extends Bdd
     public function deleteUdate($id)
     {
         $sql = "DELETE FROM `images` WHERE id = $id;";
-        debug($sql, 'SUPPRIMER');
+        return $this->queryUpdate($sql);
+    }
+
+    public function deleteUdateProduit($id)
+    {
+        $sql = "DELETE FROM `produits` WHERE id = $id;";
         return $this->queryUpdate($sql);
     }
 

@@ -45,18 +45,21 @@ class Bdd
         while ($row = $data->fetch_assoc()) {
             $liste[] = $row;
         }
-        debug($sql, 'REQUETTE');
+        debug($sql, 'SQL QUERY');
         /* free result set */
         $data->free();
         return $liste;
     }
 
     public function queryUpdate($sql){
+        debug($sql, 'SQL UPDATE');
+
         $this->mysqli->query($sql) or die ('ERREUR 801 de mise à jours de la BDD : <br>'.$sql);
         return true;
     }
 
     public function queryInsert($sql){
+        debug($sql, 'SQL INSERT');
         $this->mysqli->query($sql) or die ('ERREUR 802 de mise à jours de la BDD : <br>'.$sql);
         return $this->mysqli->insert_id;
     }

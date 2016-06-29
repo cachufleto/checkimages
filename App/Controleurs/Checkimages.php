@@ -53,20 +53,23 @@ class Checkimages extends Image
             } else if($_POST['option'] == 'retirer'){
                 $this->updateRetirer($id);
             } else if($_POST['option'] == 'supprimer'){
-                if($image = $this->getImage($id)){
-                    $image = SITE . $image[0]['site'] . '/' .$image[0]['nom'];
+                if($image = $this->getProduit($id)){
+                    $produit = $image[0];
                     $this->deleteUdate($id);
-                    if(file_exists($image)){
-                        unlink($image);
-                    } else {
-                        echo $image;
+                    if(!empty($produit['id_produit'])){
+                        $this->deleteUdateProduit($produit['id_produit']);
+                    }
+                    $link = !empty($produit['cip13'])? $produit['cip13'].'.jpg' : $produit['nom'];
+                    $link = SITE . $produit['site'] . '/' . $link;
+                    if(file_exists($link)){
+                        unlink($link);
                     }
                 }
             } else if($_POST['option'] == 'valider'){
                 $this->setData();
             }
         }
-        $this->indexAction();
+       $this->indexAction();
     }
 
     public function setData()

@@ -330,13 +330,12 @@ class Image extends Images
     {
         $origine = $produit['cip13'];
 
-        if(file_exists(PHOTO . "en_cours/$origine.jpg")){
-            //unlink(PHOTO . "en_cours/$origine.jpg");
-        }
-
         $produit['cip13'] = $new;
         $this->enregistrerImageJpg($produit);
-
+        
+        if($origine != $new AND file_exists(PHOTO . "en_cours/$origine.jpg")){
+            unlink(PHOTO . "en_cours/$origine.jpg");
+        }
     }
 
     public function enregistrerImageJpg($produit)
@@ -398,7 +397,7 @@ class Image extends Images
 
         //var_dump($produit);
         imagejpeg($im2, PHOTO. "en_cours/{$produit['cip13']}.jpg");
-        $this->updateImageURL($produit['id'], 'photos/en_cours', $produit['cip13'].'.jpg');
+        $this->updateImageURL($produit['id'], 'photos/en_cours', $produit['cip13']);
 
         if(!preg_match('/(photos.en_cours)/', $_url) AND file_exists(SITE . $_url)){
             unlink(SITE . $_url);
