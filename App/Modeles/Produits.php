@@ -136,10 +136,11 @@ class Produits extends Bdd
 
     public function getImage($nom){
         $sql = "SELECT * FROM control_images WHERE cip13 = $nom LIMIT 0, 1";
-        return $this->query($sql);
+        $img = $this->query($sql);
+        return !empty($img)? $img[0] : false;
     }
 
-    public function setImage($cip13, $grande = 1, $vignette = 1){
+    public function setImage($cip13, $grande = 0, $vignette = 0){
         $sql = "INSERT INTO `control_images` (`cip13`, `image`, `vignette`) VALUES ('$cip13', $grande, $vignette);";
         $this->queryInsert($sql);
     }

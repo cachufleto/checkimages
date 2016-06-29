@@ -180,8 +180,13 @@ class Produit extends Produits
             $info['image'] = !isset($info['image'])? [] : $info['image'];
             if ($img = $this->getImage($info['cip13'])){
                 $info['image'] = $this->imgProd($img, $info['cip13']);
-            } else if (!($info['image'] = $this->testImage($info['cip13']))){
-                    $info['image'] = $info['cip13'];
+            } else if (!empty($img = $this->testImage($info['cip13']))){
+                $info['image'] = $img;
+            } else {
+                $info['image'] = [
+                    'vignette'=>'',
+                    'image'=>''
+                    ];
             }
 
             if (file_exists(PHOTO . "en_cours/{$info['cip13']}.jpg")) {
@@ -193,48 +198,39 @@ class Produit extends Produits
         return $_liste;
     }
 
-    public function imgProd($_img, $nom)
+    public function imgProd($img, $nom)
     {
-        $img = $_img[0];
         if ($img['image'] == 1 && $img['vignette'] == 1) {
-            return ['vignette'=>'<img src="' . $this->link . $nom . '_vig.jpg" alt="' . $nom . ' Vignette"  border="0" />',
-                'image'=>'<img src="' . $this->link . $nom . '.jpg" alt="' . $nom . ' Grande"  border="0" />'];
+            return [
+                'image'=>'<img src="' . $this->link . $nom . '.jpg" alt="' . $nom . ' Grande"  border="0" />',
+                'vignette'=>'<img src="' . $this->link . $nom . '_vig.jpg" alt="' . $nom . ' Vignette"  border="0" />'
+                ];
         } else if ($img['image'] == 1) {
-            return ['vignette'=>'', 
-                'image'=>'<img src="' . $this->link . $nom . '.jpg" alt="' . $nom . ' Grande"  border="0" />'];
+            return [
+                'image'=>'<img src="' . $this->link . $nom . '.jpg" alt="' . $nom . ' Grande"  border="0" />',
+                'vignette'=>''
+                ];
         } else if ($img['vignette'] == 1) {
-            return ['vignette'=>'<img src="' . $this->link . $nom . '_vig.jpg" alt="' . $nom . ' Vignette"  border="0" />',
-                'image'=> ''];
+            return [
+                'image'=> '',
+                'vignette'=>'<img src="' . $this->link . $nom . '_vig.jpg" alt="' . $nom . ' Vignette"  border="0" />'
+                ];
         }
         return false;
     }
 
     public function testImage($nom)
     {
-
-        $_grand = remote_file_exists('' . $this->link . $nom . '.jpg');
-        $_vignette = remote_file_exists('' . $this->link . $nom . '_vig.jpg');
-
-        if ($_grand && $_vignette) {
-            $this->setImage($nom, 1, 1);
-            return ['vignette'=>'<img src="' . $this->link . $nom . '_vig.jpg" alt="' . $nom . ' Vignette"  border="0" />',
-                'image'=>'<img src="' . $this->link . $nom . '.jpg" alt="' . $nom . ' Grande"  border="0" />'];
-        } else if ($_grand) {
-            $this->setImage($nom, 1, 0);
-            return ['vignette'=>'',
-                'image'=>'<img src="' . $this->link . $nom . '.jpg" alt="' . $nom . ' Grande"  border="0" />'];
-        } else if ($_vignette) {
-            $this->setImage($nom, 0, 1);
-            return ['vignette'=>'<img src="' . $this->link . $nom . '_vig.jpg" alt="' . $nom . ' Vignette"  border="0" />',
-                'image'=>''];
-        }
-        return false;
+        $img = [];
+        $img['image'] = remote_file_exists('' . $this->link . $nom . '.jpg')? 1 : 0;
+        $img['vignette'] = remote_file_exists('' . $this->link . $nom . '_vig.jpg')? 1 : 0;
+        $this->setImage($nom, $img['image'], $img['vignette']);
+        return $this->imgProd($img, $nom);
     }
 
     public function criterMoteurRecherche()
     {
         $chercher = $_SESSION['recherche'][$this->session];
-        $recherche = '';
         $option = [];
         if( (
                 isset($chercher['cip13']) AND !empty($chercher['cip13'])
@@ -265,7 +261,7 @@ class Produit extends Produits
             foreach($option as $_r){
                 $_option .= (empty($_option)? '' : ' OR ') . $_r;
             }
-            $recherche = (!empty($_option))? ' AND ' . ((count($option) > 1 )? "( $_option )" : $_option) : '';
+            return (!empty($_option))? ' AND ' . ((count($option) > 1 )? "( $_option )" : $_option) : '';
 
         } else {
 
@@ -293,15 +289,13 @@ class Produit extends Produits
             foreach($option as $_r){
                 $_option .= (empty($_option)? '' : ' AND ') . $_r;
             }
-            $recherche = (!empty($_option))? ' AND ' . $_option : '';
+            return (!empty($_option))? ' AND ' . $_option : '';
         }
-        return $recherche;
     }
 
     public function criterMoteurRechercheLaboratoires()
     {
         $chercher = $_SESSION['recherche'][$this->session];
-        $recherche = '';
         $option = [];
         if( isset($chercher['nom']) AND !empty($chercher['nom']))
         {
@@ -323,7 +317,8 @@ class Produit extends Produits
             foreach($option as $_r){
                 $_option .= (empty($_option)? '' : ' OR ') . $_r;
             }
-            $recherche = (!empty($_option))? ' AND ' . ((count($option) > 1 )? "( $_option )" : $_option) : '';
+
+            return (!empty($_option))? ' AND ' . ((count($option) > 1 )? "( $_option )" : $_option) : '';
 
         } else {
 
@@ -347,16 +342,14 @@ class Produit extends Produits
             foreach($option as $_r){
                 $_option .= (empty($_option)? '' : ' AND ') . $_r;
             }
-            $recherche = (!empty($_option))? ' AND ' . $_option : '';
-        }
 
-        return $recherche;
+            return (!empty($_option))? ' AND ' . $_option : '';
+        }
     }
 
     public function criterMoteurRechercheFamilles()
     {
         $chercher = $_SESSION['recherche'][$this->session];
-        $recherche = '';
         $option = [];
         if( isset($chercher['nom']) AND !empty($chercher['nom']))
         {
@@ -378,7 +371,8 @@ class Produit extends Produits
             foreach($option as $_r){
                 $_option .= (empty($_option)? '' : ' OR ') . $_r;
             }
-            $recherche = (!empty($_option))? ' AND ' . ((count($option) > 1 )? "( $_option )" : $_option) : '';
+
+            return (!empty($_option))? ' AND ' . ((count($option) > 1 )? "( $_option )" : $_option) : '';
 
         } else {
 
@@ -399,10 +393,9 @@ class Produit extends Produits
             foreach($option as $_r){
                 $_option .= (empty($_option)? '' : ' AND ') . $_r;
             }
-            $recherche = (!empty($_option))? ' AND ' . $_option : '';
-        }
 
-        return $recherche;
+            return (!empty($_option))? ' AND ' . $_option : '';
+        }
     }
 
 }
