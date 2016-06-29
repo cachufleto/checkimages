@@ -17,6 +17,10 @@ echo "
 $data = $produit[0];
 $data['libelle_ospharm'] = utf8_encode($data['libelle_ospharm']);
 $data['ansm'] = utf8_encode($data['ansm']);
+$data['presentation'] = utf8_encode($data['presentation']);
+$data['famille'] = utf8_encode($data['famille']);
+$data['sFamille'] = utf8_encode($data['sFamille']);
+$data['ssFamille'] = utf8_encode($data['ssFamille']);
 $image = file_exists(SITE . "photos/en_cours/{$data['cip13']}.jpg")? "<img height='400px' src='photos/en_cours/{$data['cip13']}.jpg'>" : "";
 echo <<<EOL
 <div class="ligne"><label>{$this->_lib['champ']['libelle_ospharm']} : </label><div>{$data['libelle_ospharm']}</div></div>
