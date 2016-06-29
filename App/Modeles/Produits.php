@@ -114,6 +114,20 @@ class Produits extends Bdd
         return $this->query($sql);
     }
 
+    public function getProduit($id)
+    {
+        $sql = "SELECT p.*, f.designation as famille, 
+                        s.designation as sFamille, ss.designation as ssFamille, l.designation as laboratoire
+                FROM produits p, familles f, s_familles s, ss_famille ss, laboratoires l
+                WHERE p.id_produit = $id
+                AND p.id_famille = f.id_famille 
+                AND p.id_laboratoire = l.id_laboratoire
+                AND p.id_sfamille = s.id_sfamille 
+                AND p.id_ssfamille = ss.id_ssfamille";
+
+        return $this->query($sql);
+    }
+
     public function getLaboratoires()
     {
         $sql = "SELECT DISTINCT l.id_laboratoire as id, l.designation 

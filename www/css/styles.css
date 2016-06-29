@@ -11,12 +11,13 @@ body.Checkimages{
 /* ------------------------------------------------------ */
 #menu{
     position: fixed;
-    margin-top: 0;
+    margin: 0;
     z-index: 99;
     width: 100%;
 }
 
 #content{
+    margin: 0;
     padding-top: 236px;
     width: 100%;
 }

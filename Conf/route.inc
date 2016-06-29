@@ -64,5 +64,10 @@ $_r = [
 'existantimage' => [
     'controleur' => 'Checkimages',
     'action' => 'imageAction'
+    ],
+
+'ficheproduit' => [
+    'controleur' => 'Medicaments',
+    'action' => 'ficheProduit'
     ]
 ];

@@ -35,4 +35,10 @@ class Medicaments extends Produit
 
         include_once VUE . 'liste_produits.tpl.php';
     }
+
+    public function ficheProduit(){
+        $id = isset($_GET['id'])? $_GET['id'] : -1;
+        $produit = $this->getProduit($id);
+        include VUE . 'ficheMedicament.tpl.php';
+    }
 }

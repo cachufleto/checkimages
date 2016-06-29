@@ -3,7 +3,6 @@
 $nav = [];
 $nav[] = 'accueil';
 $nav[] = 'upload';
-$nav[] = 'existant';
+$nav[] = 'existantimage';
 $nav[] = 'medicament';
 $nav[] = 'parapharmacie';
-

@@ -15,7 +15,6 @@ EOL;
 $this->info->afficheMoteurRecherche();
 echo <<<EOL
     <div class="suite">
-        <h1>{$data['titre']}</h1>
         <div class="resultat">Images : {$data['num']}
             [ page: {$data['p']}]
             Affichage de {$data['b']} Images par pages ( TOTAL: {$data['numProduits']} )</div>
