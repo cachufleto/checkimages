@@ -22,7 +22,6 @@ class Menu
         $data['bouttonTous'] = $this->info->_lib['bouttonTousImage'];
 
         include VUE . 'menu.tpl.php';
-
         return;
     }
 
@@ -34,7 +33,6 @@ class Menu
         $data['bouttonTous'] = $this->info->_lib['bouttonTousImage'];
 
         include VUE . 'menuUpload.tpl.php';
-
         return;
     }
 
@@ -79,7 +77,4 @@ class Menu
 
         return $data;
     }
-
-
-
 }

@@ -1,5 +1,6 @@
 <?php
 echo <<<EOL
+<div id="menu">
     <div class="suite">
         {$data['liensPages']}
     </div>
@@ -11,7 +12,7 @@ echo <<<EOL
          page suivante <a class="page" href="?page={$data['page']}&display={$data['suivante']}&nombre={$data['l']}">>></a>  
     </div>
 EOL;
-    $this->info->afficheMoteurRecherche();
+$this->info->afficheMoteurRecherche();
 echo <<<EOL
     <div class="suite">
         <h1>{$data['titre']}</h1>
@@ -19,6 +20,6 @@ echo <<<EOL
             [ page: {$data['p']}]
             Affichage de {$data['b']} Images par pages ( TOTAL: {$data['numProduits']} )</div>
     </div>
+</div>
+<div id="content">
 EOL;
-
-

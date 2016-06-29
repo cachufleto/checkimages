@@ -1,5 +1,6 @@
 <?php
 echo <<<EOL
+<div id="menu">
     <div class="suite">
         {$data['liensPages']}
     </div>
@@ -22,6 +23,6 @@ echo <<<EOL
             [ page: {$data['p']}]
             Affichage de {$data['b']} Images par pages ( TOTAL: {$data['numProduits']} )</div>
     </div>
+</div>
+<div id="content">
 EOL;
-
-

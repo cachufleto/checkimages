@@ -9,16 +9,30 @@ body.Checkimages{
 
 
 /* ------------------------------------------------------ */
+#menu{
+    position: fixed;
+    margin-top: 0;
+    z-index: 99;
+    width: 100%;
+}
+
+#content{
+    padding-top: 236px;
+    width: 100%;
+}
 
 .form{
     float: left;
     width: 50%;
 }
+
 .recherche{
     border: 1px solid #667163;
     height: 70px;
     padding: 15px;
+    background-color: #e5ebec;
 }
+
 .ligne h2{
     text-align: center;
 }

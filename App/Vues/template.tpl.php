@@ -14,6 +14,7 @@ echo <<< EOL
 </head>
 <body>
 $contentPage
+    </div>
 <div class="debug">
 $contentDebug
 </div>
