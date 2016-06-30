@@ -46,6 +46,9 @@
 # Composer PHAR
 /composer.phar
 
+# OPcahce
+/www/opcache/*
+
 # base PHOTOTHEQUE
 /www/photos/*
 /photos/*
