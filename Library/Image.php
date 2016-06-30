@@ -395,7 +395,6 @@ class Image extends Images
             }
         }
 
-        //var_dump($produit);
         imagejpeg($im2, PHOTO. "en_cours/{$produit['cip13']}.jpg");
         $this->updateImageURL($produit['id'], 'photos/en_cours', $produit['cip13']);
 

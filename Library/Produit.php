@@ -7,11 +7,9 @@
  */
 
 namespace App;
+
 require MOD . 'Produits.php';
 use Model\Produits;
-
-require APP . 'Controleurs/Checkimages.php';
-use Checkimages\Checkimages;
 
 class Produit extends Produits
 {
@@ -291,8 +289,8 @@ class Produit extends Produits
                 $option[] = (count($chercher['etat']) > 1 )? "( $etat )" : $etat;
 
                 if(isset($chercher['etat']['e'])){
-                    $images = New Checkimages();
-                    $listeNew = $images->getProduitCipOK();
+
+                    $listeNew = $this->image->getProduitCipOK();
                     $liste = '';
                     if(is_array($listeNew)){
                         foreach ($listeNew as $key=>$cip){

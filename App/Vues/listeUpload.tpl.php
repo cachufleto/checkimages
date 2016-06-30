@@ -3,7 +3,6 @@
 <?php
 $i = 1;
 foreach ($liste as $key => $image){
-    //var_dump($liste);
     $imageid = $i + 1;
     $id = $image['id'];
     $nom = $image['nom']. ' ['. $image['site'].']';

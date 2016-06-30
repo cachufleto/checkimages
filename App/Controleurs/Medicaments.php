@@ -14,10 +14,14 @@ use App\Produit;
 require_once LIB . 'Menu.php';
 use App\Menu;
 
+require_once LIB . 'Image.php';
+use App\Image;
+
 
 class Medicaments extends Produit
 {
     var $session = 'Medicaments';
+    var $mage = '';
 
     public function __construct()
     {
@@ -26,6 +30,8 @@ class Medicaments extends Produit
         $this->connexion(MEDICAMENTS);
         $this->menu = new Menu();
         $this->menu->info = $this;
+        $this->image = new Image();
+        $this->image->connexion(SURFIMAGE);
     }
 
     public function indexAction()
