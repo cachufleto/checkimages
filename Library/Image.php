@@ -7,11 +7,10 @@
  */
 
 namespace App;
+
 require MOD . 'Images.php';
 use Model\Images;
 
-debug($_SERVER, 'SERVER');
-debug($_REQUEST, 'REQUEST');
 class Image extends Images
 {
     var $link = '';
@@ -225,51 +224,82 @@ class Image extends Images
     {
         $_liste = [];
         foreach($liste as $key =>$info){
-            $info['image'] = '';
+            $info['image'] = [];
             $info['data'] = '';
-            if ($img = $this->getProduit($info['id'])){
-                $info['image'] = $this->imgProd($img, $info['cip13']);
-                $info['data'] = $img[0];
-            } else if (!($info['image'] = $this->testImage($info['cip13']))){
-                $info['image'] = $info['cip13'];
+            $info['data'] = $this->getProduit($info['id']);
+            //var_dump($info);
+            $info['image']['image'] = $this->testImage($info['nom'], $info['site']);
+
+            $info['image']['encours'] = '';
+            if (!empty($info['cip13']) AND file_exists(PHOTO . "en_cours/{$info['cip13']}.jpg")) {
+                $info['image']['encours'] = figureHTMML("photos/en_cours/{$info['cip13']}.jpg", "EN COURS");
+                // existante sur le site
             }
+
+            $info['image']['vignette'] = '';
+            if (!empty($info['cip13']) AND file_exists(PHOTO . "en_cours/{$info['cip13']}_vig.jpg")) {
+                $info['image']['vignette'] = figureHTMML("photos/en_cours/{$info['cip13']}_vig.jpg", "VIGNETTE");
+            }
+
+            if(!empty($info['cip13'])){
+                $info['image']['production'] = $this->imgTestProd($info['cip13']);
+            }
+
             $_liste[] = $info;
         }
         return $_liste;
     }
 
-    public function imgProd($_img, $nom){
-        /*$img = $_img[0];
+    public function imgProd($img, $nom)
+    {
         if ($img['image'] == 1 && $img['vignette'] == 1) {
-            return '<img height="150px" src="' . $this->link . $nom . '_vig.jpg" alt="' . $nom . ' Vignette"  border="0" />'
-            . '<img height="250px" src="' . $this->link . $nom . '.jpg" alt="' . $nom . ' Grande"  border="0" />';
-        } else if ($img['image'] == 1) {*/
-            //return '<img height="150px" src="' . $this->link . $nom . '.jpg" alt="' . $nom . ' Grande"  border="0" />';
-            return '<img height="150px" src="' . $nom . '.jpg" alt="' . $nom . ' Grande"  border="0" />';
-        /*} else if ($img['vignette'] == 1) {
-            return '<img height="150px" src="' . $this->link . $nom . '_vig.jpg" alt="' . $nom . ' Vignette"  border="0" />';
-        } */
+            return [
+                'image'=>'<img src="' . $this->link . $nom . '.jpg" alt="' . $nom . ' Grande"  border="0" />',
+                'vignette'=>'<img src="' . $this->link . $nom . '_vig.jpg" alt="' . $nom . ' Vignette"  border="0" />'
+                ];
+        } else if ($img['image'] == 1) {
+            return [
+                'image'=>'<img src="' . $this->link . $nom . '.jpg" alt="' . $nom . ' Grande"  border="0" />',
+                'vignette'=>''
+                ];
+        } else if ($img['vignette'] == 1) {
+            return [
+                'image'=> '',
+                'vignette'=>'<img src="' . $this->link . $nom . '_vig.jpg" alt="' . $nom . ' Vignette"  border="0" />'
+                ];
+        }
         return false;
     }
 
-    public function testImage($nom){
-
-        $_grand = remote_file_exists('' . $this->link . $nom . '.jpg');
-        $_vignette = remote_file_exists('' . $this->link . $nom . '_vig.jpg');
-
-        if ($_grand && $_vignette) {
-            $this->setImage($nom, 1, 1);
-            return '<img height="150px" src="' . $this->link . $nom . '_vig.jpg" alt="' . $nom . ' Vignette"  border="0" />'
-            . '<img height="250px" src="' . $this->link . $nom . '.jpg" alt="' . $nom . ' Grande"  border="0" />';
-        } else if ($_grand) {
-            $this->setImage($nom, 1, 0);
-            return '<img height="250px" src="' . $this->link . $nom . '.jpg" alt="' . $nom . ' Grande"  border="0" />';
-        } else if ($_vignette) {
-            $this->setImage($nom, 0, 1);
-            return '<img height="150px" src="' . $this->link . $nom . '_vig.jpg" alt="' . $nom . ' Vignette"  border="0" />';
+    public function imgTestProd($cip13){
+        $info = [];
+        if ($img = $this->medicament->getImage($cip13)){
+            $info['medicament'] = $this->medicament->imgProd($img, $cip13);
         }
 
+        if ($img = $this->pharmacie->getImage($cip13)){
+            $info['pharmacie'] = $this->medicament->imgProd($img, $cip13);
+        }
+        return $info;
+    }
+
+    public function imgLocal($img, $nom)
+    {
+        if ($img['image'] == 1) {
+            return figureHTMML($nom, 'Originale');
+        }
         return false;
+    }
+
+    public function testImage($nom, $link)
+    {
+        $img = [];
+        if(preg_match('/^(http)/', $link)){
+            $img['image'] = remote_file_exists(str_replace('//'. $nom, '/'. $nom, $link . '/'. $nom) )? 1 : 0;
+        } else {
+            $img['image'] = file_exists(SITE . str_replace('//'. $nom, '/'. $nom, $link . '/'. $nom) )? 1 : 0;
+        }
+        return $this->imgLocal($img, str_replace('//'. $nom, '/'. $nom, $link . '/'. $nom));
     }
 
     public function criterMoteurRecherche()
@@ -283,7 +313,7 @@ class Image extends Images
             $this->rechercheCip = " AND i.cip13 LIKE '%{$chercher['cip13']}%' ";
         }
 
-        // recherche par libelle du produit
+        // recherche par le nom de l'image
         if (isset($chercher['nom']) AND !empty($chercher['nom'])) {
             $this->zapper = ">= 0 ";
             $this->rechercheNom = " AND  i.nom LIKE '%{$chercher['nom']}%' ";
@@ -295,10 +325,10 @@ class Image extends Images
         }
 
         // agrementation du libelle du produit
-        $_nom = (isset($chercher['denomination']) AND !empty($chercher['denomination']))? explode(' ', $chercher['denomination']) : '';
+        $_denomination = (isset($chercher['denomination']) AND !empty($chercher['denomination']))? explode(' ', $chercher['denomination']) : '';
 
-        if(is_array($_nom) AND count($_nom) > 1){
-            foreach ($_nom as $mot){
+        if(is_array($_denomination) AND count($_denomination) > 1){
+            foreach ($_denomination as $mot){
                 $option[] = " p.denomination LIKE '%" . utf8_decode($mot) . "%'";
             }
         }
@@ -326,30 +356,49 @@ class Image extends Images
         return $recherche;
     }
 
+    public function renommerImage($produit, $new)
+    {
+        // on verifie chaque possibilité
+        // l'image est dans le repertoire de en cours
+        // on verifie si l'image de destination existe déjà
+        $urlNew = str_replace('//' . $new, '/' . $new, PHOTO . 'en_cours/' . $new . '.jpg');
+
+        if (file_exists($urlNew)) {
+            return false;
+        }
+
+        // on verifie si l'image d'irigine existe bien
+        if(preg_match('/^(photo)/', $produit['site']) ) {
+
+            $url = str_replace('//' . $produit['cip13'], '/' . $produit['cip13'], PHOTO . 'en_cours/' . $produit['cip13'] . '.jpg');
+            if (!file_exists($url)) {
+                return false;
+            }
+            // on renomme l'image
+            rename($url, $urlNew);
+            return true;
+        }
+        return false;
+    }
+
     public function updateImageJpg($produit, $new)
     {
         $origine = $produit['cip13'];
-
-        $produit['cip13'] = $new;
-        $this->enregistrerImageJpg($produit);
-        
-        if($origine != $new AND file_exists(PHOTO . "en_cours/$origine.jpg")){
-            unlink(PHOTO . "en_cours/$origine.jpg");
+        if(preg_match('/^(photo)/', $produit['site']) AND $origine != $new ){
+            $this->renommerImage($produit, $new);
+        } else {
+            $produit['cip13'] = $new;
+            $this->enregistrerImageJpg($produit);
         }
     }
 
-    public function enregistrerImageJpg($produit)
+    public function enregistrerImageJpg($produit, $url = '')
     {
-        $_url = $url = str_replace('//'.$produit['nom'], '/'.$produit['nom'], $produit['site'] . '/' . $produit['nom']);
+        $_url = empty($url)?
+            str_replace('//'.$produit['nom'], '/'.$produit['nom'], $produit['site'] . '/' . $produit['nom']) :
+            $url;
 
-        if(file_exists(SITE . $_url)){
-            $url = LINK . $url;
-        } else if(file_exists(SITE . $_url . '.jpg')){
-            $url = LINK . $url . '.jpg';
-        }
-
-        $image = $this->open_image($url);
-
+        $image = $this->open_image($_url);
         if ($image === false) { die ('Unable to open image'); }
 
         $w = imagesx($image);
@@ -396,11 +445,9 @@ class Image extends Images
         }
 
         imagejpeg($im2, PHOTO. "en_cours/{$produit['cip13']}.jpg");
-        $this->updateImageURL($produit['id'], 'photos/en_cours', $produit['cip13']);
+        $this->updateImageURL($produit['id'], $produit['cip13']);
 
-        if(!preg_match('/(photos.en_cours)/', $_url) AND file_exists(SITE . $_url)){
-            unlink(SITE . $_url);
-        } else if(file_exists(SITE . $_url) AND $produit['cip13'].'.jpg' != $produit['nom']){
+        if(preg_match('/^(photos)/', $produit['site']) AND file_exists(SITE . $_url)){
             unlink(SITE . $_url);
         }
     }

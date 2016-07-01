@@ -1,0 +1,35 @@
+[
+    {
+        "name": "amnuts/opcache-gui",
+        "version": "v2.0.0",
+        "version_normalized": "2.0.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/amnuts/opcache-gui.git",
+            "reference": "a2d935b9ffb342edd889b97f9ceba1e519277858"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/amnuts/opcache-gui/zipball/a2d935b9ffb342edd889b97f9ceba1e519277858",
+            "reference": "a2d935b9ffb342edd889b97f9ceba1e519277858",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.5.0"
+        },
+        "time": "2014-11-26 23:39:40",
+        "type": "library",
+        "installation-source": "dist",
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Andrew Collington",
+                "email": "andy@amnuts.com"
+            }
+        ],
+        "description": "A gui for Zend OPcache with a simple & effective interface and real-time updates"
+    }
+]

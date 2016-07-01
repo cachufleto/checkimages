@@ -66,8 +66,13 @@ $_r = [
     'action' => 'imageAction'
     ],
 
-'ficheproduit' => [
+'fichemedicament' => [
     'controleur' => 'Medicaments',
+    'action' => 'ficheProduit'
+    ],
+
+'ficheparapharmacie' => [
+    'controleur' => 'Parapharmacie',
     'action' => 'ficheProduit'
     ]
 ];

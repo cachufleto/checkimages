@@ -211,7 +211,8 @@ class Images extends Bdd
                 LEFT JOIN produits p ON i.id = p.id_image
                 WHERE i.id = $id
                 LIMIT 0, 1";
-        return $this->query($sql);
+        $produit = $this->query($sql);
+        return ($produit = $this->query($sql))? $produit[0] : false;
     }
 
     public function getProduitCip($cip13, $id){
@@ -279,10 +280,10 @@ class Images extends Bdd
         $this->queryUpdate($sql);
     }
 
-    public function updateImageURL($id, $site, $nom)
+    public function updateImageURL($id, $nom)
     {
         $sql = "UPDATE `images` 
-                    SET `site` = '$site', cip13 = '$nom', upload = 1
+                    SET cip13 = '$nom', upload = 1
                     WHERE id = $id;";
 
         $this->queryUpdate($sql);

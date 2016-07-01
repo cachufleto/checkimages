@@ -135,9 +135,4 @@ class Medicaments extends Bdd
         return $this->query($sql);
     }
 
-    public function setImage($cip13, $grande = 1, $vignette = 1){
-        $sql = "INSERT INTO `control_images` (`cip13`, `image`, `vignette`) VALUES ('$cip13', $grande, $vignette);";
-        $this->queryInsert($sql);
-    }
-
 }

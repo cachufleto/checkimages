@@ -40,7 +40,7 @@ echo <<<EOL
 <div class="ligne"><label>{$this->_lib['champ']['date_traitement']} : </label><div>{$data['date_traitement']}</div></div>
 <div class="ligne"><label>{$this->_lib['champ']['produit_actif']} : </label><div>{$this->_lib['actif'][$data['produit_actif']]}</div></div>
 <div class="ligne"><label>{$this->_lib['champ']['ansm']} : </label><div>{$data['ansm']}</div></div>
-<div class='ligne'><label>VIGNETTE : </label><div></div></div>
+<div class='ligne'><label>PHOTOS : </label><div></div></div>
 <div class='ligne'>
     <img height='100px' src='{$this->link}{$data['cip13']}_vig.jpg'>
     <img height='400px' src='{$this->link}{$data['cip13']}.jpg'>

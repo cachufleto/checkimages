@@ -29,7 +29,7 @@ foreach($liste as $key=>$info){
             <div class='ligne'><label>{$this->_lib['famille']} : </label><div>".utf8_encode($info['famille'])."</div></div>
             <div class='ligne'><label>{$this->_lib['sFamille']} : </label><div>".utf8_encode($info['sFamille'])."</div></div>
             <div class='ligne'><label>{$this->_lib['ssFamille']} : </label><div>".utf8_encode($info['ssFamille'])."</div></div>
-            <div class='ligne'><label>{$this->_lib['id_produit']} : </label><div><a target='_blanc' href='?page=ficheproduit&id={$info['id_produit']}'>{$info['id_produit']}</a></div></div>
+            <div class='ligne'><label>{$this->_lib['id_produit']} : </label><div><a target='_blanc' href='?page=fiche{$this->page}&id={$info['id_produit']}'>{$info['id_produit']}</a></div></div>
             <div class='ligne'><label>{$this->_lib['produit_actif']} : </label><div>{$this->_lib['actif'][$info['produit_actif']]}</div></div>
             <div class='ligne'><label>{$this->_lib['image']} : </label><div></div></div>
             <div class='ligne'><div class='vignette'>$vignette</div></div>

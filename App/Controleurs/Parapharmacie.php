@@ -14,9 +14,13 @@ use App\Produit;
 require_once LIB . 'Menu.php';
 use App\Menu;
 
+require_once LIB . 'Image.php';
+use App\Image;
+
 class Parapharmacie extends Produit
 {
     var $session = 'Parapharmacie';
+    var $mage = '';
 
     public function __construct()
     {
@@ -26,14 +30,22 @@ class Parapharmacie extends Produit
         $this->menu = new Menu();
         $this->menu->info = $this;
         $this->menu->file = 'Produits';
+        $this->image = new Image();
+        $this->image->connexion(SURFIMAGE);
     }
 
     public function indexAction()
     {
         $this->menu->afficher();
-        $this->afficheMoteurRecherche();
+        //$this->afficheMoteurRecherche();
         $liste = $this->getImages($this->produits());
-        
+
         include_once VUE . 'liste_produits.tpl.php';
+    }
+
+    public function ficheProduit(){
+        $id = isset($_GET['id'])? $_GET['id'] : -1;
+        $produit = $this->getProduit($id);
+        include VUE . 'fichePharmacie.tpl.php';
     }
 }

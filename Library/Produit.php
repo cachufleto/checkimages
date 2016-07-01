@@ -252,7 +252,7 @@ class Produit extends Produits
 
             // recherche par libelle du produit
             if (isset($chercher['nom']) AND !empty($chercher['nom'])) {
-                $option[] = " p.libelle_ospharm LIKE '{$chercher['nom']}%'";
+                $option[] = " p.libelle_ospharm LIKE '%" . utf8_decode($chercher['nom']) . "%'";
             }
 
             // agrementation du libelle du produit
@@ -260,7 +260,7 @@ class Produit extends Produits
 
             if(is_array($_nom) AND count($_nom) > 1){
                 foreach ($_nom as $mot){
-                    $option[] = " p.libelle_ospharm LIKE '%$mot%'";
+                    $option[] = " p.libelle_ospharm LIKE '%" . utf8_decode($mot) . "%'";
                 }
             }
 

@@ -109,3 +109,11 @@ function listerReperoires($dir){
         }
     }
 }
+
+function figureHTMML($nom, $texte){
+    return "
+            <figure>
+            <img src='$nom' alt='$texte'/>
+            <figcaption>$texte</figcaption>
+            </figure>";
+}

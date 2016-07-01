@@ -1,0 +1,50 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
+    ],
+    "hash": "4efda827898242fec42d8571298d0e16",
+    "content-hash": "1b6cb9a0ac1441431b405974be174d1a",
+    "packages": [
+        {
+            "name": "amnuts/opcache-gui",
+            "version": "v2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/amnuts/opcache-gui.git",
+                "reference": "a2d935b9ffb342edd889b97f9ceba1e519277858"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/amnuts/opcache-gui/zipball/a2d935b9ffb342edd889b97f9ceba1e519277858",
+                "reference": "a2d935b9ffb342edd889b97f9ceba1e519277858",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5.0"
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Andrew Collington",
+                    "email": "andy@amnuts.com"
+                }
+            ],
+            "description": "A gui for Zend OPcache with a simple & effective interface and real-time updates",
+            "time": "2014-11-26 23:39:40"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": []
+}

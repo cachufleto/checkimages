@@ -8,6 +8,9 @@
 
 namespace Checkimages;
 
+require_once LIB . 'Produit.php';
+use App\Produit;
+
 require_once LIB . 'Image.php';
 use App\Image;
 
@@ -21,6 +24,7 @@ class Checkimages extends Image
     var $session = 'Checkimages';
     var $msg = '';
     var $listeLocal = [];
+    var $produit = '';
 
     public function __construct()
     {
@@ -31,12 +35,19 @@ class Checkimages extends Image
         $this->menu->info = $this;
         $this->recherche = !empty($this->criterMoteurRecherche())? true : false ;
         $this->listeLocal = ['id'=>'-1','nom'=>"'_'"];
+        $this->pharmacie = new Produit();
+        $this->pharmacie->connexion(PARAPHARMACIE);
+        $this->pharmacie->link = 'https://www.pharmaplay.fr/p/produits/';
+        $this->medicament = new Produit();
+        $this->medicament->connexion(MEDICAMENTS);
+        $this->medicament->link = 'https://www.pharmaplay.fr/m/produits/';
     }
 
     public function indexAction()
     {
         $this->menu->afficherUpload();
         $liste = $this->getImages($this->produits());
+        debug($liste, 'LISTE DES PRODUITS');
         $display = isset($_SESSION[$this->session]['display'])? $_SESSION[$this->session]['display'] : 0;
         $b = isset($_SESSION[$this->session]['b'])? $_SESSION[$this->session]['b'] : NUM;
         $f = '&display=' . $display . '&nombre=' . $b;
@@ -53,8 +64,7 @@ class Checkimages extends Image
             } else if($_POST['option'] == 'retirer'){
                 $this->updateRetirer($id);
             } else if($_POST['option'] == 'supprimer'){
-                if($image = $this->getProduit($id)){
-                    $produit = $image[0];
+                if($produit = $this->getProduit($id)){
                     $this->deleteUdate($id);
                     if(!empty($produit['id_produit'])){
                         $this->deleteUdateProduit($produit['id_produit']);
@@ -92,15 +102,16 @@ class Checkimages extends Image
             return false;
         }
 
-        if($produit[0]['id_image']){
+        if($produit['id_image']){
             $this->msg = "Mise à Jour du produit: $cip13";
-            $this->updateImageJpg($produit[0], $cip13);
-            $this->updateProduit($id, $cip13, $denomination, $presentation, $type);
+            if($this->updateImageJpg($produit, $cip13)){
+                $this->updateProduit($id, $cip13, $denomination, $presentation, $type);
+            }
         } else {
             $this->msg = "Isertion Nouveau Produit: $cip13";
             $this->setProduit($id, $cip13, $denomination, $presentation, $type);
-            $produit[0]['cip13'] = $cip13;
-            $this->enregistrerImageJpg($produit[0]);
+            $produit['cip13'] = $cip13;
+            $this->enregistrerImageJpg($produit);
         }
 
         $this->updateImage($id, $cip13);

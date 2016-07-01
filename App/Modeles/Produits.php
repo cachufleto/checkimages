@@ -149,7 +149,7 @@ class Produits extends Bdd
     }
 
     public function getImage($nom){
-        $sql = "SELECT * FROM control_images WHERE cip13 = $nom LIMIT 0, 1";
+        $sql = "SELECT * FROM control_images WHERE cip13 LIKE '$nom'";
         $img = $this->query($sql);
         return !empty($img)? $img[0] : false;
     }

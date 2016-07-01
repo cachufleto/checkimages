@@ -7,14 +7,6 @@ foreach ($liste as $key => $image){
     $id = $image['id'];
     $nom = $image['nom']. ' ['. $image['site'].']';
     $zap = isset($image['zapper'])? $image['zapper'] : 0;
-    $existe = (file_exists(PHOTO . $image['nom']. '.jpg'))?
-        '<img src="'. PHOTO . $image['nom'] . '.jpg' . '">' : '';
-
-    $existepng = (file_exists(PHOTO . $image['nom']. '.png'))?
-        '<img src="'. PHOTO . $image['nom'] . '.png' . '">' : '';
-
-    $existesans = (file_exists(PHOTO . $image['nom']))?
-        '<img src="'. PHOTO . $image['nom'] . '">' : '';
 
     $zapper2 = ($zap != 2)?
         '<input name="option" type="submit" value="conserver">' :
@@ -28,7 +20,42 @@ foreach ($liste as $key => $image){
     $cip13 = (isset($image['data']['cip13']))? $image['data']['cip13'] : '';
     $med = (isset($image['data']['type']) && $image['data']['type'] == '1')? 'selected="selected"' : '';
     $para = (isset($image['data']['type']) && $image['data']['type'] == '2')? 'selected="selected"' : '';
-    $image = str_replace('//'.$image['nom'], '/'.$image['nom'], $image['site'] . '/' . $image['nom']);
+    //var_dump($image);
+    $photo = $image['image'];
+    $image = $photo['image'];
+    $encours = $photo['encours'];
+    $vignette = $photo['vignette'];
+    $imageMedicament =
+        $vignetteMedicament =
+        $imagePharmacie =
+        $vignettePharmacie = '';
+    $production = '';
+    if(isset($photo['production']) && !empty($photo['production'])){
+        $_images = $photo['production'];
+        if(!empty($_images['medicament'])){
+            $production .= "
+        <div class=\"medicament\">
+            <div>MEDICAMENT:</div>
+            {$_images['medicament']['image']}
+            {$_images['medicament']['vignette']}
+        </div>";
+
+        }
+        if(!empty($_images['pharmacie'])){
+            $production .= "
+        <div class=\"parapaharmacie\">
+            <div>PARAPHARMACIE:</div>
+            {$_images['pharmacie']['image']}
+            {$_images['pharmacie']['vignette']}
+        </div>";
+        }
+        $production = "
+    <div class=\"ligne production\">
+    $production
+    </div>";
+
+    }
+
     $_zap = ['sans', 'ecarte', 'conserve'];
     $traitement = $_zap[$zap];
 
@@ -53,14 +80,14 @@ foreach ($liste as $key => $image){
        </select>
        <input name="option" type="submit" value="valider">
     </form>
-    <img src="$image">
-    $existe
-    $existepng
-    $existesans
+    $image
+    $encours
+    $vignette
     </div>
-        <div class="ligne">
-            <a href="#" id="$imageid" >&nbsp;</a>
-        </div>
+    $production
+    <div class="ligne">
+        <a href="#" id="$imageid" >&nbsp;</a>
+    </div>
     </div>
 EOL;
     $i++;

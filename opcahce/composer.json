@@ -1,0 +1,6 @@
+{
+  "require": {
+    "amnuts/opcache-gui": "*"
+  }
+}
+
