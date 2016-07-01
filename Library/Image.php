@@ -254,18 +254,18 @@ class Image extends Images
     {
         if ($img['image'] == 1 && $img['vignette'] == 1) {
             return [
-                'image'=>'<img src="' . $this->link . $nom . '.jpg" alt="' . $nom . ' Grande"  border="0" />',
-                'vignette'=>'<img src="' . $this->link . $nom . '_vig.jpg" alt="' . $nom . ' Vignette"  border="0" />'
+                'image'=>figureHTMML($this->link . $nom . '.jpg',  $nom . ' Grande'),
+                'vignette'=>figureHTMML($this->link . $nom . '_vig.jpg', $nom . ' Vignette')
                 ];
         } else if ($img['image'] == 1) {
             return [
-                'image'=>'<img src="' . $this->link . $nom . '.jpg" alt="' . $nom . ' Grande"  border="0" />',
+                'image'=>figureHTMML($this->link . $nom . '.jpg',  $nom . ' Grande'),
                 'vignette'=>''
                 ];
         } else if ($img['vignette'] == 1) {
             return [
                 'image'=> '',
-                'vignette'=>'<img src="' . $this->link . $nom . '_vig.jpg" alt="' . $nom . ' Vignette"  border="0" />'
+                'vignette'=>figureHTMML($this->link . $nom . '_vig.jpg', $nom . ' Vignette')
                 ];
         }
         return false;

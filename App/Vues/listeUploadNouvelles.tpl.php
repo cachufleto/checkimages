@@ -8,13 +8,13 @@ foreach ($liste as $key => $image){
     $nom = $image['nom']. ' ['. $image['site'].']';
     $zap = isset($image['zapper'])? $image['zapper'] : 0;
     $existe = (file_exists(PHOTO . $image['nom']. '.jpg'))?
-        '<img src="'. PHOTO . $image['nom'] . '.jpg' . '">' : '';
+        figureHTMML(PHOTO . $image['nom'] . '.jpg', $image['nom']) : '';
 
     $existepng = (file_exists(PHOTO . $image['nom']. '.png'))?
-        '<img src="'. PHOTO . $image['nom'] . '.png' . '">' : '';
+        figureHTMML(PHOTO . $image['nom'] . '.png', $image['nom']) : '';
 
     $existesans = (file_exists(PHOTO . $image['nom']))?
-        '<img src="'. PHOTO . $image['nom'] . '">' : '';
+        figureHTMML(PHOTO . $image['nom'], $image['nom']) : '';
 
     $zapper2 = ($zap != 2)?
         '<input name="option" type="submit" value="conserver">' :

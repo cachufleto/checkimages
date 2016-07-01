@@ -197,7 +197,7 @@ class Produit extends Produits
             }
 
             if (file_exists(PHOTO . "en_cours/{$info['cip13']}.jpg")) {
-                    $info['image']['encours'] = "<img src='photos/en_cours/{$info['cip13']}.jpg' alt='{$info['cip13']} EN COURS'  border='0' />";
+                $info['image']['encours'] = figureHTMML('photos/en_cours/'.$info['cip13'].'.jpg', $info['cip13'].' EN COURS');
             }
 
             $_liste[] = $info;
@@ -209,18 +209,18 @@ class Produit extends Produits
     {
         if ($img['image'] == 1 && $img['vignette'] == 1) {
             return [
-                'image'=>'<img src="' . $this->link . $nom . '.jpg" alt="' . $nom . ' Grande"  border="0" />',
-                'vignette'=>'<img src="' . $this->link . $nom . '_vig.jpg" alt="' . $nom . ' Vignette"  border="0" />'
+                'image'=>figureHTMML($this->link . $nom . '.jpg',  $nom . ' Grande'),
+                'vignette'=>figureHTMML($this->link . $nom . '_vig.jpg', $nom . ' Vignette')
                 ];
         } else if ($img['image'] == 1) {
             return [
-                'image'=>'<img src="' . $this->link . $nom . '.jpg" alt="' . $nom . ' Grande"  border="0" />',
+                'image'=>figureHTMML($this->link . $nom . '.jpg',  $nom . ' Grande'),
                 'vignette'=>''
                 ];
         } else if ($img['vignette'] == 1) {
             return [
                 'image'=> '',
-                'vignette'=>'<img src="' . $this->link . $nom . '_vig.jpg" alt="' . $nom . ' Vignette"  border="0" />'
+                'vignette'=>figureHTMML($this->link . $nom . '_vig.jpg', $nom . ' Vignette')
                 ];
         }
         return false;
