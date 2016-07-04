@@ -18,6 +18,7 @@ function file_contents_libelles(){
    1 = Invalid URL host
    2 = Unable to connect to remote host
 */
+
 function remote_file_exists ($url)
 {
     $head = "";
@@ -34,8 +35,8 @@ function remote_file_exists ($url)
         $path = $url_p["path"];
     }
 
-
-    $fp = fsockopen ('tls://'.$host, 443);
+//    $fp = fsockopen ('tls://'.$host, 443);
+    $fp = fsockopen ($host, 80);
 
     if (!$fp) {
         return false; 
