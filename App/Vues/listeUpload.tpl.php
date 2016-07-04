@@ -1,6 +1,8 @@
 <div id="upload">
     <div class="ligne">
 <?php
+debug($_SESSION, 'SESSION');
+
 $i = 1;
 foreach ($liste as $key => $image){
     $imageid = $i + 1;
@@ -22,8 +24,8 @@ foreach ($liste as $key => $image){
     $para = (isset($image['data']['type']) && $image['data']['type'] == '2')? 'selected="selected"' : '';
     //var_dump($image);
     $photo = $image['image'];
-    $image = $photo['image'];
     $encours = $photo['encours'];
+    $image = $photo['image'];
     $vignette = $photo['vignette'];
     $imageMedicament =
         $vignetteMedicament =
@@ -65,7 +67,7 @@ foreach ($liste as $key => $image){
     image : $nom
     </div>
     <div class="ligne">
-    <form action="?page=existantimage$f#$i" method="POST">
+    <form action="#$i" method="POST">
         <input name="id" type="hidden" value="$id">
         <br> 
         $zapper1

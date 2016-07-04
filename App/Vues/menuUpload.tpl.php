@@ -9,7 +9,7 @@ echo <<<EOL
         <a class="page" href="?page={$data['page']}&display={$data['arriere']}&nombre={$data['l']}"><<</a> page précédente
         <a {$data['ok']} href="?page={$data['page']}&produit=ok"> {$data['bouttonAvec']}  </a>  
         <a {$data['ko']} href="?page={$data['page']}&produit=ko"> {$data['bouttonSans']} </a>  
-        <a {$data['tous']} href="?page={$data['page']}"> {$data['bouttonTous']} </a>
+        <a {$data['tous']} href="?page={$data['page']}&produit="> {$data['bouttonTous']} </a>
          page suivante <a class="page" href="?page={$data['page']}&display={$data['suivante']}&nombre={$data['l']}">>></a>
         <input type="text" name="nombre"><input type="submit" name="display" value="Nombre">
     </form>   

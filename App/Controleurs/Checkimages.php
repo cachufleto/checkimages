@@ -85,13 +85,23 @@ class Checkimages extends Image
     public function setData()
     {
         $id = intval($_POST['id']);
-        $cip13 = trim(utf8_decode($_POST['cip13']));
+        $cip13 = utf8_decode(trim(str_replace(' ', '', $_POST['cip13'])));
         $denomination = utf8_decode($_POST['denomination']);
         $presentation = utf8_decode($_POST['presentation']);
         $type = intval($_POST['type']);
         
-        if(empty($cip13) OR empty($denomination) OR empty($presentation)){
-            $this->msg = 'Le Formulaire est incomplet!';
+        if(empty($cip13)){
+            $this->msg = 'Le code CIP doit être renseigné!';
+            return false;
+        }
+
+        if(preg_match('/[a-zA-Z-]/', $cip13)){
+            $this->msg = 'Le code CIP doit contenir uniquement des chiffres';
+            return false;
+        }
+
+        if(strlen($cip13) != 13){
+            $this->msg = 'Le code CIP doit contenir 13 caractères!';
             return false;
         }
 
