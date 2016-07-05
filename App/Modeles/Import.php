@@ -201,7 +201,7 @@ class Import extends Bdd
         return $balise;
     }
 
-    public function getEtat()
+    public function getEtat2()
     {
         $choix = isset($_SESSION['recherche'][$this->session]['etat'])? $_SESSION['recherche'][$this->session]['etat'] : '';
         $etat = '

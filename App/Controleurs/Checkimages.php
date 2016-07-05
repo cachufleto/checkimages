@@ -22,7 +22,7 @@ class Checkimages extends Image
     var $menu = false;
     var $recherche = false;
     var $session = 'Checkimages';
-    var $msg = '';
+    var $msg = [];
     var $listeLocal = [];
     var $produit = '';
 

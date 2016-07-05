@@ -77,59 +77,51 @@ class Produit extends Produits
     {
         $data = $this->getLaboratoires();
 
-        $balise = '<select name="labo">';
-        $balise .= '
-            <option value="0">---</option>';
+        $balise = "<select name='labo'>";
+        $balise .= "
+            <option value='0'>---</option>";
 
-        $choix = isset($_SESSION['recherche'][$this->session]['labo']) ? $_SESSION['recherche'][$this->session]['labo'] : 0;
+        $choix = isset($_SESSION['recherche'][$this->session]['labo']) ?
+                    $_SESSION['recherche'][$this->session]['labo'] : 0;
         foreach ($data as $info) {
-            $select = '';
+            $selected = '';
             if($info['id'] == $choix){
-                $select = 'selected';
-                $this->listeRecherche .= 'Laboratoire : "' . $info['designation'] . '" ';
+                $selected = 'selected';
+                $this->listeRecherche .= "Laboratoire : {$info['designation']}";
             }
-            $balise .= '
-            <option value="' . $info['id'] . '" ' . $select . '>' . $info['designation'] . '</option>';
+            $balise .= "
+            <option value='{$info['id']}' $selected >{$info['designation']}</option>";
         }
-        $balise .= '
-        </select>';
+        $balise .= "
+        </select>";
 
         return $balise;
     }
 
     public function listeEtat()
     {
-        $choix = isset($_SESSION['recherche'][$this->session]['etat']) ? $_SESSION['recherche'][$this->session]['etat'] : '';
+        $choix = isset($_SESSION['recherche'][$this->session]['etat'])?
+                $_SESSION['recherche'][$this->session]['etat'] : '';
 
-        $etat = '
-        Inedit<input name="etat[i]" type="checkbox" value="1" ' .
-            (isset($choix['i']) ? 'checked' : '')
-            . ' >';
-        $this->listeRecherche .= isset($choix['i']) ? ": Inedit " : '';
+        $checked['i'] = isset($choix['i']) ? 'checked' : '';
+        $checked['o'] = isset($choix['o']) ? 'checked' : '';
+        $checked['n'] = isset($choix['n']) ? 'checked' : '';
+        $checked['a'] = isset($choix['a']) ? 'checked' : '';
+        $checked['e'] = isset($choix['e']) ? 'checked' : '';
 
-        $etat .= '
-        On Line<input name="etat[o]" type="checkbox" value="1" ' .
-            (isset($choix['o']) ? 'checked' : '')
-            . ' >';
-        $this->listeRecherche .= isset($choix['o']) ? ": On line " : '';
+        $this->listeRecherche .= isset($choix['i']) ? ": {$this->_lib['etat']['i']} " : '';
+        $this->listeRecherche .= isset($choix['o']) ? ": {$this->_lib['etat']['o']} " : '';
+        $this->listeRecherche .= isset($choix['n']) ? ": {$this->_lib['etat']['n']} " : '';
+        $this->listeRecherche .= isset($choix['a']) ? ": {$this->_lib['etat']['a']} " : '';
+        $this->listeRecherche .= isset($choix['e']) ? ": {$this->_lib['etat']['e']} " : '';
 
-        $etat .= '
-        Off line<input name="etat[n]" type="checkbox" value="1" ' .
-            (isset($choix['n']) ? 'checked' : '')
-            . ' >';
-        $this->listeRecherche .= isset($choix['n']) ? ":  Off line " : '';
-
-        $etat .= '
-        Archivé<input name="etat[a]" type="checkbox" value="1" ' .
-            (isset($choix['a']) ? 'checked' : '')
-            . ' >';
-        $this->listeRecherche .= isset($choix['a']) ? ": Archivés " : '';
-
-        $etat .= '
-        En cours<input name="etat[e]" type="checkbox" value="1" ' .
-            (isset($choix['e']) ? 'checked' : '')
-            . ' >';
-        $this->listeRecherche .= isset($choix['e']) ? ": En Cours " : '';
+        $etat = "
+            {$this->_lib['etat']['o']}<input name='etat[o]' type='checkbox' value='1' {$checked['o']} >
+            {$this->_lib['etat']['i']}<input name='etat[i]' type='checkbox' value='1' {$checked['i']} >
+            {$this->_lib['etat']['e']}<input name='etat[e]' type='checkbox' value='1' {$checked['e']} >
+            {$this->_lib['etat']['n']}<input name='etat[n]' type='checkbox' value='1' {$checked['n']} >
+            {$this->_lib['etat']['a']}<input name='etat[a]' type='checkbox' value='1' {$checked['a']} >
+            ";
 
         return $etat;
     }
@@ -137,7 +129,7 @@ class Produit extends Produits
     public function inputCip()
     {
         $choix = isset($_SESSION['recherche'][$this->session]['cip13']) ? $_SESSION['recherche'][$this->session]['cip13'] : '';
-        if($choix){
+        if(!empty($choix)){
             $this->listeRecherche = ": $choix ";
         }
         return '<input type="texte" name="cip13" placeholder="' . $choix . '" >';

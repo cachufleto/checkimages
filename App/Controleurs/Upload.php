@@ -51,11 +51,11 @@ class Upload extends Images
     public function selectAction(){
 
         if(isset($_POST['id'])){
-            if($_POST['option'] == 'zapper'){
+            if($_POST['option'] == $this->_lib['option']['zapper']){
                 $this->updateZapper();
-            } else if($_POST['option'] == 'conserver'){
+            } else if($_POST['option'] == $this->_lib['option']['conserver']){
                 $this->updateConserver();
-            } else if($_POST['option'] == 'retirer'){
+            } else if($_POST['option'] == $this->_lib['option']['retirer']){
                 $this->updateRetirer();
             }
         }
@@ -70,13 +70,13 @@ class Upload extends Images
     public function photoAction(){
 
         if(isset($_POST['id'])){
-            if($_POST['option'] == 'zapper'){
+            if($_POST['option'] == $this->_lib['option']['zapper']){
                 $this->updateZapper();
-            } else if($_POST['option'] == 'conserver'){
+            } else if($_POST['option'] == $this->_lib['option']['conserver']){
                 $this->updateConserver();
-            } else if($_POST['option'] == 'retirer'){
+            } else if($_POST['option'] == $this->_lib['option']['retirer']){
                 $this->updateRetirer();
-            } else if($_POST['option'] == 'CIP'){
+            } else if($_POST['option'] == $this->_lib['option']['CIP']){
                 $this->updateCip();
             }
         }
@@ -103,10 +103,11 @@ class Upload extends Images
             $liste[$key]['existepng'] = (file_exists(PHOTO . $image['nom'] . '.png')) ?
                 '<img src="' . PHOTO . $image['nom'] . '.png' . '">' : '';
             $liste[$key]['zapper2'] = ($image['zapper'] != 2) ?
-                '<input name="option" type="submit" value="conserver">' :
-                '<input name="option" type="submit" value="retirer">';
-            $liste[$key]['zapper1'] = ($image['zapper'] != 1) ? 
-                '<input name="option" type="submit" value="zapper">' : '';
+                "<input name='option' type='submit' value='{$this->_lib['option']['conserver']}'>" :
+                "<input name='option' type='submit' value='{$this->_lib['option']['retirer']}'>";
+            $liste[$key]['zapper1'] = ($image['zapper'] != 1) ?
+                "<input name='option' type='submit' value='{$this->_lib['option']['zapper']}'>"
+                : "";
             $data = getExistProduit($image['id']);
             $produit = $data->fetch_assoc();
             $liste[$key]['cip13'] = isset($produit['cip13'])? $produit['cip13']:'';

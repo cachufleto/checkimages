@@ -105,41 +105,40 @@ class Image extends Images
     {
         $data = $this->getLaboratoires();
 
-        $balise = '<select name="labo">';
-        $balise .= '
-            <option value="0">---</option>';
+        $balise = "<select name='labo'>";
+        $balise .= "
+            <option value='0'>---</option>";
 
-        $choix = isset($_SESSION['recherche'][$this->session]['labo']) ? $_SESSION['recherche'][$this->session]['labo'] : 0;
+        $choix = isset($_SESSION['recherche'][$this->session]['labo']) ?
+            $_SESSION['recherche'][$this->session]['labo'] : 0;
         foreach ($data as $info) {
-            $select = '';
+            $selected = '';
             if($info['id'] == $choix){
-                $select = 'selected';
-                $this->listeRecherche .= 'Laboratoire : "' . $info['designation'] . '" ';
+                $selected = 'selected';
+                $this->listeRecherche .= "Laboratoire : {$info['designation']}";
             }
-            $balise .= '
-            <option value="' . $info['id'] . '" ' . $select . '>' . $info['designation'] . '</option>';
+            $balise .= "
+            <option value='{$info['id']}' $selected >{$info['designation']}</option>";
         }
-        $balise .= '
-        </select>';
+        $balise .= "
+        </select>";
 
         return $balise;
     }
 
     public function listeEtat()
     {
-        $choix = isset($_SESSION['recherche'][$this->session]['etat']) ? $_SESSION['recherche'][$this->session]['etat'] : '';
-        $etat = $this->_lib['etat'][0].'
-        <input name="etat" type="radio" value="0" ' .
-            (empty($choix) ? 'checked' : '')
-            . ' >';
-        $etat .= $this->_lib['etat'][1].'
-        <input name="etat" type="radio" value="1" ' .
-            ((!empty($choix) && $choix == 1) ? 'checked' : '')
-            . ' >';
-        $etat .= $this->_lib['etat'][2].'
-        <input name="etat" type="radio" value="2" ' .
-            ((!empty($choix) && $choix == 2) ? 'checked' : '')
-            . ' >';
+        $choix = isset($_SESSION['recherche'][$this->session]['etat'])? 
+                    $_SESSION['recherche'][$this->session]['etat'] : '';
+
+        $checked[0] = empty($choix) ? 'checked' : '';
+        $checked[1] = (!empty($choix) && $choix == 1) ? 'checked' : '';
+        $checked[2] = (!empty($choix) && $choix == 2) ? 'checked' : '';
+
+        $etat = "{$this->_lib['etat'][0]}<input name='etat' type='radio' value='0' {$checked[0]} >
+            {$this->_lib['etat'][1]}<input name='etat' type='radio' value='1' {$checked[1]} >
+            {$this->_lib['etat'][2]}<input name='etat' type='radio' value='2' {$checked[2]} >";
+        
         $this->listeRecherche .= !empty($choix) ? ": " . $this->_lib['etat'][$choix] : '';
         return $etat;
     }
@@ -245,10 +244,10 @@ class Image extends Images
             }
 
             // Retour du POST dans le formulaire
-            if(!empty($_POST) && $_POST['id'] == $info['id']){
+            if(isset($_POST['id']) && $_POST['id'] == $info['id']){
                 $info['data']['cip13'] = $_POST['cip13'];
-                $info['data']['denomination'] = $_POST['denomination'];
-                $info['data']['presentation'] = $_POST['presentation'];
+                $info['data']['denomination'] = utf8_decode($_POST['denomination']);
+                $info['data']['presentation'] = utf8_decode($_POST['presentation']);
                 $info['data']['type'] = $_POST['type'];
             }
 
@@ -552,13 +551,13 @@ class Image extends Images
     public function imageAction()
     {
         if(isset($_POST['id']) and $id = intval($_POST['id'])){
-            if($_POST['option'] == 'zapper'){
+            if($_POST['option'] == $this->_lib['option']['zapper']){
                 $this->updateZapper($id);
-            } else if($_POST['option'] == 'conserver'){
+            } else if($_POST['option'] == $this->_lib['option']['conserver']){
                 $this->updateConserver($id);
-            } else if($_POST['option'] == 'retirer'){
+            } else if($_POST['option'] == $this->_lib['option']['retirer']){
                 $this->updateRetirer($id);
-            } else if($_POST['option'] == 'supprimer'){
+            } else if($_POST['option'] == $this->_lib['option']['supprimer']){
                 if($produit = $this->getProduit($id)){
                     $this->deleteUdate($id);
                     if(!empty($produit['id_produit'])){
@@ -570,7 +569,7 @@ class Image extends Images
                         unlink($link);
                     }
                 }
-            } else if($_POST['option'] == 'valider'){
+            } else if($_POST['option'] == $this->_lib['option']['valider']){
                 $this->setData();
             }
         }
@@ -579,40 +578,40 @@ class Image extends Images
     public function setData()
     {
         $id = intval($_POST['id']);
-        $cip13 = utf8_decode(trim(str_replace(' ', '', $_POST['cip13'])));
+        $_POST['cip13'] = $cip13 = utf8_decode(trim(str_replace(' ', '', $_POST['cip13'])));
         $denomination = utf8_decode($_POST['denomination']);
         $presentation = utf8_decode($_POST['presentation']);
         $type = intval($_POST['type']);
 
         if(empty($cip13)){
-            $this->msg = 'Le code CIP doit être renseigné!';
+            $this->msg[$id] = 'Le code CIP doit être renseigné!';
             return false;
         }
 
         if(preg_match('/[a-zA-Z-]/', $cip13)){
-            $this->msg = 'Le code CIP doit contenir uniquement des chiffres';
+            $this->msg[$id] = 'Le code CIP doit contenir uniquement des chiffres';
             return false;
         }
 
         if(strlen($cip13) != 13){
-            $this->msg = 'Le code CIP doit contenir 13 chiffres!';
+            $this->msg[$id] = 'Le code CIP doit contenir 13 chiffres!';
             return false;
         }
 
         $produit = $this->getProduit($id);
 
         if($cip = $this->getProduitCip($cip13, $id)){
-            $this->msg = "ATTENTION !!!! Ce produit existe déjà sous le nom de : {$cip[0]['denomination']}";
+            $this->msg[$id] = "ATTENTION !!!! Ce produit existe déjà sous le nom de : {$cip[0]['denomination']}";
             return false;
         }
 
         if($produit['id_image']){
-            $this->msg = "Mise à Jour du produit: $cip13";
+            $this->msg[$id] = "Mise à Jour du produit: $cip13";
             if($this->updateImageJpg($produit, $cip13)){
                 $this->updateProduit($id, $cip13, $denomination, $presentation, $type);
             }
         } else {
-            $this->msg = "Isertion Nouveau Produit: $cip13";
+            $this->msg[$id] = "Isertion Nouveau Produit: $cip13";
             $this->setProduit($id, $cip13, $denomination, $presentation, $type);
             $produit['cip13'] = $cip13;
             $this->enregistrerImageJpg($produit);

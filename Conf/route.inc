@@ -63,7 +63,7 @@ $_r = [
 
 'existantimage' => [
     'controleur' => 'Checkimages',
-    'action' => 'imageAction'
+    'action' => 'indexAction'
     ],
 
 'fichemedicament' => [

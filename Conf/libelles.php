@@ -15,7 +15,7 @@ $_libelle['image'] = "Photo";
 $_libelle['cip13'] = "Code CIP";
 $_libelle['test'] = "Code CIP";
 $_libelle['laboratoire'] = "Laboratoire";
-$_libelle['produit_actif'] = "On Line";
+$_libelle['produit_actif'] = "Mise en Ligne";
 $_libelle['parapharmacie'] = "produits de Parapharmacie";
 $_libelle['medicament'] = "Medicaments";
 $_libelle['avecImage'] = "Liste des produits avec images";
@@ -29,13 +29,23 @@ $_libelle['bouttonTousImage'] = "tous les produits";
 $_libelle['upload'] = "Alimenter la base des nouvelles images";
 $_libelle['existantimage'] = "Traiter les nouvelles images";
 $_libelle['accueil'] = "Page d'Accueil";
-$_libelle['actif']['i'] = "Inédit";
-$_libelle['actif']['o'] = "En Ligne";
-$_libelle['actif']['n'] = "OFF";
-$_libelle['actif']['a'] = "Archivée";
-$_libelle['etat'][0] = "Sans";
-$_libelle['etat'][1] = "Ecarté";
-$_libelle['etat'][2] = "Conservé";
+
+$_libelle['etat']['i'] = 'Inédit';
+$_libelle['etat']['o'] = 'En Ligne';
+$_libelle['etat']['n'] = 'Hors Ligne';
+$_libelle['etat']['a'] = 'Archivé';
+$_libelle['etat']['e'] = 'En cours';
+
+$_libelle['etat'][0] = "Aucun";
+$_libelle['etat'][1] = "Zappé";
+$_libelle['etat'][2] = "Chosi";
+
+$_libelle['option']['zapper'] = 'Zapper';
+$_libelle['option']['conserver'] = 'Chosir';
+$_libelle['option']['retirer'] = 'Initialiser';
+$_libelle['option']['CIP'] = 'CIP';
+$_libelle['option']['valider'] = 'Valider';
+$_libelle['option']['supprimer'] = 'Supprimer';
 
 $_libelle['titre']['Checkimages'] = 'CEIDO :: Gestion d\'images';
 $_libelle['titre']['Site'] = 'CEIDO Imports';
@@ -74,3 +84,4 @@ $_libelle['champ']['id_produit_lien'] = "Produit";
 $_libelle['champ']['code_int_ceido_1'] = "CEIDO 1";
 $_libelle['champ']['code_int_ceido_2'] = "CEIDO 2";
 $_libelle['champ']['code_int_ceido_3'] = "CEIDO 3";
+

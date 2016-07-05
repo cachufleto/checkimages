@@ -18,7 +18,10 @@
             <label>Code CIP</label><div><?php echo $Code; ?></div>
         </div>
         <div class="ligne">
-            <label></label><div><input type="submit" name="chercher" value="Valider"></div>
+            <label> </label>
+            <div>
+                <input type="submit" name="chercher" value="<?php echo $this->_lib['option']['valider']; ?>">
+            </div>
         </div>
     </div>
     <div class="ligne">

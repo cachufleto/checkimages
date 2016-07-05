@@ -275,7 +275,7 @@ class Images extends Bdd
     public function updateImage($id, $cip13)
     {
         $sql = "UPDATE `images` 
-                    SET `cip13` = '$cip13', `zapper` = '2'
+                    SET `cip13` = '$cip13'
                     WHERE id = $id;";
         $this->queryUpdate($sql);
     }

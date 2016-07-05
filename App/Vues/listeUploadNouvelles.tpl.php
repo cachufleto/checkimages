@@ -2,9 +2,12 @@
     <div class="ligne">
 <?php
 $i = 1;
+$alert = '';
 foreach ($liste as $key => $image){
     $imageid = $i + 1;
     $id = $image['id'];
+    $msg = isset($this->msg[$id])? $this->msg[$id] : '';
+    $alert = empty($alert)? $msg : $alert;
     $nom = $image['nom']. ' ['. $image['site'].']';
     $zap = isset($image['zapper'])? $image['zapper'] : 0;
     $existe = (file_exists(PHOTO . $image['nom']. '.jpg'))?
@@ -15,13 +18,6 @@ foreach ($liste as $key => $image){
 
     $existesans = (file_exists(PHOTO . $image['nom']))?
         figureHTMML(PHOTO . $image['nom'], $image['nom']) : '';
-
-    $zapper2 = ($zap != 2)?
-        '<input name="option" type="submit" value="conserver">' :
-        '<input name="option" type="submit" value="retirer">';
-
-    $zapper1 = ($zap != 1)? "<input name='option' type='submit' value='zapper'>
-        <input name='option' type='submit' value='supprimer'>" : "";
 
     $denomination = (isset($image['data']['denomination']))? utf8_encode($image['data']['denomination']) : '';
     $presentation = (isset($image['data']['presentation']))? utf8_encode($image['data']['presentation']) : '';
@@ -54,8 +50,8 @@ EOL;
     </div>
 </div>
 <?php
-if(!empty($this->msg)){
-    echo "<script type='text/javascript'>alert('{$this->msg}');</script>";
+if(!empty($alert)){
+    echo "<script type='text/javascript'>alert('$alert');</script>";
 }
 ?>
     

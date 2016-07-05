@@ -38,7 +38,7 @@ echo <<<EOL
 <div class="ligne"><label>{$this->_lib['champ']['prix_public']} : </label><div>{$data['prix_public']}</div></div>
 <div class="ligne"><label>{$this->_lib['champ']['ordre_top']} : </label><div>{$data['ordre_top']}</div></div>
 <div class="ligne"><label>{$this->_lib['champ']['date_traitement']} : </label><div>{$data['date_traitement']}</div></div>
-<div class="ligne"><label>{$this->_lib['champ']['produit_actif']} : </label><div>{$this->_lib['actif'][$data['produit_actif']]}</div></div>
+<div class="ligne"><label>{$this->_lib['champ']['produit_actif']} : </label><div>{$this->_lib['etat'][$data['produit_actif']]}</div></div>
 <div class="ligne"><label>{$this->_lib['champ']['ansm']} : </label><div>{$data['ansm']}</div></div>
 <div class='ligne'><label>PHOTOS : </label><div></div></div>
 <div class='ligne'>

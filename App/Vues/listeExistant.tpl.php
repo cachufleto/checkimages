@@ -18,15 +18,15 @@ foreach ($liste as $key => $produit) {
                     <input name="id" type="hidden" value="{$produit['id']}">
 EOL;
 
-    echo ($produit['zapper'] != 2)? '
-                    <input name="option" type="submit" value="conserver">' : '
-                    <input name="option" type="submit" value="retirer">';
+    echo ($produit['zapper'] != 2)?
+        "<input name='option' type='submit' value='{$this->_lib['option']['conserver']}'>" :
+        "<input name='option' type='submit' value='{$this->_lib['option']['retirer']}'>";
 
     if($produit['zapper'] != 1){
-        echo '
-                    <input name="option" type="submit" value="zapper">
-                    <input name="option" type="submit" value="CIP">
-                    <input name="cip13" type="text" value="">';
+        echo "
+        <input name='option' type='submit' value='{$this->_lib['option']['zapper']}'>
+        <input name='option' type='submit' value='{$this->_lib['option']['CIP']}'>
+        <input name='cip13' type='text' value=''>";
     }
     echo "
     </form>

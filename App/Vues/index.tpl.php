@@ -8,7 +8,7 @@
             <li><a href="?page=medicament">MEDICAMENT</a></li>
             <li><a href="?page=parapharmacie">PARAPHARMACIE</a></li>
             <li><a href="?page=upload">IMPORT IMAGES</a></li>
-            <li><a href="?page=existant">PARCOURT IMAGES</a></li>
+            <li><a href="?page=existantimage">PARCOURT IMAGES</a></li>
         </ul>
     </div>
 </div>

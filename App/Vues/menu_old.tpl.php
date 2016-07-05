@@ -1,6 +1,6 @@
 <div class="suite">
     <a href="?page=upload"> Upload </a>
-    <a href="?page=existant"> Existat </a>
+    <a href="?page=existant"> Existant </a>
     <a href="?page=accueil"> Accueil </a>
 </div>
 <h1><?php echo $titre; ?></h1>
