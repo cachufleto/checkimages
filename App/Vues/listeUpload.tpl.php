@@ -69,7 +69,7 @@ foreach ($liste as $key => $image){
     <div class="ligne">
     <form action="#$i" method="POST">
         <input name="id" type="hidden" value="$id">
-        <br> 
+        <span style="color:red">{$this->msg}</span><br> 
         $zapper1
         $zapper2
       <input type="text" name="cip13" placeholder="CIP" value="$cip13" >

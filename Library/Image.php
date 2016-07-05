@@ -227,7 +227,6 @@ class Image extends Images
             $info['image'] = [];
             $info['data'] = '';
             $info['data'] = $this->getProduit($info['id']);
-            //var_dump($info);
             $info['image']['image'] = $this->testImage($info['nom'], $info['site']);
 
             $info['image']['encours'] = '';
@@ -243,6 +242,14 @@ class Image extends Images
 
             if(!empty($info['cip13'])){
                 $info['image']['production'] = $this->imgTestProd($info['cip13']);
+            }
+
+            // Retour du POST dans le formulaire
+            if(!empty($_POST) && $_POST['id'] == $info['id']){
+                $info['data']['cip13'] = $_POST['cip13'];
+                $info['data']['denomination'] = $_POST['denomination'];
+                $info['data']['presentation'] = $_POST['presentation'];
+                $info['data']['type'] = $_POST['type'];
             }
 
             $_liste[] = $info;
@@ -542,5 +549,78 @@ class Image extends Images
         }
     }
 
+    public function imageAction()
+    {
+        if(isset($_POST['id']) and $id = intval($_POST['id'])){
+            if($_POST['option'] == 'zapper'){
+                $this->updateZapper($id);
+            } else if($_POST['option'] == 'conserver'){
+                $this->updateConserver($id);
+            } else if($_POST['option'] == 'retirer'){
+                $this->updateRetirer($id);
+            } else if($_POST['option'] == 'supprimer'){
+                if($produit = $this->getProduit($id)){
+                    $this->deleteUdate($id);
+                    if(!empty($produit['id_produit'])){
+                        $this->deleteUdateProduit($produit['id_produit']);
+                    }
+                    $link = !empty($produit['cip13'])? $produit['cip13'].'.jpg' : $produit['nom'];
+                    $link = SITE . $produit['site'] . '/' . $link;
+                    if(file_exists($link)){
+                        unlink($link);
+                    }
+                }
+            } else if($_POST['option'] == 'valider'){
+                $this->setData();
+            }
+        }
+    }
+
+    public function setData()
+    {
+        $id = intval($_POST['id']);
+        $cip13 = utf8_decode(trim(str_replace(' ', '', $_POST['cip13'])));
+        $denomination = utf8_decode($_POST['denomination']);
+        $presentation = utf8_decode($_POST['presentation']);
+        $type = intval($_POST['type']);
+
+        if(empty($cip13)){
+            $this->msg = 'Le code CIP doit être renseigné!';
+            return false;
+        }
+
+        if(preg_match('/[a-zA-Z-]/', $cip13)){
+            $this->msg = 'Le code CIP doit contenir uniquement des chiffres';
+            return false;
+        }
+
+        if(strlen($cip13) != 13){
+            $this->msg = 'Le code CIP doit contenir 13 chiffres!';
+            return false;
+        }
+
+        $produit = $this->getProduit($id);
+
+        if($cip = $this->getProduitCip($cip13, $id)){
+            $this->msg = "ATTENTION !!!! Ce produit existe déjà sous le nom de : {$cip[0]['denomination']}";
+            return false;
+        }
+
+        if($produit['id_image']){
+            $this->msg = "Mise à Jour du produit: $cip13";
+            if($this->updateImageJpg($produit, $cip13)){
+                $this->updateProduit($id, $cip13, $denomination, $presentation, $type);
+            }
+        } else {
+            $this->msg = "Isertion Nouveau Produit: $cip13";
+            $this->setProduit($id, $cip13, $denomination, $presentation, $type);
+            $produit['cip13'] = $cip13;
+            $this->enregistrerImageJpg($produit);
+        }
+
+        $this->updateImage($id, $cip13);
+
+        return true;
+    }
 }
 
