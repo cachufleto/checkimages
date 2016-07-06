@@ -215,14 +215,14 @@ class Images extends Bdd
         return ($produit = $this->query($sql))? $produit[0] : false;
     }
 
-    public function getProduitCip($cip13, $id){
+    public function getProduitCip($cip13, $id = -1){
         $sql = "SELECT 
                     i.id, i.site, i.nom, i.produit, i.upload, i.zapper, i.cip13, 
                     p.id_image, p.denomination, p.presentation, 
                     p.type, p.date_traitement, p.libelle
                 FROM images i
                 LEFT JOIN produits p ON i.id = p.id_image
-                WHERE i.id != $id AND i.cip13 = $cip13
+                WHERE i.id != $id AND i.cip13 = '$cip13'
                 LIMIT 0, 1";
         return $this->query($sql);
     }
@@ -275,7 +275,7 @@ class Images extends Bdd
     public function updateImage($id, $cip13)
     {
         $sql = "UPDATE `images` 
-                    SET `cip13` = '$cip13'
+                    SET `cip13` LIKE '$cip13'
                     WHERE id = $id;";
         $this->queryUpdate($sql);
     }

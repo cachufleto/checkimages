@@ -66,6 +66,11 @@ $_r = [
     'action' => 'indexAction'
     ],
 
+'ficheimage' => [
+    'controleur' => 'Checkimages',
+    'action' => 'ficheImage'
+    ],
+
 'fichemedicament' => [
     'controleur' => 'Medicaments',
     'action' => 'ficheProduit'

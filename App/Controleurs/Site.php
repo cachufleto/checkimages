@@ -31,15 +31,15 @@ class Site extends Import
         extract($_SESSION[$this->session]);
         
         if($produit == 'ok'){
-            testPagination($this->session, $num = $this->countMedicamentOk());
+            testPagination($this->session, $num = $this->countMedicamentOk(), $this->page);
             $_liste = $this->selectMedicamentOk();
         
         } else if ($produit == 'ko') {
-            testPagination($this->session, $num = $this->countMedicamentKo());
+            testPagination($this->session, $num = $this->countMedicamentKo(), $this->page);
             $_liste = $this->selectMedicamentKo();
         
         } else {
-            testPagination($this->session, $num = $this->countMedicament());
+            testPagination($this->session, $num = $this->countMedicament(), $this->page);
             $_liste = $this->selectMedicament();
         }
 

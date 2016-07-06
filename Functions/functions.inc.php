@@ -7,8 +7,8 @@
  */
 
 
-function file_contents_libelles(){
-
+function file_contents_libelles()
+{
     include CONF . 'libelles.php';
     return $_libelle;
 }
@@ -87,14 +87,13 @@ function afficheMenu($page, $session, $numProduits = 0)
     return $f;
 }
 
-function testPagination($session, $num){
-
+function testPagination($session, $num, $page)
+{
     if($num < $_SESSION[$session]['a']){
         $_SESSION[$session]['display'] = intval( $num / $_SESSION[$session]['b']);
         header('Location:?page='.$page.'&display='.$_SESSION[$session]['display']);
         exit();
     }
-
     $_SESSION[$session]['a'] = $_SESSION[$session]['b'] * $_SESSION[$session]['display'];
 }
 
@@ -117,4 +116,10 @@ function figureHTMML($nom, $texte){
             <img src='$nom' alt='$texte'/>
             <figcaption>$texte</figcaption>
             </figure>";
+}
+
+function testCIP13($cip13)
+{
+    $cip13 = utf8_decode(trim(str_replace(' ', '', $cip13)));
+    return (!preg_match('/[a-zA-Z-]/', $cip13) and strlen($cip13))? $cip13 : false;
 }

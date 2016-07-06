@@ -554,7 +554,12 @@ class Image extends Images
             if($_POST['option'] == $this->_lib['option']['zapper']){
                 $this->updateZapper($id);
             } else if($_POST['option'] == $this->_lib['option']['conserver']){
+                // verifier si un cip est attribué
                 $this->updateConserver($id);
+                if(testCIP13($_POST['cip13'])){
+                    $this->updateConserver($id);
+                    //$this->setData();
+                }
             } else if($_POST['option'] == $this->_lib['option']['retirer']){
                 $this->updateRetirer($id);
             } else if($_POST['option'] == $this->_lib['option']['supprimer']){
@@ -578,7 +583,7 @@ class Image extends Images
     public function setData()
     {
         $id = intval($_POST['id']);
-        $_POST['cip13'] = $cip13 = utf8_decode(trim(str_replace(' ', '', $_POST['cip13'])));
+        $_POST['cip13'] = $cip13 = testCIP13($_POST['cip13']);
         $denomination = utf8_decode($_POST['denomination']);
         $presentation = utf8_decode($_POST['presentation']);
         $type = intval($_POST['type']);

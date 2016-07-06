@@ -1,10 +1,7 @@
 
 <script type='text/javascript'>
     function opnw(a) {
-        var myWindow = window.open("", "MsgWindow", "width=400,height=500");
-        myWindow.document.write('<HTML> <BODY>' +
-            '<H1>Image existante:<H1>' + a +
-            '</BODY></HTML>');
+        var myWindow = window.open("<?php echo LINK; ?>?page=ficheimage&cip13=" + a, "MsgWindow", "width=400,height=500");
     }
 </script>
 
@@ -18,10 +15,6 @@ $alert = '';
 foreach ($liste as $key => $image){
     $imageid = $i + 1;
     $id = $image['id'];
-    $msg = isset($this->msg[$id])? $this->msg[$id] : '';
-    $existedeja = (isset($this->alert[$id]) and file_exists(PHOTO . "en_cours/{$_POST['cip13']}.jpg"))?
-        "<img width=\"350\" src=\"".LINK."photos/en_cours/{$_POST['cip13']}.jpg\">" : "";
-    $alert = (empty($alert) AND isset($this->alert[$id]))? $existedeja : $alert;
     $nom = $image['nom']. ' ['. $image['site'].']';
     $zap = isset($image['zapper'])? $image['zapper'] : 0;
 
@@ -38,6 +31,10 @@ foreach ($liste as $key => $image){
     $denomination = (isset($image['data']['denomination']))? utf8_encode($image['data']['denomination']) : '';
     $presentation = (isset($image['data']['presentation']))? utf8_encode($image['data']['presentation']) : '';
     $cip13 = (isset($image['data']['cip13']))? $image['data']['cip13'] : '';
+    $msg = isset($this->msg[$id])? $this->msg[$id] : '';
+    $existedeja = (isset($this->alert[$id]) and file_exists(PHOTO . "en_cours/{$_POST['cip13']}.jpg"))?
+        $cip13 : "";
+    $alert = (empty($alert) AND isset($this->alert[$id]))? $existedeja : $alert;
     $med = (isset($image['data']['type']) && $image['data']['type'] == '1')? 'selected="selected"' : '';
     $para = (isset($image['data']['type']) && $image['data']['type'] == '2')? 'selected="selected"' : '';
     //var_dump($image);
@@ -85,7 +82,7 @@ foreach ($liste as $key => $image){
     image : $nom 
     </div>
     <div class="ligne" style="color:red">
-        $msg
+        $msg $existedeja
     </div> 
     <div class="ligne">
     <form action="#$i" method="POST">
