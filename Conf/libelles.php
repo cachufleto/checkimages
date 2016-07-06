@@ -38,10 +38,10 @@ $_libelle['etat']['e'] = 'En cours';
 
 $_libelle['etat'][0] = "Aucun";
 $_libelle['etat'][1] = "Zappé";
-$_libelle['etat'][2] = "Chosi";
+$_libelle['etat'][2] = "Conservé";
 
 $_libelle['option']['zapper'] = 'Zapper';
-$_libelle['option']['conserver'] = 'Chosir';
+$_libelle['option']['conserver'] = 'Conserver';
 $_libelle['option']['retirer'] = 'Initialiser';
 $_libelle['option']['CIP'] = 'CIP';
 $_libelle['option']['valider'] = 'Valider';
