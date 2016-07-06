@@ -602,6 +602,7 @@ class Image extends Images
 
         if($cip = $this->getProduitCip($cip13, $id)){
             $this->msg[$id] = "ATTENTION !!!! Ce produit existe déjà sous le nom de : {$cip[0]['denomination']}";
+            $this->alert[$id] = "ATTENTION";
             return false;
         }
 

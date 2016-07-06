@@ -7,7 +7,9 @@ foreach ($liste as $key => $image){
     $imageid = $i + 1;
     $id = $image['id'];
     $msg = isset($this->msg[$id])? $this->msg[$id] : '';
-    $alert = empty($alert)? $msg : $alert;
+    $alert = (empty($alert) AND isset($this->alert[$id]))? isset($this->alert[$id]) : $alert;
+    $existedeja = (isset($this->alert[$id]) and file_exists(PHOTO . "en_cours/{$_POST['cip13']}.jpg"))?
+        "<img width='150' src='photos/en_cours/{$_POST['cip13']}.jpg'>" : "";
     $nom = $image['nom']. ' ['. $image['site'].']';
     $zap = isset($image['zapper'])? $image['zapper'] : 0;
     $existe = (file_exists(PHOTO . $image['nom']. '.jpg'))?
@@ -31,8 +33,11 @@ foreach ($liste as $key => $image){
     echo <<<EOL
     <div class="produits $traitement">
     <div class="ligne">
-    image : $nom
+    image : $nom 
     </div>
+    <div class="ligne" style="color:red">
+        $msg $existedeja 
+    </div> 
     <div class="ligne">
     <img src="$image">
     $existe
@@ -50,8 +55,8 @@ EOL;
     </div>
 </div>
 <?php
-if(!empty($alert)){
-    echo "<script type='text/javascript'>alert('$alert');</script>";
+if(!empty($msg)){
+    echo "<script type='text/javascript'>alert('$msg');</script>";
 }
 ?>
     

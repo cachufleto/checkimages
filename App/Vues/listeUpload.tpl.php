@@ -1,3 +1,13 @@
+
+<script type='text/javascript'>
+    function opnw(a) {
+        var myWindow = window.open("", "MsgWindow", "width=400,height=500");
+        myWindow.document.write('<HTML> <BODY>' +
+            '<H1>Image existante:<H1>' + a +
+            '</BODY></HTML>');
+    }
+</script>
+
 <div id="upload">
     <div class="ligne">
 <?php
@@ -9,7 +19,9 @@ foreach ($liste as $key => $image){
     $imageid = $i + 1;
     $id = $image['id'];
     $msg = isset($this->msg[$id])? $this->msg[$id] : '';
-    $alert = empty($alert)? $msg : $alert;
+    $existedeja = (isset($this->alert[$id]) and file_exists(PHOTO . "en_cours/{$_POST['cip13']}.jpg"))?
+        "<img width=\"350\" src=\"".LINK."photos/en_cours/{$_POST['cip13']}.jpg\">" : "";
+    $alert = (empty($alert) AND isset($this->alert[$id]))? $existedeja : $alert;
     $nom = $image['nom']. ' ['. $image['site'].']';
     $zap = isset($image['zapper'])? $image['zapper'] : 0;
 
@@ -70,12 +82,14 @@ foreach ($liste as $key => $image){
     echo <<<EOL
     <div class="produits $traitement">
     <div class="ligne">
-    image : $nom
+    image : $nom 
     </div>
+    <div class="ligne" style="color:red">
+        $msg
+    </div> 
     <div class="ligne">
     <form action="#$i" method="POST">
         <input name="id" type="hidden" value="$id">
-        <span style="color:red">$msg</span><br> 
         $zapper1
       <input type="text" name="cip13" placeholder="CIP" value="$cip13" >
       <input type="text" name="denomination" placeholder="Dénomination" value="$denomination" >
@@ -103,8 +117,11 @@ EOL;
     </div>
 </div>
 <?php
+
 if(!empty($alert)){
-    echo "<script type='text/javascript'>alert('$alert');</script>";
+    echo "<script type='text/javascript'> 
+        opnw('$alert');
+        </script>";
 }
 ?>
     
