@@ -21,6 +21,7 @@
             <label> </label>
             <div>
                 <input type="submit" name="chercher" value="<?php echo $this->_lib['option']['valider']; ?>">
+                Recherche Globale <input type="checkbox" name="all" value="1">
             </div>
         </div>
     </div>

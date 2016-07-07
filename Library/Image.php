@@ -27,13 +27,15 @@ class Image extends Images
 
     public function count($recherche)
     {
+        debug($recherche, __FUNCTION__);
         $produit = (
             isset($_SESSION[$this->session]['produit']) ? 
                 $_SESSION[$this->session]['produit'] : ''
             ) . (
                 empty($recherche)? '': 'R'
             );
-        
+
+        debug($produit, __FUNCTION__);
         switch ($produit) {
             case 'okR':
                 return $this->getCountOkR();
@@ -313,15 +315,15 @@ class Image extends Images
         $chercher = $_SESSION['recherche'][$this->session];
         $recherche = '';
         $option = [];
+        $this->zapper = isset($_POST['all'])? ">= 0 " : $this->zapper;
+        
         // recherche par cip
         if (isset($chercher['cip13']) AND !empty($chercher['cip13'])){
-            $this->zapper = ">= 0 ";
             $this->rechercheCip = " AND i.cip13 LIKE '%{$chercher['cip13']}%' ";
         }
 
         // recherche par le nom de l'image
         if (isset($chercher['nom']) AND !empty($chercher['nom'])) {
-            $this->zapper = ">= 0 ";
             $this->rechercheNom = " AND  i.nom LIKE '%{$chercher['nom']}%' ";
         }
 

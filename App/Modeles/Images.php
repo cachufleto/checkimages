@@ -60,12 +60,11 @@ class Images extends Bdd
     {
 
         $sql = "SELECT count(*) as num
-                FROM images i, produits p
+                FROM images i
                 WHERE  i.zapper  {$this->zapper}
                 {$this->rechercheCip}
                 {$this->rechercheNom}
-                AND i.id NOT IN  (SELECT id_image FROM produits) ".
-                $this->criterMoteurRecherche();
+                AND i.id NOT IN  (SELECT id_image FROM produits) ";
         $num = $this->query($sql);
 
         return ($num)? $num[0]['num'] : 0;
@@ -275,7 +274,7 @@ class Images extends Bdd
     public function updateImage($id, $cip13)
     {
         $sql = "UPDATE `images` 
-                    SET `cip13` LIKE '$cip13'
+                    SET `cip13` = '$cip13'
                     WHERE id = $id;";
         $this->queryUpdate($sql);
     }
