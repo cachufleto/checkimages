@@ -233,7 +233,7 @@ class Images extends Bdd
         return $this->query($sql);
     }
 
-    public function setProduit($id, $cip13, $denomination='', $presentation='', $type=1, $libelle = ''){
+    public function setProduit($id, $cip13, $type=1, $denomination='', $presentation='', $libelle = ''){
         $sql = "INSERT INTO `produits` 
                   (`id_image`, `id`, `cip13`, `denomination`, `presentation`, `type`, `date_traitement`, `libelle`)
                   VALUES ($id, NULL, '$cip13', '$denomination', '$presentation', '$type', CURRENT_TIMESTAMP, '$libelle')";
@@ -305,33 +305,5 @@ class Images extends Bdd
         $sql = "DELETE FROM `produits` WHERE id = $id;";
         return $this->queryUpdate($sql);
     }
-
-    public function getImageUpload($repertoire, $nom)
-    {
-        $sql = "SELECT * 
-                FROM images 
-                WHERE site LIKE '$repertoire' 
-                AND nom LIKE '$nom'
-                ORDER BY nom ASC;";
-        return $this->query($sql);
-    }
-    
-    public function setImageLocal($link, $nom)
-    {
-        $sql = "INSERT INTO `images` (`id`, `site`, `nom`, `produit`, `upload`, `zapper`, `cip13`) 
-                VALUES (NULL, '$link', '".$nom."', NULL, '0', '0', NULL);";
-        return $this->queryInsert($sql);
-    }
-
-    public function getListeNewImages($listeID, $listeNom){
-
-        $sql = "SELECT * 
-                FROM images 
-                WHERE id IN ($listeID)
-                OR nom IN ($listeNom)
-                ORDER BY nom ASC";
-        debug($sql, 'UPLOAD');
-        return $this->query($sql);
-    }
-    
+   
 }

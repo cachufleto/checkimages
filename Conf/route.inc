@@ -36,15 +36,16 @@ $_r = [
     'action' => 'raportAction'
     ],
 
-'upload' => [
-    'controleur' => 'Checkimages',
-    'action' => 'uploadImagesLocal'
+'local' => [
+    'controleur' => 'Upload',
+    'action' => 'localAction'
     ],
-/*
+        
 'upload' => [
     'controleur' => 'Upload',
-    'action' => 'listeAction'
-    ],*/
+    'action' => 'indexAction'
+    ],
+    
 /*
 'existant' => [
         'controleur' => 'Upload',

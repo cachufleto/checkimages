@@ -285,8 +285,8 @@ class Image extends Images
             $info['medicament'] = $this->medicament->imgProd($img, $cip13);
         }
 
-        if ($img = $this->pharmacie->getImage($cip13)){
-            $info['pharmacie'] = $this->medicament->imgProd($img, $cip13);
+        if ($img = $this->pharamacie->getImage($cip13)){
+            $info['pharmacie'] = $this->pharamacie->imgProd($img, $cip13);
         }
         return $info;
     }
@@ -481,75 +481,6 @@ class Image extends Images
         return $im;
     }
 
-    public function typeMime($file){
-        //$liste .= '<img src="'.(str_replace(__DIR__.'/', '', $test)).'" width="72" height="72">' . "\n";
-        $finfo = finfo_open(FILEINFO_MIME); // Retourne le type mime
-
-        if (!$finfo) {
-            echo "Échec de l'ouverture de la base de données fileinfo";
-            exit();
-        }
-        $typeFile = finfo_file($finfo, $file);
-
-        /* Fermeture de la connexion */
-        finfo_close($finfo);
-        if(preg_match('#^image#', $typeFile))
-            return true;
-    }
-
-    public function uploadImageExist($repertoire, $nom)
-    {
-        if($images = $this->getImageUpload($repertoire, $nom))
-        {
-            return false;
-        }
-        $this->listeLocal['id'] .= ", ".$this->setImageLocal($repertoire, $nom);
-        $this->listeLocal['nom'] .= ", '$nom'";
-    }
-
-    public function listerReperoires($dir){
-        // Ouvre un dossier bien connu, et liste tous les fichiers
-        $dir = str_replace('\\', '/', $dir);
-        if (is_dir($dir)) {
-            
-            if ($dh = opendir($dir)) {
-                while (($file = readdir($dh)) !== false) {
-                    if($file != '.' AND $file != '..'){
-                        $test = $dir . '/' . $file;
-                        $type = filetype($test);
-                        if($type == 'dir'){
-                            $this->listerReperoires($test);
-                        }
-
-                        if ( $this->typeMime($test)) {
-                            // injection en base de données
-                            // $liste .= '<img src="'.(str_replace(__DIR__.'/', '', $test)).'">' . "\n";
-                            //$this->listeLocal .= '<br>INSERT INTO '.(str_replace(__DIR__.'/', '', $test))."\n";
-                            $name = str_replace('×', '',
-                                    str_replace(' ', '',
-                                    str_replace('(', '',
-                                    str_replace(')', '',
-                                    utf8_encode(basename($test))))));
-
-                            //exit($test . " ---> " . dirname($test) . '/'. $name);
-                            if($name != basename($test) ) {
-                                copy($test, dirname($test) . '/'. $name);
-                                unlink($test);
-                            }
-
-                            $this->uploadImageExist(str_replace(SITE, '', dirname($test)), $name);
-                            
-                        }else if($type != 'dir'){
-                            // suppression de la source
-                            unlink($test);
-                        }
-                    }
-                }
-                closedir($dh);
-            }
-        }
-    }
-
     public function imageAction()
     {
         if(isset($_POST['id']) and $id = intval($_POST['id'])){
@@ -620,7 +551,7 @@ class Image extends Images
             }
         } else {
             $this->msg[$id] = "Isertion Nouveau Produit: $cip13";
-            $this->setProduit($id, $cip13, $denomination, $presentation, $type);
+            $this->setProduit($id, $cip13, $type, $denomination, $presentation);
             $produit['cip13'] = $cip13;
             $this->enregistrerImageJpg($produit);
         }

@@ -6,133 +6,61 @@
  * Time: 11:58
  */
 namespace Upload;
-require APP . 'Modeles/Images_old.php';
 
-use Upload\Images;
+require_once LIB . 'Produit.php';
+use App\Produit;
 
-/*
-DROP TABLE IF EXISTS `produits`;
-CREATE TABLE IF NOT EXISTS `produits` (
-  `id_image` int(10) UNSIGNED NOT NULL,
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `cip13` char(15) DEFAULT NULL,
-  `denomination` longtext NOT NULL,
-  `presentation` text NOT NULL,
-  `type` int(1) DEFAULT NULL,
-  `date_traitement` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `libelle` char(200) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+require_once LIB . 'NewImage.php';
+use App\NewImage;
 
-  `cip13` char(15) DEFAULT NULL,
-  `denomination` longtext NOT NULL,
-  `presentation` text NOT NULL,
-  `type` int(1) DEFAULT NULL,
-  `libelle` char(200) DEFAULT NULL,
- * */
+require_once LIB . 'Menu.php';
+use App\Menu;
 
-class Upload extends Images
+class Upload extends NewImage
 {
+    var $menu = false;
+    var $recherche = false;
     var $session = 'Upload';
+    var $msg = [];
+    var $alert = [];
+    var $listeLocal = [];
+    var $produit = '';
 
-    public function listeAction(){
-
-        extract($_SESSION[$this->session]);
-        $this->zapper = "= $zapper";
-        $numProduits = $this->getNumImages();
-        $f = afficheMenu($this->page, $this->session, $numProduits);
-
-        $liste = $this->getListeImages($a, $b, $p);
-
-        include(VUE . 'listeUpload.tpl.php');
-
+    public function __construct()
+    {
+        parent::__construct();
+        $this->connexion(SURFIMAGE);
+        $this->zapper = isset($_SESSION['recherche'][$this->session]['etat'])? "= ".$_SESSION['recherche'][$this->session]['etat'] : "= 0";
+        $this->menu = new Menu();
+        $this->menu->info = $this;
+        // $this->recherche = !empty($this->criterMoteurRecherche())? true : false ;
+        $this->listeLocal = ['id'=>'-1','nom'=>"'_'"];
+        $this->pharamacie = new Produit();
+        $this->pharamacie->connexion(PARAPHARMACIE);
+        $this->pharamacie->link = 'https://www.pharmaplay.fr/p/produits/';
+        $this->pharamacie->session = $this->session;
+        $this->medicament = new Produit();
+        $this->medicament->connexion(MEDICAMENTS);
+        $this->medicament->link = 'https://www.pharmaplay.fr/m/produits/';
+        $this->medicament->session = $this->session;
     }
 
-    public function selectAction(){
-
-        if(isset($_POST['id'])){
-            if($_POST['option'] == $this->_lib['option']['zapper']){
-                $this->updateZapper();
-            } else if($_POST['option'] == $this->_lib['option']['conserver']){
-                $this->updateConserver();
-            } else if($_POST['option'] == $this->_lib['option']['retirer']){
-                $this->updateRetirer();
-            }
-        }
-        if(isset($_GET['mode']) && $_GET['mode'] == 'exist'){
-            $this->existantAction();
-        }
-        else {
-            $this->listeAction();
-        }
+    public function indexAction(){
+        $this->menu->afficherNewImages();
+        include_once VUE . 'upload.tpl.php';
     }
 
-    public function photoAction(){
+    public function localAction(){
+        $this->menu->afficherNewImages();
+        $this->listerReperoires(REP_TRAITEMETN);
+        header('content-type image/jpeg');
 
-        if(isset($_POST['id'])){
-            if($_POST['option'] == $this->_lib['option']['zapper']){
-                $this->updateZapper();
-            } else if($_POST['option'] == $this->_lib['option']['conserver']){
-                $this->updateConserver();
-            } else if($_POST['option'] == $this->_lib['option']['retirer']){
-                $this->updateRetirer();
-            } else if($_POST['option'] == $this->_lib['option']['CIP']){
-                $this->updateCip();
-            }
-        }
-
-        $this->existantAction();
+        $data = $this->listeLocal;
+        var_dump($data);
+        $liste = $this->getListeNewImages($data['id'], $data['nom']);
+        $f = '';
+        include_once VUE . 'listeUploadNouvelles.tpl.php';
     }
 
-    public function existantAction(){
 
-        extract($_SESSION[$this->session]);
-        $this->zapper = "= $zapper";
-        $data = $this->getExistImages($p);
-        $data = $this->extractImages($data, $a, $b);
-        $listing = $data['liste'];
-
-        $numProduits = $data['num'];
-
-        $f = afficheMenu($this->page, $this->session, $numProduits);
-        $liste = [];
-        foreach ($listing as $key => $image) {
-
-            $liste[$key]['existe'] = (file_exists(PHOTO . $image['nom'] . '.jpg')) ?
-                '<img src="' . PHOTO . $image['nom'] . '.jpg' . '">' : '';
-            $liste[$key]['existepng'] = (file_exists(PHOTO . $image['nom'] . '.png')) ?
-                '<img src="' . PHOTO . $image['nom'] . '.png' . '">' : '';
-            $liste[$key]['zapper2'] = ($image['zapper'] != 2) ?
-                "<input name='option' type='submit' value='{$this->_lib['option']['conserver']}'>" :
-                "<input name='option' type='submit' value='{$this->_lib['option']['retirer']}'>";
-            $liste[$key]['zapper1'] = ($image['zapper'] != 1) ?
-                "<input name='option' type='submit' value='{$this->_lib['option']['zapper']}'>"
-                : "";
-            $data = getExistProduit($image['id']);
-            $produit = $data->fetch_assoc();
-            $liste[$key]['cip13'] = isset($produit['cip13'])? $produit['cip13']:'';
-            $liste[$key]['denomination'] = isset($produit['denomination'])? $produit['denomination']:'';
-            $liste[$key]['libelle'] = isset($produit['libelle'])? $produit['libelle']:'';
-            $liste[$key]['presentation'] = isset($produit['presentation'])? $produit['presentation']:'';
-            $liste[$key]['date'] = isset($produit['date_traitement'])? $produit['date_traitement']:'';
-            $type = isset($produit['type'])? $produit['type']:'';
-            $liste[$key]['med'] = ($type == 1)? 'selected' : '';
-            $liste[$key]['para'] = ($type == 2)? 'selected' : '';
-        }
-//        include(VUE . 'listeExistant.tpl.php');
-    }
-
-    public function extractImages($liste, $a=0, $b=5){
-        $result = [];
-        $i = 1;
-        foreach ($liste as $key=>$info){
-            if( file_exists( PHOTO . $info['nom'] . '.jpg') OR file_exists( PHOTO . $info['nom'] . '.png')){
-                if($i >$a && $i <= ($a + $b)) {
-                    $result[] = $info;
-                }
-                $i++;
-            }
-        }
-        return ['num' => $i, 'liste' => $result];
-    }
 }

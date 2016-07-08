@@ -36,9 +36,9 @@ class Checkimages extends Image
         $this->menu->info = $this;
         $this->recherche = !empty($this->criterMoteurRecherche())? true : false ;
         $this->listeLocal = ['id'=>'-1','nom'=>"'_'"];
-        $this->pharmacie = new Produit();
-        $this->pharmacie->connexion(PARAPHARMACIE);
-        $this->pharmacie->link = 'https://www.pharmaplay.fr/p/produits/';
+        $this->pharamacie = new Produit();
+        $this->pharamacie->connexion(PARAPHARMACIE);
+        $this->pharamacie->link = 'https://www.pharmaplay.fr/p/produits/';
         $this->medicament = new Produit();
         $this->medicament->connexion(MEDICAMENTS);
         $this->medicament->link = 'https://www.pharmaplay.fr/m/produits/';
@@ -57,16 +57,6 @@ class Checkimages extends Image
         include_once VUE . 'listeUpload.tpl.php';
     }
     
-    public function uploadImagesLocal(){
-        $this->menu->afficher();
-        $this->listerReperoires(REP_TRAITEMETN);
-        header('content-type image/jpeg');
-        
-        $data = $this->listeLocal;
-        $liste = $this->getListeNewImages($data['id'], $data['nom']);
-        $f = '';
-        include_once VUE . 'listeUploadNouvelles.tpl.php';
-    }
     public function ficheImage()
     {
         if(isset($_GET['cip13']) and intval($_GET['cip13'])){
