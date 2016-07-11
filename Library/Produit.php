@@ -270,6 +270,7 @@ class Produit extends Produits
 
             if(isset($chercher['etat'])){
                 $etat = '';
+
                 $etat .= isset($chercher['etat']['i'])?
                     ' p.produit_actif = "i"' : '';
                 $etat .= isset($chercher['etat']['o'])?
@@ -278,7 +279,8 @@ class Produit extends Produits
                     (!empty($etat)? ' OR ' : '' ) . ' p.produit_actif = "n"' : '';
                 $etat .= isset($chercher['etat']['a'])?
                     (!empty($etat)? ' OR ' : '' ) . ' p.produit_actif = "a"' : '';
-                $option[] = (count($chercher['etat']) > 1 )? "( $etat )" : $etat;
+
+                $option[] = !empty($etat)? ((count($chercher['etat']) > 1 )? "( $etat )" : $etat) : "";
 
                 if(isset($chercher['etat']['e'])){
 
@@ -296,11 +298,13 @@ class Produit extends Produits
             if (isset($chercher['famille']) && !empty($chercher['famille'])){
                 $option[] = ' p.id_famille = ' . $chercher['famille'];
             }
+
             $_option = '';
             foreach($option as $_r){
                 $_option .= (empty($_option)? '' : '
              AND ') . $_r;
             }
+
             return (!empty($_option))? '
              AND ' . $_option : '';
         }
