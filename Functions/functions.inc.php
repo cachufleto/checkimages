@@ -123,3 +123,20 @@ function testCIP13($cip13)
     $cip13 = utf8_decode(trim(str_replace(' ', '', $cip13)));
     return (!preg_match('/[a-zA-Z-]/', $cip13) and strlen($cip13))? $cip13 : false;
 }
+
+function remove_accents($str, $charset='utf-8')
+{
+    $str = htmlentities($str, ENT_SUBSTITUTE, $charset);
+    $str = preg_replace('#&([A-za-z])(?:mp|acute|cedil|caron|circ|grave|orn|ring|slash|th|tilde|uml);#', '\1', $str);
+    $str = preg_replace('#&([A-za-z]{2})(?:lig);#', '\1', $str); // pour les ligatures e.g. '&oelig;'
+    $str = preg_replace('#&[^;]+;#', '', $str); // supprime les autres caractères
+    // supprime les caractères reservées
+    $str = str_replace('!', '', $str);
+    $str = str_replace('-', '', $str);
+    $str = str_replace('×', '', $str);
+    $str = str_replace(' ', '', $str);
+    $str = str_replace('(', '', $str);
+    $str = str_replace(')', '', $str);
+
+    return $str;
+}

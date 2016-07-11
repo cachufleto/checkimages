@@ -30,6 +30,26 @@ class NewImage extends NewImages
     }
 
 
+    public function netoillerBDD(){
+        $liste = $this->getImagesLocal();
+        foreach($liste as $key=>$image){
+            $supprimer = true;
+            // on verifie si l'image à était traité
+            if (!empty($image['cip13']) and file_exists(SITE . 'photos/en_cours/'.$image['cip13'].'.jpg')){
+                $supprimer = false;
+            }
+            // on verifie si l'image d'origine existe
+            if (file_exists(SITE . $image['site'].'/'.$image['nom'])){
+                $supprimer = false;
+            }
+            if($supprimer){
+                $this->deleteUdate($image['id']);
+                $this->deleteUdateProduit($image['id']);
+            }
+        }
+
+    }
+
     public function listerReperoires($dir){
         // Ouvre un dossier bien connu, et liste tous les fichiers
         $dir = str_replace('\\', '/', $dir);
@@ -46,15 +66,8 @@ class NewImage extends NewImages
 
                         if ( $extention = $this->typeMime($test)) {
                             // injection en base de données
-                            // $liste .= '<img src="'.(str_replace(__DIR__.'/', '', $test)).'">' . "\n";
-                            //$this->listeLocal .= '<br>INSERT INTO '.(str_replace(__DIR__.'/', '', $test))."\n";
-                            $name = str_replace('×', '',
-                                str_replace(' ', '',
-                                    str_replace('(', '',
-                                        str_replace(')', '',
-                                            utf8_encode(basename($test))))));
-
-                            //exit($test . " ---> " . dirname($test) . '/'. $name);
+                            $name = utf8_encode(basename($test));
+                            $name = remove_accents($name);
                             if($name != basename($test) ) {
                                 copy($test, dirname($test) . '/'. $name);
                                 unlink($test);

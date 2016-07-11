@@ -46,12 +46,12 @@ $_r = [
     'action' => 'indexAction'
     ],
     
-/*
-'existant' => [
+
+'netoiller' => [
         'controleur' => 'Upload',
-        'action' => 'existantAction'
+        'action' => 'netoillerAction'
     ],
-    */
+
 'existant' => [
     'controleur' => 'Checkimages',
     'action' => 'indexAction'

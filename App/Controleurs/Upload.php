@@ -61,6 +61,9 @@ class Upload extends NewImage
         $f = '';
         include_once VUE . 'listeUploadNouvelles.tpl.php';
     }
-
-
+    
+    public function netoillerAction(){
+        $this->netoillerBDD();
+        $this->localAction();
+    }
 }

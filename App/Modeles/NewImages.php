@@ -14,6 +14,15 @@ class NewImages extends Bdd
     var $rechercheNom = '';
     var $rechercheCip = '';
 
+    public function getImagesLocal()
+    {
+        $sql = "SELECT * 
+                FROM images 
+                WHERE site LIKE 'photos/traitement%' 
+                ORDER BY nom ASC;";
+        return $this->query($sql);
+    }
+
     public function getImageUpload($repertoire, $nom)
     {
         $sql = "SELECT * 
@@ -45,8 +54,20 @@ class NewImages extends Bdd
                 WHERE id IN ($listeID)
                 OR nom IN ($listeNom)
                 ORDER BY nom ASC";
-        debug($sql, 'UPLOAD');
         return $this->query($sql);
     }
+    
+    public function deleteUdate($id)
+    {
+        $sql = "DELETE FROM `images` WHERE id = $id;";
+        return $this->queryUpdate($sql);
+    }
+
+    public function deleteUdateProduit($id)
+    {
+        $sql = "DELETE FROM `produits` WHERE id = $id;";
+        return $this->queryUpdate($sql);
+    }
+
 
 }
