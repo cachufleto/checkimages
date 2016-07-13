@@ -236,4 +236,26 @@ class NewImage extends NewImages
         $outCIP .= ")";
         return $outCIP;
     }
+
+    public function getImage($nom)
+    {
+        $sql = "SELECT * FROM control_images WHERE cip13 LIKE '$nom'";
+        $img = $this->query($sql);
+        return !empty($img)? $img[0] : false;
+    }
+
+    public function setImage($cip13, $grande = 0, $vignette = 0)
+    {
+        $sql = "INSERT INTO `control_images` (`cip13`, `image`, `vignette`) VALUES ('$cip13', $grande, $vignette);";
+        $this->queryInsert($sql);
+    }
+
+    public function updateImage($cip13, $grande = 0, $vignette = 0)
+    {
+        $sql = "UPDATE `control_images` 
+                set `image` = $grande, `vignette` = $vignette 
+                WHERE `cip13` = '$cip13';";
+        $this->queryUpdate($sql);
+    }
+
 }

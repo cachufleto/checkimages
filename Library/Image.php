@@ -11,6 +11,9 @@ namespace App;
 require MOD . 'Images.php';
 use Model\Images;
 
+require_once LIB . 'NewImage.php';
+use App\NewImage;
+
 class Image extends Images
 {
     var $link = '';
@@ -23,6 +26,8 @@ class Image extends Images
         $this->page = $_GET['page'];
         include CONF . 'libelles.php';
         $this->_lib = $_libelle;
+        $this->control = new NewImage();
+        $this->control->connexion(SURFIMAGE);
     }
 
     public function count($recherche)
@@ -281,11 +286,11 @@ class Image extends Images
 
     public function imgTestProd($cip13){
         $info = [];
-        if ($img = $this->medicament->getImage($cip13)){
+        if ($img = $this->control->getImage($cip13)){
             $info['medicament'] = $this->medicament->imgProd($img, $cip13);
         }
 
-        if ($img = $this->parapharmacie->getImage($cip13)){
+        if ($img = $this->control->getImage($cip13)){
             $info['pharmacie'] = $this->parapharmacie->imgProd($img, $cip13);
         }
         return $info;

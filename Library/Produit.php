@@ -11,18 +11,24 @@ namespace App;
 require MOD . 'Produits.php';
 use Model\Produits;
 
+require_once LIB . 'NewImage.php';
+use App\NewImage;
+
 class Produit extends Produits
 {
     var $link = '';
     var $_lib = [];
     var $page = '';
     var $listeRecherche = 'Recherche ';
+    var $control = '';
 
     public function __construct()
     {
         $this->page = $_GET['page'];
         include CONF . 'libelles.php';
         $this->_lib = $_libelle;
+        $this->control = new NewImage();
+        $this->control->connexion(SURFIMAGE);
     }
 
     public function count()
@@ -177,7 +183,7 @@ class Produit extends Produits
         $_liste = [];
         foreach($liste as $key =>$info){
             $info['image'] = !isset($info['image'])? [] : $info['image'];
-            if ($img = $this->getImage($info['cip13'])){
+            if ($img = $this->control->getImage($info['cip13'])){
                 $info['image'] = $this->imgProd($img, $info['cip13']);
             } else if (!empty($img = $this->imgProd($this->checkImage($info['cip13']), $info['cip13']))){
                 $info['image'] = $img;
@@ -229,12 +235,12 @@ class Produit extends Produits
         $img['image'] = remote_file_exists('' . $this->link . $nom . '.jpg')? 1 : 0;
         $img['vignette'] = remote_file_exists('' . $this->link . $nom . '_vig.jpg')? 1 : 0;
         
-        if($getimg = $this->getImage($nom)){
+        if($getimg = $this->control->getImage($nom)){
             if($getimg['image'] != $img['image'] OR $getimg['vignette'] != $img['vignette'] ){
                 $this->updateImage($nom, $img['image'], $img['vignette']);
             }
         }else {
-            $this->setImage($nom, $img['image'], $img['vignette']);
+            $this->control->setImage($nom, $img['image'], $img['vignette']);
         }
 
         return $img;
