@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS `control_images` (
   `image` tinyint(1) NOT NULL,
   `vignette` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
+ALTER TABLE `control_images` ADD UNIQUE(`cip13`);
 -- --------------------------------------------------------
 
 --

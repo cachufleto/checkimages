@@ -179,7 +179,7 @@ class Produit extends Produits
             $info['image'] = !isset($info['image'])? [] : $info['image'];
             if ($img = $this->getImage($info['cip13'])){
                 $info['image'] = $this->imgProd($img, $info['cip13']);
-            } else if (!empty($img = $this->testImage($info['cip13']))){
+            } else if (!empty($img = $this->imgProd($this->checkImage($info['cip13']), $info['cip13']))){
                 $info['image'] = $img;
             } else {
                 $info['image'] = [
@@ -220,11 +220,24 @@ class Produit extends Produits
 
     public function testImage($nom)
     {
+        return $this->imgProd($this->checkImage($nom), $nom);
+    }
+
+    public function checkImage($nom)
+    {
         $img = [];
         $img['image'] = remote_file_exists('' . $this->link . $nom . '.jpg')? 1 : 0;
         $img['vignette'] = remote_file_exists('' . $this->link . $nom . '_vig.jpg')? 1 : 0;
-        $this->setImage($nom, $img['image'], $img['vignette']);
-        return $this->imgProd($img, $nom);
+        
+        if($getimg = $this->getImage($nom)){
+            if($getimg['image'] != $img['image'] OR $getimg['vignette'] != $img['vignette'] ){
+                $this->updateImage($nom, $img['image'], $img['vignette']);
+            }
+        }else {
+            $this->setImage($nom, $img['image'], $img['vignette']);
+        }
+
+        return $img;
     }
 
     public function criterMoteurRecherche()
@@ -414,5 +427,5 @@ class Produit extends Produits
             return (!empty($_option))? ' AND ' . $_option : '';
         }
     }
-
+    
 }

@@ -134,5 +134,4 @@ class Medicaments extends Bdd
         $sql = "SELECT * FROM control_images WHERE cip13 = $nom LIMIT 0, 1";
         return $this->query($sql);
     }
-
 }

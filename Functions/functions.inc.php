@@ -35,8 +35,10 @@ function remote_file_exists ($url)
         $path = $url_p["path"];
     }
 
-//    $fp = fsockopen ('tls://'.$host, 443);
-    $fp = fsockopen ($host, 80);
+    $_host = preg_match('#https#', $url)? 'tls://'.$host : $host;
+    $_port = preg_match('#https#', $url)? 443 : 80;
+
+    $fp = fsockopen ($_host, $_port);
 
     if (!$fp) {
         return false; 

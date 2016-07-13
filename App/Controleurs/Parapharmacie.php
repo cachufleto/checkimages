@@ -21,6 +21,7 @@ class Parapharmacie extends Produit
 {
     var $session = 'Parapharmacie';
     var $mage = '';
+    var $champsObligatoires = '';
 
     public function __construct()
     {
@@ -32,6 +33,8 @@ class Parapharmacie extends Produit
         $this->menu->file = 'Produits';
         $this->image = new Image();
         $this->image->connexion(SURFIMAGE);
+        include_once CONF . 'champsObligatoires.php';
+        $this->champsObligatoires = $parapharmacie;
     }
 
     public function indexAction()
@@ -48,4 +51,5 @@ class Parapharmacie extends Produit
         $produit = $this->getProduit($id);
         include VUE . 'fichePharmacie.tpl.php';
     }
+    
 }

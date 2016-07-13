@@ -36,9 +36,9 @@ class Checkimages extends Image
         $this->menu->info = $this;
         $this->recherche = !empty($this->criterMoteurRecherche())? true : false ;
         $this->listeLocal = ['id'=>'-1','nom'=>"'_'"];
-        $this->pharamacie = new Produit();
-        $this->pharamacie->connexion(PARAPHARMACIE);
-        $this->pharamacie->link = 'https://www.pharmaplay.fr/p/produits/';
+        $this->parapharmacie = new Produit();
+        $this->parapharmacie->connexion(PARAPHARMACIE);
+        $this->parapharmacie->link = 'https://www.pharmaplay.fr/p/produits/';
         $this->medicament = new Produit();
         $this->medicament->connexion(MEDICAMENTS);
         $this->medicament->link = 'https://www.pharmaplay.fr/m/produits/';

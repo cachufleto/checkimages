@@ -114,7 +114,7 @@ class Import extends Bdd
 
         return ($num)? $num[0]['num'] : 0;
     }
-
+/*
     public function testimage($photo){
 
         if ($_img = $this->existImageBDD($photo)){
@@ -148,7 +148,7 @@ class Import extends Bdd
 
         return false;
     }
-
+*/
     public function existImageBDD($photo){
         $sql = "SELECT * FROM control_images WHERE cip13 = $photo LIMIT 0, 1";
         return $this->query($sql);

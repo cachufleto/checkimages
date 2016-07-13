@@ -22,7 +22,7 @@ class Site extends Import
         include_once VUE . 'index.tpl.php';
     }
 
-    public function medicamentAction(){
+    /* public function medicamentAction(){
 
         $this->page = 'medicament';
 
@@ -58,7 +58,7 @@ class Site extends Import
         unset($_liste);
 
         include_once VUE . 'liste_produits.tpl.php';
-    }
+    } */
 
     public function erreur404Action(){
         echo "<p style='padding: 50px;color: crimson'>ERREUR 404 : La page que vous recherchez n'existe pas!</p>";

@@ -69,5 +69,44 @@ class NewImages extends Bdd
         return $this->queryUpdate($sql);
     }
 
+    public function getProduitModification($cip13)
+    {
+        $sql = "SELECT * FROM `produitsmodifications`
+                WHERE `cip13` = '$cip13';";
+
+        return $this->query($sql);
+    }
+
+    public function getProduitModificationKo($type)
+    {
+        $sql = "SELECT `cip13` FROM `produitsmodifications`
+                WHERE `etat` < 2 AND (`type` = 0 OR `type` = $type)
+                LIMIT 0,10;";
+
+        return $this->query($sql);
+    }
+
+    public function getChangementsOK($type)
+    {
+        $sql = "SELECT * FROM `produitsmodifications`
+                WHERE `etat` < 2 AND `type` = $type;";
+
+        return $this->query($sql);
+    }
+
+    public function updateProduitModification($cip13, $etat, $type, $msg)
+    {
+        $sql = "UPDATE `produitsmodifications` 
+                set `etat` = $etat, `type` = $type, `message` = '$msg' 
+                WHERE `cip13` = '$cip13';";
+        return $this->queryUpdate($sql);
+    }
+
+    public function setProduitModification($cip13, $etat, $type, $msg)
+    {
+        $sql = "INSERT INTO `produitsmodifications` 
+                (`cip13`, `etat`, `type`, `message`) VALUES ('$cip13', $etat, $type, '$msg');";
+        return $this->queryInsert($sql);
+    }
 
 }

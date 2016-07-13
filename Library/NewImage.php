@@ -124,14 +124,14 @@ class NewImage extends NewImages
             return false;
         }
 
-        $this->pharamacie->zapper =
+        $this->parapharmacie->zapper =
             $this->medicament->zapper =
                 " >= 0 ";
-        $this->pharamacie->rechercheCip =
+        $this->parapharmacie->rechercheCip =
             $this->medicament->rechercheCip =
                 " AND cip13 LIKE '$cip13' ";
 
-        if (!empty($cip13) and $this->pharamacie->getCount()){
+        if (!empty($cip13) and $this->parapharmacie->getCount()){
             $id = $this->setImageLocal($repertoire, $nom, $cip13);
             $this->setProduit($id, $cip13, $type=2);
         } else if (!empty($cip13) and $this->medicament->getCount()){
@@ -145,4 +145,95 @@ class NewImage extends NewImages
         $this->listeLocal['nom'] .= ", '$nom'";
     }
 
+    public function listeChangements($liste, $type, $produits)
+    {
+        $_listeMod = [];
+        $_listeMod['ko'] = $_listeMod['ok'] = [];
+        foreach ($liste as $key=>$produit){
+            $data = $this->checkProduits($produit, $type, $produits->checkImage($produit['cip13']));
+            if(isset($data['ko'])){
+                $produits->updateProduitEtat($produit['id_produit'], 'i');
+            }
+            if(isset($data['ok'])){
+                $produits->updateProduitEtat($produit['id_produit'], 'o');
+            }
+        }
+        unset($liste);
+        return;
+    }
+    
+    /*
+     * function qui verifie le premier état des produits
+     * passage en hors ligne ou en ligne selon les critaires specifiées
+     */
+
+    public function checkProduits($produit, $type, $img)
+    {
+        $mod = ['ko', 'ok'];
+        $msg = $ko_msg = $i_msg = '';
+        if($produit['produit_actif'] == 'o'){
+            if(($img['image'] != 1 OR $img['vignette'] != 1)){
+                $msg = 'Manque images. ';
+            } else {
+                // on verifie les champs obligatoires
+                foreach ($this->champsObligatoires as $champ){
+                    if(empty($produit[$champ])){
+                        $msg .= "Manque $champ. ";
+                    }
+                }
+            }
+        } else if($produit['produit_actif'] == 'i'){
+            if(($img['image'] == 1 AND $img['vignette'] == 1)){
+                $i_msg = 'Images OK. ';
+                // on verifie les champs obligatoires
+                foreach ($this->champsObligatoires as $champ){
+                    if(empty($produit[$champ])){
+                        $ko_msg .= "Manque $champ. ";
+                    }
+                }
+            }
+        }
+
+        if(!empty($msg)) {
+            // passage hors ligne
+            $this->produitModification($produit, 1, $type, $msg);
+            $mod['ko'] = 1;
+        } else if(!empty($i_msg)){
+            if(empty($ko_msg)) {
+                // passage en ligne
+                $this->produitModification($produit, 2, $type, $i_msg);
+                $mod['ok'] = 1;
+            } else {
+                $mod['ko'] = 1;
+            }
+        }
+
+        return $mod;
+    }
+
+    public function produitModification($produit, $etat, $type, $msg)
+    {
+        $mod = $this->getProduitModification($produit['cip13']);
+
+        if(!empty($mod)){
+            $this->updateProduitModification($produit['cip13'], $etat, $type, $msg);
+            return;
+        }
+
+        $this->setProduitModification($produit['cip13'], $etat, $type, $msg);
+        return;
+    }
+
+    public function outCIP()
+    {
+        // verifications des conditions requises
+        $type = 1;
+        $out = $this->getProduitModificationKo($type);
+        $outCIP = " AND cip13 NOT IN (-1";
+        foreach ($out as $key=>$cip){
+            $outCIP .= ",{$cip['cip13']} ";
+        }
+        $outCIP .= ")";
+        return $outCIP;
+    }
 }

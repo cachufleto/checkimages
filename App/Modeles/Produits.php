@@ -148,15 +148,40 @@ class Produits extends Bdd
         return $this->query($sql);
     }
 
-    public function getImage($nom){
+    public function getImage($nom)
+    {
         $sql = "SELECT * FROM control_images WHERE cip13 LIKE '$nom'";
         $img = $this->query($sql);
         return !empty($img)? $img[0] : false;
     }
 
-    public function setImage($cip13, $grande = 0, $vignette = 0){
+    public function setImage($cip13, $grande = 0, $vignette = 0)
+    {
         $sql = "INSERT INTO `control_images` (`cip13`, `image`, `vignette`) VALUES ('$cip13', $grande, $vignette);";
         $this->queryInsert($sql);
     }
+
+    public function updateImage($cip13, $grande = 0, $vignette = 0)
+    {
+        $sql = "UPDATE `control_images` 
+                set `image` = $grande, `vignette` = $vignette 
+                WHERE `cip13` = '$cip13';";
+        $this->queryUpdate($sql);
+    }
+
+    public function getProduits($outCIP = '')
+    {
+        $sql = "SELECT * FROM produits WHERE 1 $outCIP;";
+        return $this->query($sql);
+    }
+    
+    public function updateProduitEtat($id_produit, $produit_actif)
+    {
+        $sql = "UPDATE `produits` 
+                set `produit_actif` = '$produit_actif' 
+                WHERE `id_produit` = $id_produit;";
+        return $this->queryUpdate($sql);
+    }
+
 
 }

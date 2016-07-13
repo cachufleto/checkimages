@@ -285,8 +285,8 @@ class Image extends Images
             $info['medicament'] = $this->medicament->imgProd($img, $cip13);
         }
 
-        if ($img = $this->pharamacie->getImage($cip13)){
-            $info['pharmacie'] = $this->pharamacie->imgProd($img, $cip13);
+        if ($img = $this->parapharmacie->getImage($cip13)){
+            $info['pharmacie'] = $this->parapharmacie->imgProd($img, $cip13);
         }
         return $info;
     }

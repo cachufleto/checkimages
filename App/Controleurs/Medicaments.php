@@ -22,14 +22,19 @@ class Medicaments extends Produit
 {
     var $session = 'Medicaments';
     var $mage = '';
+    var $champsObligatoires =[];
 
     public function __construct()
     {
         parent::__construct();
         $this->link = 'https://www.pharmaplay.fr/m/produits/';
+        include_once CONF . 'champsObligatoires.php';
+        $this->champsObligatoires = $medicaments;
         $this->connexion(MEDICAMENTS);
+
         $this->menu = new Menu();
         $this->menu->info = $this;
+
         $this->image = new Image();
         $this->image->connexion(SURFIMAGE);
     }
@@ -47,4 +52,5 @@ class Medicaments extends Produit
         $produit = $this->getProduit($id);
         include VUE . 'ficheMedicament.tpl.php';
     }
+
 }

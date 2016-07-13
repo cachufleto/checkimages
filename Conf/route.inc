@@ -1,10 +1,5 @@
 <?php
-/* 'medicament' => [
-       'controleur' => 'Site',
-        'action' => 'medicamentAction'
-    ],
 
-*/
 $_r = [
 'accueil' => [
     'controleur' => 'Site',
@@ -80,5 +75,15 @@ $_r = [
 'ficheparapharmacie' => [
     'controleur' => 'Parapharmacie',
     'action' => 'ficheProduit'
+    ],
+    
+'checkerMed' => [
+    'controleur' => 'Upload',
+    'action' => 'checkerMed'
+    ],
+
+'checkerPara' => [
+    'controleur' => 'Upload',
+    'action' => 'checkerPara'
     ]
 ];

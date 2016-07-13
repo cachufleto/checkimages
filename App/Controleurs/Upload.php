@@ -25,6 +25,7 @@ class Upload extends NewImage
     var $alert = [];
     var $listeLocal = [];
     var $produit = '';
+    var $champsObligatoires = [];
 
     public function __construct()
     {
@@ -35,35 +36,64 @@ class Upload extends NewImage
         $this->menu->info = $this;
         // $this->recherche = !empty($this->criterMoteurRecherche())? true : false ;
         $this->listeLocal = ['id'=>'-1','nom'=>"'_'"];
-        $this->pharamacie = new Produit();
-        $this->pharamacie->connexion(PARAPHARMACIE);
-        $this->pharamacie->link = 'https://www.pharmaplay.fr/p/produits/';
-        $this->pharamacie->session = $this->session;
+        $this->parapharmacie = new Produit();
+        $this->parapharmacie->connexion(PARAPHARMACIE);
+        $this->parapharmacie->link = 'https://www.pharmaplay.fr/p/produits/';
+        $this->parapharmacie->session = $this->session;
         $this->medicament = new Produit();
         $this->medicament->connexion(MEDICAMENTS);
         $this->medicament->link = 'https://www.pharmaplay.fr/m/produits/';
         $this->medicament->session = $this->session;
     }
 
-    public function indexAction(){
+    public function indexAction()
+    {
         $this->menu->afficherNewImages();
         include_once VUE . 'upload.tpl.php';
     }
 
-    public function localAction(){
+    public function localAction()
+    {
         $this->menu->afficherNewImages();
         $this->listerReperoires(REP_TRAITEMETN);
         header('content-type image/jpeg');
 
         $data = $this->listeLocal;
-        var_dump($data);
+        //var_dump($data);
         $liste = $this->getListeNewImages($data['id'], $data['nom']);
         $f = '';
         include_once VUE . 'listeUploadNouvelles.tpl.php';
     }
     
-    public function netoillerAction(){
+    public function netoillerAction()
+    {
         $this->netoillerBDD();
         $this->localAction();
     }
+
+    public function checkerMed()
+    {
+        // verifications des conditions requises
+        include_once CONF . 'champsObligatoires.php';
+        $this->champsObligatoires = $medicaments;
+        $this->checker($this->medicament, 1);
+    }
+
+    public function checkerPara()
+    {
+        // verifications des conditions requises
+        include_once CONF . 'champsObligatoires.php';
+        $this->champsObligatoires = $parapharmacie;
+        $this->checker( $this->parapharmacie, 2);
+    }
+
+    public function checker($produits, $type)
+    {
+        //$this->listeChangements( $produits->getProduits($this->outCIP()), $type, $produits);
+        $liste = $this->getChangementsOK($type);
+        include_once VUE . 'produitsModifies.tpl.php';
+    }
+
+
+
 }
