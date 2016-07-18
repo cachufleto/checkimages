@@ -25,8 +25,7 @@ class Produit extends Produits
     public function __construct()
     {
         $this->page = $_GET['page'];
-        include CONF . 'libelles.php';
-        $this->_lib = $_libelle;
+        $this->_lib = file_contents_libelles();
         $this->control = new NewImage();
         $this->control->connexion(SURFIMAGE);
     }
@@ -37,10 +36,10 @@ class Produit extends Produits
         
         switch ($produit) {
             case 'ok':
-                return $this->getCountOk();
+                return $this->getCountOk($this->control->listeCIP());
                 break;
             case 'ko':
-                return $this->getCountKo();
+                return $this->getCountKo($this->control->listeCIP());
                 break;
             case '':
                 return $this->getCount();
@@ -56,10 +55,10 @@ class Produit extends Produits
 
         switch ($produit) {
             case 'ok':
-                return $this->getOk($debut, $limit);
+                return $this->getOk($debut, $limit, $this->control->listeCIP());
                 break;
             case 'ko':
-                return $this->getKo($debut, $limit);
+                return $this->getKo($debut, $limit, $this->control->listeCIP());
                 break;
             case '':
                 return $this->get($debut, $limit);
@@ -195,7 +194,7 @@ class Produit extends Produits
             }
 
             if (file_exists(PHOTO . "en_cours/{$info['cip13']}.jpg")) {
-                $info['image']['encours'] = figureHTMML('photos/en_cours/'.$info['cip13'].'.jpg', $info['cip13'].' EN COURS');
+                $info['image']['encours'] = figureHTML('photos/en_cours/'.$info['cip13'].'.jpg', $info['cip13'].' EN COURS');
             }
 
             $_liste[] = $info;
@@ -207,18 +206,18 @@ class Produit extends Produits
     {
         if ($img['image'] == 1 && $img['vignette'] == 1) {
             return [
-                'image'=>figureHTMML($this->link . $nom . '.jpg',  $nom . ' Grande'),
-                'vignette'=>figureHTMML($this->link . $nom . '_vig.jpg', $nom . ' Vignette')
+                'image'=>figureHTML($this->link . $nom . '.jpg',  $nom . ' Grande'),
+                'vignette'=>figureHTML($this->link . $nom . '_vig.jpg', $nom . ' Vignette')
                 ];
         } else if ($img['image'] == 1) {
             return [
-                'image'=>figureHTMML($this->link . $nom . '.jpg',  $nom . ' Grande'),
+                'image'=>figureHTML($this->link . $nom . '.jpg',  $nom . ' Grande'),
                 'vignette'=>''
                 ];
         } else if ($img['vignette'] == 1) {
             return [
                 'image'=> '',
-                'vignette'=>figureHTMML($this->link . $nom . '_vig.jpg', $nom . ' Vignette')
+                'vignette'=>figureHTML($this->link . $nom . '_vig.jpg', $nom . ' Vignette')
                 ];
         }
         return false;
@@ -237,10 +236,10 @@ class Produit extends Produits
         
         if($getimg = $this->control->getImage($nom)){
             if($getimg['image'] != $img['image'] OR $getimg['vignette'] != $img['vignette'] ){
-                $this->updateImage($nom, $img['image'], $img['vignette']);
+                $this->control->updateImage($nom, $img['image'], $img['vignette'], $this->control->type);
             }
         }else {
-            $this->control->setImage($nom, $img['image'], $img['vignette']);
+            $this->control->setImage($nom, $img['image'], $img['vignette'], $this->control->type);
         }
 
         return $img;
@@ -320,8 +319,10 @@ class Produit extends Produits
 
             $_option = '';
             foreach($option as $_r){
-                $_option .= (empty($_option)? '' : '
-             AND ') . $_r;
+                $and = empty($_option)? '' : 'AND ';
+                $and = empty($_r)? '' : $and;
+
+                $_option .= $and.$_r;
             }
 
             return (!empty($_option))? '

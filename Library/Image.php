@@ -24,8 +24,7 @@ class Image extends Images
     public function __construct()
     {
         $this->page = $_GET['page'];
-        include CONF . 'libelles.php';
-        $this->_lib = $_libelle;
+        $this->_lib = file_contents_libelles();
         $this->control = new NewImage();
         $this->control->connexion(SURFIMAGE);
     }
@@ -237,13 +236,13 @@ class Image extends Images
 
             $info['image']['encours'] = '';
             if (!empty($info['cip13']) AND file_exists(PHOTO . "en_cours/{$info['cip13']}.jpg")) {
-                $info['image']['encours'] = figureHTMML("photos/en_cours/{$info['cip13']}.jpg", "EN COURS");
+                $info['image']['encours'] = figureHTML("photos/en_cours/{$info['cip13']}.jpg", "EN COURS");
                 // existante sur le site
             }
 
             $info['image']['vignette'] = '';
             if (!empty($info['cip13']) AND file_exists(PHOTO . "en_cours/{$info['cip13']}_vig.jpg")) {
-                $info['image']['vignette'] = figureHTMML("photos/en_cours/{$info['cip13']}_vig.jpg", "VIGNETTE");
+                $info['image']['vignette'] = figureHTML("photos/en_cours/{$info['cip13']}_vig.jpg", "VIGNETTE");
             }
 
             if(!empty($info['cip13'])){
@@ -267,18 +266,18 @@ class Image extends Images
     {
         if ($img['image'] == 1 && $img['vignette'] == 1) {
             return [
-                'image'=>figureHTMML($this->link . $nom . '.jpg',  $nom . ' Grande'),
-                'vignette'=>figureHTMML($this->link . $nom . '_vig.jpg', $nom . ' Vignette')
+                'image'=>figureHTML($this->link . $nom . '.jpg',  $nom . ' Grande'),
+                'vignette'=>figureHTML($this->link . $nom . '_vig.jpg', $nom . ' Vignette')
                 ];
         } else if ($img['image'] == 1) {
             return [
-                'image'=>figureHTMML($this->link . $nom . '.jpg',  $nom . ' Grande'),
+                'image'=>figureHTML($this->link . $nom . '.jpg',  $nom . ' Grande'),
                 'vignette'=>''
                 ];
         } else if ($img['vignette'] == 1) {
             return [
                 'image'=> '',
-                'vignette'=>figureHTMML($this->link . $nom . '_vig.jpg', $nom . ' Vignette')
+                'vignette'=>figureHTML($this->link . $nom . '_vig.jpg', $nom . ' Vignette')
                 ];
         }
         return false;
@@ -299,7 +298,7 @@ class Image extends Images
     public function imgLocal($img, $nom)
     {
         if ($img['image'] == 1) {
-            return figureHTMML($nom, 'Originale');
+            return figureHTML($nom, 'Originale');
         }
         return false;
     }

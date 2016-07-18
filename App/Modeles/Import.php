@@ -17,14 +17,12 @@ class Import extends Bdd
         $this->_lib = file_contents_libelles();
     }
     
-    public  function  countMedicamentOk(){
-
-        extract($_SESSION[$this->session]);
+    /*public function countMedicamentOk($listeCIP){
 
         $sql = "SELECT count(*) as num
-                FROM produits p, familles f, s_familles s, ss_famille ss, control_images i, laboratoires l
-                WHERE p.cip13 = i.cip13
-                {$this->criterMoteurRecherche()}
+                FROM produits p, familles f, s_familles s, ss_famille ss, laboratoires l
+                WHERE p.cip13 IN $listeCIP 
+                ".$this->criterMoteurRecherche()."
                 AND p.id_famille = f.id_famille 
                 AND p.id_laboratoire = l.id_laboratoire
                 AND p.id_sfamille = s.id_sfamille 
@@ -33,9 +31,9 @@ class Import extends Bdd
         $num = $this->query($sql);
         
         return ($num)? $num[0]['num'] : 0;
-    }
+    }*/
 
-    public function selectMedicamentKo(){
+    /*public function selectMedicamentKo($listeCIP){
 
         $a = 0;
         $b = NUM;
@@ -45,8 +43,8 @@ class Import extends Bdd
         $sql = "SELECT p.produit_actif, p.id_produit, p.cip13, p.libelle_ospharm, f.designation as famille, 
                         s.designation as sFamille, ss.designation as ssFamille, l.designation as laboratoire
                 FROM produits p, familles f, s_familles s, ss_famille ss, laboratoires l
-                WHERE p.cip13 NOT IN  (SELECT cip13 FROM control_images)
-                {$this->criterMoteurRecherche()}
+                WHERE p.cip13 NOT IN  $listeCIP 
+                ".$this->criterMoteurRecherche()."
                 AND p.id_laboratoire = l.id_laboratoire
                 AND p.id_famille = f.id_famille 
                 AND p.id_sfamille = s.id_sfamille 
@@ -55,16 +53,14 @@ class Import extends Bdd
                 LIMIT $a, $b";
 
         return $this->query($sql);
-    }
+    }*/
 
-    public  function  countMedicamentKo(){
-
-        extract($_SESSION[$this->session]);
-
+    /*public function countMedicamentKo($listeCIP){
+        
         $sql = "SELECT count(*) as num
                 FROM produits p, familles f, s_familles s, ss_famille ss, laboratoires l
-                WHERE p.cip13 NOT IN  (SELECT cip13 FROM control_images)
-                {$this->criterMoteurRecherche()}
+                WHERE p.cip13 NOT IN  $listeCIP  
+                ".$this->criterMoteurRecherche()."
                 AND p.id_laboratoire = l.id_laboratoire
                 AND p.id_famille = f.id_famille 
                 AND p.id_sfamille = s.id_sfamille 
@@ -73,9 +69,9 @@ class Import extends Bdd
         $num = $this->query($sql);
         
         return ($num)? $num[0]['num'] : 0;
-    }
+    }*/
 
-    public function selectMedicament(){
+    /*public function selectMedicament(){
 
         $a = 0;
         $b = NUM;
@@ -86,7 +82,7 @@ class Import extends Bdd
                         s.designation as sFamille, ss.designation as ssFamille, l.designation as laboratoire
                 FROM produits p, familles f, s_familles s, ss_famille ss, laboratoires l
                 WHERE 1
-                {$this->criterMoteurRecherche()}
+                ".$this->criterMoteurRecherche()."
                 AND p.id_famille = f.id_famille 
                 AND p.id_laboratoire = l.id_laboratoire
                 AND p.id_sfamille = s.id_sfamille 
@@ -95,16 +91,14 @@ class Import extends Bdd
                 LIMIT $a, $b";
 
         return $this->query($sql);
-    }
+    }*/
 
-    public  function  countMedicament(){
-
-        extract($_SESSION[$this->session]);
+    /*public function countMedicament(){
 
         $sql = "SELECT count(*) as num
                 FROM produits p, familles f, s_familles s, ss_famille ss, laboratoires l
                 WHERE 1
-                {$this->criterMoteurRecherche()}
+                ".$this->criterMoteurRecherche()."
                 AND p.id_famille = f.id_famille 
                 AND p.id_laboratoire = l.id_laboratoire
                 AND p.id_sfamille = s.id_sfamille 
@@ -113,9 +107,9 @@ class Import extends Bdd
         $num = $this->query($sql);
 
         return ($num)? $num[0]['num'] : 0;
-    }
-/*
-    public function testimage($photo){
+    }*/
+
+    /*public function testimage($photo){
 
         if ($_img = $this->existImageBDD($photo)){
             $img = $_img[0];
@@ -147,41 +141,41 @@ class Import extends Bdd
         }
 
         return false;
-    }
-*/
-    public function existImageBDD($photo){
+    }*/
+
+    /*public function existImageBDD($photo){
         $sql = "SELECT * FROM control_images WHERE cip13 = $photo LIMIT 0, 1";
         return $this->query($sql);
-    }
+    }*/
 
-    public function insertControlImage($cip13){
+    /*public function insertControlImage($cip13){
         $sql = "INSERT INTO `control_images` (`cip13`, `image`, `vignette`) VALUES ('$cip13', '1', '1');";
         $this->queryInsert($sql);
-    }
+    }*/
 
-    public function insertControlImageGrande($cip13){
+    /*public function insertControlImageGrande($cip13){
         $sql = "INSERT INTO `control_images` (`cip13`, `image`, `vignette`) VALUES ('$cip13', '1', '0');";
         $this->queryInsert($sql);
-    }
+    }*/
 
-    public function insertControlImageVignette($cip13){
+    /*public function insertControlImageVignette($cip13){
         $sql = "INSERT INTO `control_images` (`cip13`, `image`, `vignette`) VALUES ('$cip13', '0', '1');";
         $this->queryInsert($sql);
-    }
+    }*/
 
-    public function selectLaboratoires()
+    /*public function selectLaboratoires()
     {
         $sql = "SELECT id_laboratoire as id, designation as nom FROM laboratoires ORDER BY designation ASC";
         return $this->query($sql);
-    }
+    }*/
 
-    public function selectFamilles()
+    /*public function selectFamilles()
     {
         $sql = "SELECT id_famille as id, designation as nom FROM familles ORDER BY designation";
         return $this->query($sql);
-    }
+    }*/
 
-    public function getLaboratoires()
+    /*public function getLaboratoires()
     {
         $data = $this->selectLaboratoires();
 
@@ -199,9 +193,9 @@ class Import extends Bdd
         </select>';
 
         return $balise;
-    }
+    }*/
 
-    public function getEtat2()
+    /*public function getEtat2()
     {
         $choix = isset($_SESSION['recherche'][$this->session]['etat'])? $_SESSION['recherche'][$this->session]['etat'] : '';
         $etat = '
@@ -222,21 +216,21 @@ class Import extends Bdd
                 . ' >';
 
         return $etat;
-    }
+    }*/
 
-    public function getCip()
+    /*public function getCip()
     {
         $choix = isset($_SESSION['recherche'][$this->session]['cip'])? $_SESSION['recherche'][$this->session]['cip'] : '';
         return '<input type="texte" name="cip13" placeholder="' . $choix . '" >';
-    }
+    }*/
 
-    public function getNoms()
+    /*public function getNoms()
     {
         $choix = isset($_SESSION['recherche'][$this->session]['nom'])? $_SESSION['recherche'][$this->session]['nom'] : '';
         return '<input type="texte" name="nom" placeholder="' . $choix . '" >';
-    }
+    }*/
 
-    public function getFamilles()
+    /*public function getFamilles()
     {
         $data = $this->selectFamilles();
 
@@ -252,16 +246,16 @@ class Import extends Bdd
         </select>';
 
         return $balise;
-    }
+    }*/
 
-    public function getSousFamilles()
+    /*public function getSousFamilles()
     {
         return 'Sous Familles';
-    }
+    }*/
 
-    public function getSousSousFamilles()
+    /*public function getSousSousFamilles()
     {
         return 'Sous Sous Famille';
-    }
+    }*/
 
 }

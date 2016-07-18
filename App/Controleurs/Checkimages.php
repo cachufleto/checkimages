@@ -57,7 +57,7 @@ class Checkimages extends Image
         include_once VUE . 'listeUpload.tpl.php';
     }
     
-    public function ficheImage()
+    /*public function ficheImage()
     {
         if(isset($_GET['cip13']) and intval($_GET['cip13'])){
 
@@ -67,5 +67,5 @@ class Checkimages extends Image
             //var_dump($liste);
            include_once VUE . 'listeUpload.tpl.php';
         }
-    }
+    }*/
 }

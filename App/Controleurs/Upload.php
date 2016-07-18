@@ -71,26 +71,28 @@ class Upload extends NewImage
         $this->localAction();
     }
 
-    public function checkerMed()
+    public function medAction()
     {
         // verifications des conditions requises
         include_once CONF . 'champsObligatoires.php';
         $this->champsObligatoires = $medicaments;
-        $this->checker($this->medicament, 1);
+        $this->type = 1;
+        $this->checker($this->medicament);
     }
 
-    public function checkerPara()
+    public function paraAction()
     {
         // verifications des conditions requises
         include_once CONF . 'champsObligatoires.php';
         $this->champsObligatoires = $parapharmacie;
-        $this->checker( $this->parapharmacie, 2);
+        $this->type = 2;
+        $this->checker($this->parapharmacie);
     }
 
-    public function checker($produits, $type)
+    public function checker($produits)
     {
-        $this->listeChangements( $produits->getProduits($this->outCIP()), $type, $produits);
-        $liste = $this->getChangementsOK($type);
+        $this->listeChangements( $produits->getProduits($this->outCIP()), $produits);
+        $liste = $this->getChangementsOK($this->type);
         include_once VUE . 'produitsModifies.tpl.php';
     }
 

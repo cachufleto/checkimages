@@ -79,11 +79,11 @@ $_r = [
     
 'checkerMed' => [
     'controleur' => 'Upload',
-    'action' => 'checkerMed'
+    'action' => 'medAction'
     ],
 
 'checkerPara' => [
     'controleur' => 'Upload',
-    'action' => 'checkerPara'
+    'action' => 'paraAction'
     ]
 ];

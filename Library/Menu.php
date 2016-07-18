@@ -13,6 +13,12 @@ class Menu
 {
     var $info = '';
     var $file = '';
+    var $nav = [];
+
+    public function __construct()
+    {
+        $this->nav = file_contents_nav();
+    }
 
     public function afficher()
     {
@@ -50,9 +56,8 @@ class Menu
 
         $data['l'] = ($p)? $data['b']."&produit=$produit" : $data['b'];
 
-        include CONF . 'nav.inc';
         $data['liensPages'] = '';
-        foreach ($nav as $page){
+        foreach ($this->nav as $page){
             $data['liensPages'] .= '<a '. (
                 ($data['page'] == $page)? 'class="actif"' : ""
                 ) . ' href="?page=' . $page . '"> '.$this->info->_lib[$page].'</a>';
@@ -103,9 +108,8 @@ class Menu
 
         $data['l'] = ($p)? $data['b']."&produit=$produit" : $data['b'];
 
-        include CONF . 'nav.inc';
         $data['liensPages'] = '';
-        foreach ($nav as $page){
+        foreach ($this->nav as $page){
             $data['liensPages'] .= '<a '. (
                 ($data['page'] == $page)? 'class="actif"' : ""
                 ) . ' href="?page=' . $page . '"> '.$this->info->_lib[$page].'</a>';
@@ -156,9 +160,8 @@ class Menu
 
         $data['l'] = ($p)? $data['b']."&produit=$produit" : $data['b'];
 
-        include CONF . 'nav.inc';
         $data['liensPages'] = '';
-        foreach ($nav as $page){
+        foreach ($this->nav as $page){
             $data['liensPages'] .= '<a '. (
                 ($data['page'] == $page)? 'class="actif"' : ""
                 ) . ' href="?page=' . $page . '"> '.$this->info->_lib[$page].'</a>';

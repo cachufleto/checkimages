@@ -109,4 +109,10 @@ class NewImages extends Bdd
         return $this->queryInsert($sql);
     }
 
+    public function getCIP($type)
+    {
+        $sql = "SELECT cip13 FROM control_images WHERE type = $type;";
+        return $this->query($sql);
+    }
+
 }

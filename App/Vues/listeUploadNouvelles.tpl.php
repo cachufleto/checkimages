@@ -13,13 +13,13 @@ foreach ($liste as $key => $image){
     $nom = $image['nom']. ' ['. $image['site'].']';
     $zap = isset($image['zapper'])? $image['zapper'] : 0;
     $existe = (file_exists(PHOTO . $image['nom']. '.jpg'))?
-        figureHTMML(PHOTO . $image['nom'] . '.jpg', $image['nom']) : '';
+        figureHTML(PHOTO . $image['nom'] . '.jpg', $image['nom']) : '';
 
     $existepng = (file_exists(PHOTO . $image['nom']. '.png'))?
-        figureHTMML(PHOTO . $image['nom'] . '.png', $image['nom']) : '';
+        figureHTML(PHOTO . $image['nom'] . '.png', $image['nom']) : '';
 
     $existesans = (file_exists(PHOTO . $image['nom']))?
-        figureHTMML(PHOTO . $image['nom'], $image['nom']) : '';
+        figureHTML(PHOTO . $image['nom'], $image['nom']) : '';
 
     $denomination = (isset($image['data']['denomination']))? utf8_encode($image['data']['denomination']) : '';
     $presentation = (isset($image['data']['presentation']))? utf8_encode($image['data']['presentation']) : '';

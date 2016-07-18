@@ -13,7 +13,8 @@ class Images extends Bdd
 {
     var $rechercheNom = '';
     var $rechercheCip = '';
-    public  function  getCountR()
+    
+    public function getCountR()
     {
         $sql = "SELECT count(*) as num
                 FROM images i, produits p
@@ -28,7 +29,7 @@ class Images extends Bdd
         return ($num)? $num[0]['num'] : 0;
     }
 
-    public  function  getCount()
+    public function getCount()
     {
         $sql = "SELECT count(*) as num
                 FROM images i
@@ -41,7 +42,7 @@ class Images extends Bdd
         return ($num)? $num[0]['num'] : 0;
     }
 
-    public  function  getCountKoR()
+    public function getCountKoR()
     {
 
         $sql = "SELECT count(*) as num
@@ -56,7 +57,7 @@ class Images extends Bdd
         return ($num)? $num[0]['num'] : 0;
     }
 
-    public  function  getCountKo()
+    public function getCountKo()
     {
 
         $sql = "SELECT count(*) as num
@@ -70,7 +71,7 @@ class Images extends Bdd
         return ($num)? $num[0]['num'] : 0;
     }
 
-    public  function  getCountOkR()
+    public function getCountOkR()
     {
         
         $sql = "SELECT count(*) as num
@@ -87,7 +88,7 @@ class Images extends Bdd
         return ($num)? $num[0]['num'] : 0;
     }
 
-    public  function  getCountOk()
+    public function getCountOk()
     {
 
         $sql = "SELECT count(*) as num
@@ -181,9 +182,9 @@ class Images extends Bdd
                 WHERE  i.zapper  {$this->zapper}
                 {$this->rechercheCip}
                 {$this->rechercheNom}
+                ".$this->criterMoteurRecherche()."
                 AND i.id = p.id_image 
-                ORDER BY p.denomination ASC, i.nom ASC ".
-                $this->criterMoteurRecherche();
+                ORDER BY p.denomination ASC, i.nom ASC ";
 
         return $this->query($sql);
     }
@@ -288,6 +289,9 @@ class Images extends Bdd
         $this->queryUpdate($sql);
     }
 
+    /*
+     * Utilisé par l'obejt externe
+     * */
     public function getImage($id)
     {
         $sql = "SELECT * FROM images WHERE id = $id;";

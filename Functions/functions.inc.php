@@ -13,6 +13,18 @@ function file_contents_libelles()
     return $_libelle;
 }
 
+function file_contents_mimes()
+{
+    include CONF . 'mimes.php';
+    return $mimes;
+}
+
+function file_contents_nav()
+{
+    include CONF . 'nav.inc';
+    return $nav;
+}
+
 /*
    Return error codes:
    1 = Invalid URL host
@@ -65,7 +77,7 @@ function remote_file_exists ($url)
     return $return;
 }
 
-function afficheMenu($page, $session, $numProduits = 0)
+/*function afficheMenu($page, $session, $numProduits = 0)
 {
 
     include CONF . 'libelles.php';
@@ -87,9 +99,9 @@ function afficheMenu($page, $session, $numProduits = 0)
 
     include VUE . 'menu_old.tpl.php';
     return $f;
-}
+}*/
 
-function testPagination($session, $num, $page)
+/*function testPagination($session, $num, $page)
 {
     if($num < $_SESSION[$session]['a']){
         $_SESSION[$session]['display'] = intval( $num / $_SESSION[$session]['b']);
@@ -97,10 +109,10 @@ function testPagination($session, $num, $page)
         exit();
     }
     $_SESSION[$session]['a'] = $_SESSION[$session]['b'] * $_SESSION[$session]['display'];
-}
+}*/
 
 
-function listerReperoires($dir){
+/*function listerReperoires($dir){
 // Ouvre un dossier bien connu, et liste tous les fichiers
     if (is_dir($dir)) {
         if ($dh = opendir($dir)) {
@@ -110,9 +122,9 @@ function listerReperoires($dir){
             closedir($dh);
         }
     }
-}
+}*/
 
-function figureHTMML($nom, $texte){
+function figureHTML($nom, $texte){
     return "
             <figure>
             <img src='$nom' alt='$texte'/>

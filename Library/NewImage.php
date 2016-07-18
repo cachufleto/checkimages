@@ -18,14 +18,14 @@ class NewImage extends NewImages
     var $mimes = [];
     var $page = '';
     var $listeRecherche = 'Recherche ';
+    var $type = 0;
 
     public function __construct()
     {
         $this->page = $_GET['page'];
-        include CONF . 'libelles.php';
-        $this->_lib = $_libelle;
-        include CONF . 'mimes.php';
-        $this->mimes = $mimes;
+        $this->type = ($this->page == 'medicament')? 1 : 2;
+        $this->_lib = file_contents_libelles();
+        $this->mimes = file_contents_mimes();
         //var_dump($this);
     }
 
@@ -133,10 +133,10 @@ class NewImage extends NewImages
 
         if (!empty($cip13) and $this->parapharmacie->getCount()){
             $id = $this->setImageLocal($repertoire, $nom, $cip13);
-            $this->setProduit($id, $cip13, $type=2);
+            $this->setProduit($id, $cip13, 2);
         } else if (!empty($cip13) and $this->medicament->getCount()){
             $id = $this->setImageLocal($repertoire, $nom, $cip13);
-            $this->setProduit($id, $cip13);
+            $this->setProduit($id, $cip13, 1);
         } else {
             $id = $this->setImageLocal($repertoire, $nom);
         }
@@ -145,12 +145,12 @@ class NewImage extends NewImages
         $this->listeLocal['nom'] .= ", '$nom'";
     }
 
-    public function listeChangements($liste, $type, $produits)
+    public function listeChangements($liste, $produits)
     {
         $_listeMod = [];
         $_listeMod['ko'] = $_listeMod['ok'] = [];
         foreach ($liste as $key=>$produit){
-            $data = $this->checkProduits($produit, $type, $produits->checkImage($produit['cip13']));
+            $data = $this->checkProduits($produit, $produits->checkImage($produit['cip13']));
             if(isset($data['ko'])){
                 $produits->updateProduitEtat($produit['id_produit'], 'i');
             }
@@ -167,7 +167,7 @@ class NewImage extends NewImages
      * passage en hors ligne ou en ligne selon les critaires specifiées
      */
 
-    public function checkProduits($produit, $type, $img)
+    public function checkProduits($produit, $img)
     {
         $mod = ['ko', 'ok'];
         $msg = $ko_msg = $i_msg = '';
@@ -196,12 +196,12 @@ class NewImage extends NewImages
 
         if(!empty($msg)) {
             // passage hors ligne
-            $this->produitModification($produit, 1, $type, $msg);
+            $this->produitModification($produit, 1, $msg);
             $mod['ko'] = 1;
         } else if(!empty($i_msg)){
             if(empty($ko_msg)) {
                 // passage en ligne
-                $this->produitModification($produit, 2, $type, $i_msg);
+                $this->produitModification($produit, 2, $i_msg);
                 $mod['ok'] = 1;
             } else {
                 $mod['ko'] = 1;
@@ -211,24 +211,23 @@ class NewImage extends NewImages
         return $mod;
     }
 
-    public function produitModification($produit, $etat, $type, $msg)
+    public function produitModification($produit, $etat, $msg)
     {
         $mod = $this->getProduitModification($produit['cip13']);
 
         if(!empty($mod)){
-            $this->updateProduitModification($produit['cip13'], $etat, $type, $msg);
+            $this->updateProduitModification($produit['cip13'], $etat, $this->type, $msg);
             return;
         }
 
-        $this->setProduitModification($produit['cip13'], $etat, $type, $msg);
+        $this->setProduitModification($produit['cip13'], $etat, $this->type, $msg);
         return;
     }
 
     public function outCIP()
     {
         // verifications des conditions requises
-        $type = 1;
-        $out = $this->getProduitModificationKo($type);
+        $out = $this->getProduitModificationKo($this->type);
         $outCIP = " AND cip13 NOT IN (-1";
         foreach ($out as $key=>$cip){
             $outCIP .= ",{$cip['cip13']} ";
@@ -244,18 +243,28 @@ class NewImage extends NewImages
         return !empty($img)? $img[0] : false;
     }
 
-    public function setImage($cip13, $grande = 0, $vignette = 0)
+    public function setImage($cip13, $grande = 0, $vignette = 0, $type=0)
     {
-        $sql = "INSERT INTO `control_images` (`cip13`, `image`, `vignette`) VALUES ('$cip13', $grande, $vignette);";
+        $sql = "INSERT INTO `control_images` (`cip13`, `image`, `vignette`, `type`) 
+                VALUES ('$cip13', $grande, $vignette, $type);";
         $this->queryInsert($sql);
     }
 
-    public function updateImage($cip13, $grande = 0, $vignette = 0)
+    public function updateImage($cip13, $grande = 0, $vignette = 0, $type = 0)
     {
         $sql = "UPDATE `control_images` 
-                set `image` = $grande, `vignette` = $vignette 
+                set `image` = $grande, `vignette` = $vignette, `type` = $type 
                 WHERE `cip13` = '$cip13';";
         $this->queryUpdate($sql);
     }
 
+    public function listeCIP()
+    {
+        $liste = $this->getCIP($this->type);
+        $listeCIP = '';
+        foreach ($liste as $key=>$data){
+            $listeCIP .= ", {$data['cip13']}";
+        }
+        return "(-1$listeCIP)";
+    }
 }
