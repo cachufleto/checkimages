@@ -36,6 +36,7 @@ class Medicaments extends Produit
 
         $this->image = new Image();
         $this->image->connexion(SURFIMAGE);
+        //$this->image->session = $this->session;
         $this->image->session = $this->session;
     }
 

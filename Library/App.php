@@ -106,6 +106,8 @@ class App
                                                         ) : 0;
             }
         }
+
+        $_SESSION['actif'] = $this->session;
     }
 
     function setSessionMoteurRecherche()

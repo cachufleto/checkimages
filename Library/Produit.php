@@ -27,12 +27,17 @@ class Produit extends Produits
     {
         $this->page = $_GET['page'];
         $this->_lib = file_contents_libelles();
+        //$this->session = isset($this->session)? $this->session : 'Checkimages';
+        $this->session = $_SESSION['actif'];
 
         $this->control = new NewImage();
         $this->control->connexion(SURFIMAGE);
+        //$this->control->session = $this->session;
         $this->control->session = $this->session;
         $this->control->listeCIP();
         $this->selectCIP = $this->control->selectCIP;
+        debug($this->session, 'SESSION');
+        debug($this, 'OBJ');
     }
 
     public function count()
