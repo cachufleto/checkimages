@@ -33,7 +33,7 @@ foreach($liste as $key=>$info){
             <div class='ligne'><label>{$this->_lib['produit_actif']} : </label><div>{$this->_lib['etat'][$info['produit_actif']]}</div></div>
             <div class='ligne'><label>{$this->_lib['image']} : </label><div></div></div>
             <div class='ligne'><div class='vignette'>$vignette</div></div>
-            <div class='ligne'><label>EN COURS : </label><div></div></div>
+            <div class='ligne'><label>{$this->_lib['etat']['e']} : </label><div></div></div>
             <div class='ligne'><div class='encours'>$encours</div></div>
         </div>
         <div class='ligneimg' style='float:left; width:30%;'>

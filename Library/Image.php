@@ -410,83 +410,8 @@ class Image extends Images
 
     public function enregistrerImageJpg($produit, $url = '')
     {
-        $_url = empty($url)?
-            str_replace('//'.$produit['nom'], '/'.$produit['nom'], $produit['site'] . '/' . $produit['nom']) :
-            $url;
-
-        $image = $this->open_image($_url);
-        if ($image === false) { die ('Unable to open image'); }
-
-        $w = imagesx($image);
-        $h = imagesy($image);
-
-        //calculate new image dimensions (preserve aspect)
-        if(isset($_GET['w']) && !isset($_GET['h'])){
-            $new_w=$_GET['w'];
-            $new_h=$new_w * ($h/$w);
-        } elseif (isset($_GET['h']) && !isset($_GET['w'])) {
-            $new_h=$_GET['h'];
-            $new_w=$new_h * ($w/$h);
-        } else {
-            $new_w=isset($_GET['w'])?$_GET['w']:560;
-            $new_h=isset($_GET['h'])?$_GET['h']:560;
-            if(($w/$h) > ($new_w/$new_h)){
-                $new_h=$new_w*($h/$w);
-            } else {
-                $new_w=$new_h*($w/$h);
-            }
-        }
-
-        $im2 = ImageCreateTrueColor($new_w, $new_h);
-        imagecopyResampled ($im2, $image, 0, 0, 0, 0, $new_w, $new_h, $w, $h);
-        //effects
-        if(isset($_GET['blur'])){
-            $lv=$_GET['blur'];
-            for($i=0; $i<$lv;$i++){
-                $matrix=array(array(1,1,1),array(1,1,1),array(1,1,1));
-                $divisor = 9;
-                $offset = 0;
-                imageconvolution($im2, $matrix, $divisor, $offset);
-            }
-        }
-
-        if(isset($_GET['sharpen'])){
-            $lv=$_GET['sharpen'];
-            for($i=0; $i<$lv;$i++){
-                $matrix = array(array(-1,-1,-1),array(-1,16,-1),array(-1,-1,-1));
-                $divisor = 8;
-                $offset = 0;
-                imageconvolution($im2, $matrix, $divisor, $offset);
-            }
-        }
-
-        imagejpeg($im2, PHOTO. "en_cours/{$produit['cip13']}.jpg");
+        enregistrerImageJpg($produit, $url);
         $this->updateImageURL($produit['id'], $produit['cip13']);
-
-        if(preg_match('/^(photos)/', $produit['site']) AND file_exists(SITE . $_url)){
-            unlink(SITE . $_url);
-        }
-    }
-
-    public function open_image ($file) {
-        //detect type and process accordinally
-        global $type;
-        $size=getimagesize($file);
-        switch($size["mime"]){
-            case "image/jpeg":
-                $im = imagecreatefromjpeg($file); //jpeg file
-                break;
-            case "image/gif":
-                $im = imagecreatefromgif($file); //gif file
-                break;
-            case "image/png":
-                $im = imagecreatefrompng($file); //png file
-                break;
-            default:
-                $im=false;
-                break;
-        }
-        return $im;
     }
 
     public function imageAction()

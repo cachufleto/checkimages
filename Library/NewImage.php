@@ -11,6 +11,9 @@ namespace App;
 require MOD . 'NewImages.php';
 use Model\NewImages;
 
+require LIB . 'image.php';
+use App\Image;
+
 class NewImage extends NewImages
 {
     var $link = '';
@@ -138,13 +141,13 @@ class NewImage extends NewImages
             " AND cip13 LIKE '$cip13' ";*/
 
         if (!empty($cip13) and $this->parapharmacie->getUpdateCount($cip13)){
-            debug($this->parapharmacie,'SQL QUERY');
             $id = $this->setImageLocal($repertoire, $nom, $cip13);
             $this->setProduit($id, $cip13, 2);
+            $this->uploadImageJpg(['site'=>$repertoire, 'nom'=>$nom, 'cip13'=>$cip13]);
         } else if (!empty($cip13) and $this->medicament->getUpdateCount($cip13)){
-            debug($this->medicament,'SQL QUERY');
             $id = $this->setImageLocal($repertoire, $nom, $cip13);
             $this->setProduit($id, $cip13, 1);
+            $this->uploadImageJpg(['site'=>$repertoire, 'nom'=>$nom, 'cip13'=>$cip13]);
         } else {
             $id = $this->setImageLocal($repertoire, $nom);
         }
@@ -262,4 +265,13 @@ class NewImage extends NewImages
         };
         $this->selectCIP = "(''$listeCIP)";
     }
+
+    public function uploadImageJpg($produit)
+    {
+        if(!file_exists('photos/en_cours/' . $produit['nom'])){
+            enregistrerImageJpg($produit);
+        }
+    }
+
+
 }
