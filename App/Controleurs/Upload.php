@@ -68,9 +68,9 @@ class Upload extends NewImage
         include_once VUE . 'listeUploadNouvelles.tpl.php';
     }
     
-    public function netoillerAction()
+    public function nettoyerAction()
     {
-        $this->netoillerBDD();
+        $this->nettoyerBDD();
         $this->localAction();
     }
 
@@ -96,7 +96,4 @@ class Upload extends NewImage
         $liste = $this->getChangementsOK($this->type);
         include_once VUE . 'produitsModifies.tpl.php';
     }
-
-
-
 }

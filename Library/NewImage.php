@@ -35,7 +35,7 @@ class NewImage extends NewImages
         $this->type = ($this->session == 'Medicaments')? 1 : 2;
     }
 
-    public function netoillerBDD(){
+    public function nettoyerBDD(){
         $liste = $this->getImagesLocal();
         foreach($liste as $key=>$image){
             $supprimer = true;

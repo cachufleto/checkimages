@@ -42,9 +42,9 @@ $_r = [
     ],
     
 
-'netoiller' => [
+'nettoyer' => [
         'controleur' => 'Upload',
-        'action' => 'netoillerAction'
+        'action' => 'nettoyerAction'
     ],
 
 'existant' => [
