@@ -22,6 +22,7 @@ class Produit extends Produits
     var $listeRecherche = 'Recherche ';
     var $control = '';
     var $selectCIP = '';
+    var $BDD = '';
 
     public function __construct()
     {

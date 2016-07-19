@@ -148,7 +148,7 @@ function figureHTML($nom, $texte){
 function testCIP13($cip13)
 {
     $cip13 = utf8_decode(trim(str_replace(' ', '', $cip13)));
-    return (!preg_match('/[a-zA-Z-]/', $cip13) and strlen($cip13))? $cip13 : false;
+    return (!preg_match('/[a-zA-Z-]/', $cip13) and strlen($cip13) == 13)? $cip13 : false;
 }
 
 function remove_accents($str, $charset='utf-8')

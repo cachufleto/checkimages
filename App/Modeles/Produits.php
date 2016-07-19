@@ -128,6 +128,18 @@ class Produits extends Bdd
         return $this->query($sql);
     }
 
+    public function getUpdateCount($cip13)
+    {
+
+        $sql = "SELECT count(*) as num
+                FROM produits
+                WHERE cip13 = '$cip13'";
+
+        $num = $this->query($sql);
+
+        return ($num AND $num[0]['num'] > 0)? true : false;
+    }
+
     public function getLaboratoires()
     {
         $sql = "SELECT DISTINCT l.id_laboratoire as id, l.designation 

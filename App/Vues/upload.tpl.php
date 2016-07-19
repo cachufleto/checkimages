@@ -7,7 +7,7 @@
     <a href="?page=local">Importer des images du Local</a>
 </div>
 <div id="Upload">
-    <a href="?page=netoiller">Assainier la base de données des images locales</a>
+    <a href="?page=netoiller">Nettoyer la base de données des images locales</a>
 </div>
 <div id="Upload">
     <a href="?page=checkerMed">Checker la validité des Medicaments</a>

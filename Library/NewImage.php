@@ -75,6 +75,7 @@ class NewImage extends NewImages
                             // injection en base de données
                             $name = utf8_encode(basename($test));
                             $name = remove_accents($name);
+                            $name = str_replace('GoogleChrome', '', $name);
                             if($name != basename($test) ) {
                                 copy($test, dirname($test) . '/'. $name);
                                 unlink($test);
@@ -129,17 +130,19 @@ class NewImage extends NewImages
             return false;
         }
 
-        $this->parapharmacie->zapper =
+        /*$this->parapharmacie->zapper =
             $this->medicament->zapper =
                 " >= 0 ";
         $this->parapharmacie->rechercheCip =
-            $this->medicament->rechercheCip =
-                " AND cip13 LIKE '$cip13' ";
+        $this->medicament->rechercheCip =
+            " AND cip13 LIKE '$cip13' ";*/
 
-        if (!empty($cip13) and $this->parapharmacie->getCount()){
+        if (!empty($cip13) and $this->parapharmacie->getUpdateCount($cip13)){
+            debug($this->parapharmacie,'SQL QUERY');
             $id = $this->setImageLocal($repertoire, $nom, $cip13);
             $this->setProduit($id, $cip13, 2);
-        } else if (!empty($cip13) and $this->medicament->getCount()){
+        } else if (!empty($cip13) and $this->medicament->getUpdateCount($cip13)){
+            debug($this->medicament,'SQL QUERY');
             $id = $this->setImageLocal($repertoire, $nom, $cip13);
             $this->setProduit($id, $cip13, 1);
         } else {

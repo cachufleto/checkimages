@@ -38,11 +38,13 @@ class Upload extends NewImage
         $this->listeLocal = ['id'=>'-1','nom'=>"'_'"];
         
         $this->parapharmacie = new Produit();
+        $this->parapharmacie->BDD = PARAPHARMACIE;
         $this->parapharmacie->connexion(PARAPHARMACIE);
         $this->parapharmacie->link = 'https://www.pharmaplay.fr/p/produits/';
         $this->parapharmacie->session = $this->session;
         
         $this->medicament = new Produit();
+        $this->medicament->BDD = MEDICAMENTS;
         $this->medicament->connexion(MEDICAMENTS);
         $this->medicament->link = 'https://www.pharmaplay.fr/m/produits/';
         $this->medicament->session = $this->session;
