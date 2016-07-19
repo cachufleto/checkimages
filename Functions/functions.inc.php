@@ -25,6 +25,12 @@ function file_contents_nav()
     return $nav;
 }
 
+function file_contents_option()
+{
+    include CONF . 'nav.inc';
+    return $option;
+}
+
 function file_contents_medicaments()
 {
     include CONF . 'champsObligatoires.php';

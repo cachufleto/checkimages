@@ -108,12 +108,12 @@ class Menu
 
         $data['l'] = ($p)? $data['b']."&produit=$produit" : $data['b'];
 
-        $data['liensPages'] = '';
-        foreach ($this->nav as $page){
+        $data['liensPages'] = $this->liensData();
+        /*foreach ($this->nav as $page){
             $data['liensPages'] .= '<a '. (
                 ($data['page'] == $page)? 'class="actif"' : ""
                 ) . ' href="?page=' . $page . '"> '.$this->info->_lib[$page].'</a>';
-        }
+        }*/
 
         $data['ok'] = ($produit == 'ok')? 'class="actif"' : "";
         $data['ko'] = ($produit == 'ko')? 'class="actif"' : "";
@@ -160,12 +160,12 @@ class Menu
 
         $data['l'] = ($p)? $data['b']."&produit=$produit" : $data['b'];
 
-        $data['liensPages'] = '';
-        foreach ($this->nav as $page){
+        $data['liensPages'] = $this->liensData();
+        /*foreach ($this->nav as $page){
             $data['liensPages'] .= '<a '. (
                 ($data['page'] == $page)? 'class="actif"' : ""
                 ) . ' href="?page=' . $page . '"> '.$this->info->_lib[$page].'</a>';
-        }
+        }*/
 
         $data['ok'] = ($produit == 'ok')? 'class="actif"' : "";
         $data['ko'] = ($produit == 'ko')? 'class="actif"' : "";
@@ -174,5 +174,18 @@ class Menu
         $data['p'] = (($data['suivante'])? $data['suivante'] : 1) . ' / ' . intval($data['numProduits']/$data['b'] +1);
 
         return $data;
+    }
+
+    public function liensData()
+    {
+        $option = file_contents_option();
+        $action = isset($option[$this->info->page])? $option[$this->info->page] : $this->info->page;
+        $liensPages = '';
+        foreach ($this->nav as $page){
+            $liensPages .= '<a '. (
+                ($action == $page)? 'class="actif"' : ""
+                ) . ' href="?page=' . $page . '"> '.$this->info->_lib[$page].'</a>';
+        }
+        return $liensPages;
     }
 }
