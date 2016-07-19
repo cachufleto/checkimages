@@ -316,10 +316,10 @@ class Produit extends Produits
                     $liste = '';
                     if(is_array($listeNew)){
                         foreach ($listeNew as $key=>$cip){
-                            $liste .= (empty($liste)? "" : ", ") . "'{$cip['cip13']}'";
+                            $liste .= ", '{$cip['cip13']}'";
                         }
                     }
-                    $option[] = !empty($liste)? "p.cip13 IN ($liste)" : "";
+                    $option[] = "p.cip13 IN (''$liste)";
                 }
             }
             // recherche partielle

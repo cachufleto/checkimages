@@ -30,7 +30,7 @@ class Image extends Images
         $this->control = new NewImage();
         $this->control->connexion(SURFIMAGE);
         // la valeur de session estinjecté à la suite
-        // $this->control->session = $this->session;
+        $this->control->session = $this->session;
     }
 
     public function count($recherche)

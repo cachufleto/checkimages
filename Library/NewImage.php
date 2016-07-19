@@ -26,30 +26,35 @@ class NewImage extends NewImages
     public function __construct()
     {
         $this->page = $_GET['page'];
-        $this->type = ($this->page == 'medicament')? 1 : 2;
         $this->_lib = file_contents_libelles();
         $this->mimes = file_contents_mimes();
+        $this->session = ($_SESSION['actif']);
+        $this->type = ($this->session == 'Medicaments')? 1 : 2;
     }
-
 
     public function netoillerBDD(){
         $liste = $this->getImagesLocal();
         foreach($liste as $key=>$image){
             $supprimer = true;
             // on verifie si l'image à était traité
-            if (!empty($image['cip13']) and file_exists(SITE . 'photos/en_cours/'.$image['cip13'].'.jpg')){
+            if (!empty($image['cip13']) and file_exists(SITE . 'photos/production/original/'.$image['cip13'].'.jpg')){
+                $supprimer = false;
+            } else if (!empty($image['cip13']) and file_exists(SITE . 'photos/en_cours/'.$image['cip13'].'.jpg')){
+                $supprimer = false;
+            } else if (file_exists(SITE . $image['site'].'/'.$image['nom'])){
                 $supprimer = false;
             }
-            // on verifie si l'image d'origine existe
-            if (file_exists(SITE . $image['site'].'/'.$image['nom'])){
-                $supprimer = false;
-            }
+            
             if($supprimer){
-                $this->deleteUdate($image['id']);
-                $this->deleteUdateProduit($image['id']);
+                if(preg_match('#^photo#', $image['site'])){
+                    $this->deleteUpdate($image['id']);
+                } else {
+                    $this->updateUpdate($image['id']);
+                }
+                $this->deleteUpdateProduit($image['id']);
+
             }
         }
-
     }
 
     public function listerReperoires($dir){
@@ -104,11 +109,9 @@ class NewImage extends NewImages
             foreach ($this->mimes as $type => $motif){
                 if(preg_match("#$type#", $typeFile)){
                     return true;
-                };
+                }
             }
-            
         }
-
         return false;
     }
 

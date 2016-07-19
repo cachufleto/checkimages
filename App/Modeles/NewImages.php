@@ -18,7 +18,6 @@ class NewImages extends Bdd
     {
         $sql = "SELECT * 
                 FROM images 
-                WHERE site LIKE 'photos/traitement%' 
                 ORDER BY nom ASC;";
         return $this->query($sql);
     }
@@ -57,15 +56,23 @@ class NewImages extends Bdd
         return $this->query($sql);
     }
     
-    public function deleteUdate($id)
+    public function updateUpdate($id)
+    {
+        $sql = "UPDATE `images` 
+                set `cip13` = '' 
+                WHERE `id` = $id;";
+        return $this->queryUpdate($sql);
+    }
+
+    public function deleteUpdate($id)
     {
         $sql = "DELETE FROM `images` WHERE id = $id;";
         return $this->queryUpdate($sql);
     }
 
-    public function deleteUdateProduit($id)
+    public function deleteUpdateProduit($id_image)
     {
-        $sql = "DELETE FROM `produits` WHERE id = $id;";
+        $sql = "DELETE FROM `produits` WHERE id_image = $id_image;";
         return $this->queryUpdate($sql);
     }
 
@@ -136,6 +143,4 @@ class NewImages extends Bdd
                 WHERE `cip13` = '$cip13';";
         $this->queryUpdate($sql);
     }
-
-
 }
