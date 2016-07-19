@@ -1,11 +1,5 @@
 <div class ="ligne">
     <?php
-/**
- * Created by PhpStorm.
- * User: User
- * Date: 31/05/2016
- * Time: 16:45
- */
 $entete = '
     <div>
         <div>';

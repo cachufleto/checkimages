@@ -1,7 +1,7 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: User
+ * User: Carlos PAZ DUPRIEZ
  * Date: 06/06/2016
  * Time: 11:58
  */
@@ -32,17 +32,17 @@ class Upload extends NewImage
         parent::__construct();
         $this->connexion(SURFIMAGE);
         $this->zapper = isset($_SESSION['recherche'][$this->session]['etat'])? "= ".$_SESSION['recherche'][$this->session]['etat'] : "= 0";
-        
+        // menu
         $this->menu = new Menu();
         $this->menu->info = $this;
         $this->listeLocal = ['id'=>'-1','nom'=>"'_'"];
-        
+        // produits de parapharmacie
         $this->parapharmacie = new Produit();
         $this->parapharmacie->BDD = PARAPHARMACIE;
         $this->parapharmacie->connexion(PARAPHARMACIE);
         $this->parapharmacie->link = 'https://www.pharmaplay.fr/p/produits/';
         $this->parapharmacie->session = $this->session;
-        
+        // Medicaments
         $this->medicament = new Produit();
         $this->medicament->BDD = MEDICAMENTS;
         $this->medicament->connexion(MEDICAMENTS);
@@ -50,12 +50,18 @@ class Upload extends NewImage
         $this->medicament->session = $this->session;
     }
 
+    /**
+     * Liste les options
+     */
     public function indexAction()
     {
         $this->menu->afficherNewImages();
         include_once VUE . 'upload.tpl.php';
     }
 
+    /**
+     * charge les nouvelles images en local
+     */
     public function localAction()
     {
         $this->menu->afficherNewImages();
@@ -67,7 +73,10 @@ class Upload extends NewImage
         $f = '';
         include_once VUE . 'listeUploadNouvelles.tpl.php';
     }
-    
+
+    /**
+     * supprime les informations inutiles de la base des images
+     */
     public function nettoyerAction()
     {
         $this->nettoyerBDD();

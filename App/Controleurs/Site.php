@@ -1,7 +1,7 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: User
+ * User: CARLOS PAZ
  * Date: 31/05/2016
  * Time: 15:47
  */
@@ -17,8 +17,11 @@ class Site extends Import
     var $page = '';
     var $session = 'Site';
 
-    public function indexAction(){
-
+    /**
+     * Page de démarrage
+     */
+    public function indexAction()
+    {
         include_once VUE . 'index.tpl.php';
     }
 

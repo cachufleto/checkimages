@@ -1,7 +1,7 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: User
+ * User: Carlos PAZ DUPRIEZ
  * Date: 08/07/2016
  * Time: 10:47
  */
@@ -56,6 +56,8 @@ class NewImage extends NewImages
                 }
                 $this->deleteUpdateProduit($image['id']);
 
+            } else if(!empty($image['cip13']) AND empty($produit = $this->getProduitCIP($image['cip13']))){
+                $this->setProduit($image['id'], $image['cip13'], $this->type);
             }
         }
     }

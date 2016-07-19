@@ -1,7 +1,7 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: User
+ * User: Carlos PAZ DUPRIEZ
  * Date: 08/07/2016
  * Time: 10:52
  */
@@ -13,6 +13,14 @@ class NewImages extends Bdd
 {
     var $rechercheNom = '';
     var $rechercheCip = '';
+
+    public function getProduitCIP($cip13)
+    {
+        $sql = "SELECT * 
+                FROM produits
+                WHERE cip13 = '$cip13';";
+        return $this->query($sql);
+    }
 
     public function getImagesLocal()
     {
