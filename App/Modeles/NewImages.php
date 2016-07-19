@@ -109,10 +109,33 @@ class NewImages extends Bdd
         return $this->queryInsert($sql);
     }
 
-    public function getCIP($type)
+    public function getCIP($type, $selectImages)
     {
-        $sql = "SELECT cip13 FROM control_images WHERE type = $type;";
+        $sql = "SELECT cip13 FROM control_images WHERE type = $type $selectImages;";
         return $this->query($sql);
     }
+
+    public function getImage($nom)
+    {
+        $sql = "SELECT * FROM control_images WHERE cip13 LIKE '$nom'";
+        $img = $this->query($sql);
+        return !empty($img)? $img[0] : false;
+    }
+
+    public function setImage($cip13, $grande = 0, $vignette = 0, $type=0)
+    {
+        $sql = "INSERT INTO `control_images` (`cip13`, `image`, `vignette`, `type`) 
+                VALUES ('$cip13', $grande, $vignette, $type);";
+        $this->queryInsert($sql);
+    }
+
+    public function updateImage($cip13, $grande = 0, $vignette = 0, $type = 0)
+    {
+        $sql = "UPDATE `control_images` 
+                set `image` = $grande, `vignette` = $vignette, `type` = $type 
+                WHERE `cip13` = '$cip13';";
+        $this->queryUpdate($sql);
+    }
+
 
 }

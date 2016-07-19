@@ -32,14 +32,16 @@ class Upload extends NewImage
         parent::__construct();
         $this->connexion(SURFIMAGE);
         $this->zapper = isset($_SESSION['recherche'][$this->session]['etat'])? "= ".$_SESSION['recherche'][$this->session]['etat'] : "= 0";
+        
         $this->menu = new Menu();
         $this->menu->info = $this;
-        // $this->recherche = !empty($this->criterMoteurRecherche())? true : false ;
         $this->listeLocal = ['id'=>'-1','nom'=>"'_'"];
+        
         $this->parapharmacie = new Produit();
         $this->parapharmacie->connexion(PARAPHARMACIE);
         $this->parapharmacie->link = 'https://www.pharmaplay.fr/p/produits/';
         $this->parapharmacie->session = $this->session;
+        
         $this->medicament = new Produit();
         $this->medicament->connexion(MEDICAMENTS);
         $this->medicament->link = 'https://www.pharmaplay.fr/m/produits/';
@@ -59,7 +61,6 @@ class Upload extends NewImage
         header('content-type image/jpeg');
 
         $data = $this->listeLocal;
-        //var_dump($data);
         $liste = $this->getListeNewImages($data['id'], $data['nom']);
         $f = '';
         include_once VUE . 'listeUploadNouvelles.tpl.php';
@@ -74,8 +75,7 @@ class Upload extends NewImage
     public function medAction()
     {
         // verifications des conditions requises
-        include_once CONF . 'champsObligatoires.php';
-        $this->champsObligatoires = $medicaments;
+        $this->champsObligatoires = file_contents_medicaments();
         $this->type = 1;
         $this->checker($this->medicament);
     }
@@ -83,8 +83,7 @@ class Upload extends NewImage
     public function paraAction()
     {
         // verifications des conditions requises
-        include_once CONF . 'champsObligatoires.php';
-        $this->champsObligatoires = $parapharmacie;
+        $this->champsObligatoires = file_contents_parapharmacie();
         $this->type = 2;
         $this->checker($this->parapharmacie);
     }

@@ -25,6 +25,19 @@ function file_contents_nav()
     return $nav;
 }
 
+function file_contents_medicaments()
+{
+    include CONF . 'champsObligatoires.php';
+    return $medicaments;
+}
+
+function file_contents_parapharmacie()
+{
+    include CONF . 'champsObligatoires.php';
+    return $parapharmacie;
+}
+
+
 /*
    Return error codes:
    1 = Invalid URL host

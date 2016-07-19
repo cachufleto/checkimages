@@ -32,13 +32,16 @@ class Checkimages extends Image
         parent::__construct();
         $this->connexion(SURFIMAGE);
         $this->zapper = isset($_SESSION['recherche'][$this->session]['etat'])? "= ".$_SESSION['recherche'][$this->session]['etat'] : "= 0";
+
         $this->menu = new Menu();
         $this->menu->info = $this;
         $this->recherche = !empty($this->criterMoteurRecherche())? true : false ;
         $this->listeLocal = ['id'=>'-1','nom'=>"'_'"];
+
         $this->parapharmacie = new Produit();
         $this->parapharmacie->connexion(PARAPHARMACIE);
         $this->parapharmacie->link = 'https://www.pharmaplay.fr/p/produits/';
+
         $this->medicament = new Produit();
         $this->medicament->connexion(MEDICAMENTS);
         $this->medicament->link = 'https://www.pharmaplay.fr/m/produits/';
@@ -64,7 +67,6 @@ class Checkimages extends Image
             $this->imageAction();
             $cip13 = isset($_POST['cip13'])? testCIP13($_POST['cip13']) : $_GET['cip13'];
             $liste = $this->getImages($this->getProduitCip($cip13));
-            //var_dump($liste);
            include_once VUE . 'listeUpload.tpl.php';
         }
     }*/

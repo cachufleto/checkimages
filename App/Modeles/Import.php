@@ -17,11 +17,11 @@ class Import extends Bdd
         $this->_lib = file_contents_libelles();
     }
     
-    /*public function countMedicamentOk($listeCIP){
+    /*public function countMedicamentOk(){
 
         $sql = "SELECT count(*) as num
                 FROM produits p, familles f, s_familles s, ss_famille ss, laboratoires l
-                WHERE p.cip13 IN $listeCIP 
+                WHERE p.cip13 IN {$this->selectCIP} 
                 ".$this->criterMoteurRecherche()."
                 AND p.id_famille = f.id_famille 
                 AND p.id_laboratoire = l.id_laboratoire
@@ -33,7 +33,7 @@ class Import extends Bdd
         return ($num)? $num[0]['num'] : 0;
     }*/
 
-    /*public function selectMedicamentKo($listeCIP){
+    /*public function selectMedicamentKo(){
 
         $a = 0;
         $b = NUM;
@@ -43,7 +43,7 @@ class Import extends Bdd
         $sql = "SELECT p.produit_actif, p.id_produit, p.cip13, p.libelle_ospharm, f.designation as famille, 
                         s.designation as sFamille, ss.designation as ssFamille, l.designation as laboratoire
                 FROM produits p, familles f, s_familles s, ss_famille ss, laboratoires l
-                WHERE p.cip13 NOT IN  $listeCIP 
+                WHERE p.cip13 IN  {$this->selectCIP} 
                 ".$this->criterMoteurRecherche()."
                 AND p.id_laboratoire = l.id_laboratoire
                 AND p.id_famille = f.id_famille 
@@ -55,11 +55,11 @@ class Import extends Bdd
         return $this->query($sql);
     }*/
 
-    /*public function countMedicamentKo($listeCIP){
+    /*public function countMedicamentKo(){
         
         $sql = "SELECT count(*) as num
                 FROM produits p, familles f, s_familles s, ss_famille ss, laboratoires l
-                WHERE p.cip13 NOT IN  $listeCIP  
+                WHERE p.cip13 IN  {$this->selectCIP}  
                 ".$this->criterMoteurRecherche()."
                 AND p.id_laboratoire = l.id_laboratoire
                 AND p.id_famille = f.id_famille 

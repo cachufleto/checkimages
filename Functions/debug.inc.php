@@ -14,7 +14,6 @@ function getDebug()
 {
     if(isset($_ENV['debug'])){
         debug(get_required_files(), 'REQUIERED');
-
         echo '<pre>';
         foreach($_ENV['debug'] as $key=>$info){
             echo "<br>$key<br>";

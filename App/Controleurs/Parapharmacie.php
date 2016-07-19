@@ -28,13 +28,16 @@ class Parapharmacie extends Produit
         parent::__construct();
         $this->link = 'https://www.pharmaplay.fr/p/produits/';
         $this->connexion(PARAPHARMACIE);
+
         $this->menu = new Menu();
         $this->menu->info = $this;
         $this->menu->file = 'Produits';
+
         $this->image = new Image();
         $this->image->connexion(SURFIMAGE);
-        include_once CONF . 'champsObligatoires.php';
-        $this->champsObligatoires = $parapharmacie;
+        $this->image->session = $this->session;
+
+        $this->champsObligatoires = file_contents_parapharmacie();
     }
 
     public function indexAction()

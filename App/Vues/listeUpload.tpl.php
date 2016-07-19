@@ -37,7 +37,6 @@ foreach ($liste as $key => $image){
     $alert = (empty($alert) AND isset($this->alert[$id]))? $existedeja : $alert;
     $med = (isset($image['data']['type']) && $image['data']['type'] == '1')? 'selected="selected"' : '';
     $para = (isset($image['data']['type']) && $image['data']['type'] == '2')? 'selected="selected"' : '';
-    //var_dump($image);
     $photo = $image['image'];
     $encours = $photo['encours'];
     $image = $photo['image'];

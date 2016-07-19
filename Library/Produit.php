@@ -21,13 +21,18 @@ class Produit extends Produits
     var $page = '';
     var $listeRecherche = 'Recherche ';
     var $control = '';
+    var $selectCIP = '';
 
     public function __construct()
     {
         $this->page = $_GET['page'];
         $this->_lib = file_contents_libelles();
+
         $this->control = new NewImage();
         $this->control->connexion(SURFIMAGE);
+        $this->control->session = $this->session;
+        $this->control->listeCIP();
+        $this->selectCIP = $this->control->selectCIP;
     }
 
     public function count()

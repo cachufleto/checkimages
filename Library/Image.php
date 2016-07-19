@@ -18,6 +18,7 @@ class Image extends Images
 {
     var $link = '';
     var $_lib = [];
+    var $session = '';
     var $page = '';
     var $listeRecherche = 'Recherche ';
 
@@ -25,8 +26,11 @@ class Image extends Images
     {
         $this->page = $_GET['page'];
         $this->_lib = file_contents_libelles();
+        
         $this->control = new NewImage();
         $this->control->connexion(SURFIMAGE);
+        // la valeur de session estinjecté à la suite
+        // $this->control->session = $this->session;
     }
 
     public function count($recherche)

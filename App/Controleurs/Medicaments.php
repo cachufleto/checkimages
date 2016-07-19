@@ -28,8 +28,7 @@ class Medicaments extends Produit
     {
         parent::__construct();
         $this->link = 'https://www.pharmaplay.fr/m/produits/';
-        include_once CONF . 'champsObligatoires.php';
-        $this->champsObligatoires = $medicaments;
+        $this->champsObligatoires = file_contents_medicaments();
         $this->connexion(MEDICAMENTS);
 
         $this->menu = new Menu();
@@ -37,6 +36,7 @@ class Medicaments extends Produit
 
         $this->image = new Image();
         $this->image->connexion(SURFIMAGE);
+        $this->image->session = $this->session;
     }
 
     public function indexAction()

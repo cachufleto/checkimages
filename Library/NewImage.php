@@ -16,9 +16,12 @@ class NewImage extends NewImages
     var $link = '';
     var $_lib = [];
     var $mimes = [];
+    var $session = '';
     var $page = '';
     var $listeRecherche = 'Recherche ';
     var $type = 0;
+    var $countListeCIP = 0;
+    var $selectCIP = '';
 
     public function __construct()
     {
@@ -26,7 +29,6 @@ class NewImage extends NewImages
         $this->type = ($this->page == 'medicament')? 1 : 2;
         $this->_lib = file_contents_libelles();
         $this->mimes = file_contents_mimes();
-        //var_dump($this);
     }
 
 
@@ -236,35 +238,22 @@ class NewImage extends NewImages
         return $outCIP;
     }
 
-    public function getImage($nom)
-    {
-        $sql = "SELECT * FROM control_images WHERE cip13 LIKE '$nom'";
-        $img = $this->query($sql);
-        return !empty($img)? $img[0] : false;
-    }
-
-    public function setImage($cip13, $grande = 0, $vignette = 0, $type=0)
-    {
-        $sql = "INSERT INTO `control_images` (`cip13`, `image`, `vignette`, `type`) 
-                VALUES ('$cip13', $grande, $vignette, $type);";
-        $this->queryInsert($sql);
-    }
-
-    public function updateImage($cip13, $grande = 0, $vignette = 0, $type = 0)
-    {
-        $sql = "UPDATE `control_images` 
-                set `image` = $grande, `vignette` = $vignette, `type` = $type 
-                WHERE `cip13` = '$cip13';";
-        $this->queryUpdate($sql);
-    }
-
     public function listeCIP()
     {
-        $liste = $this->getCIP($this->type);
+
+        $selectImages = ' AND '. ( (isset($_SESSION[$this->session]['produit']) AND $_SESSION[$this->session]['produit'] == 'ko')?
+            ' (image = 0 OR vignette = 0) ' : '(image = 1 AND vignette = 1)' );
+
+        $produit = isset($_SESSION[$this->session]['produit']) ? $_SESSION[$this->session]['produit'] : '';
+        $selectImages = !empty($produit)? $selectImages : '';
+
         $listeCIP = '';
-        foreach ($liste as $key=>$data){
-            $listeCIP .= ", {$data['cip13']}";
-        }
-        return "(-1$listeCIP)";
+        if($liste = $this->getCIP($this->type, $selectImages)){
+            $this->countListeCIP = $liste;
+            foreach ($liste as $key=>$data){
+                $listeCIP .= ", '{$data['cip13']}'";
+            }
+        };
+        $this->selectCIP = "(''$listeCIP)";
     }
 }

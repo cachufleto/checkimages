@@ -29,12 +29,12 @@ class Parapharmacie extends Bdd
         return ($num)? $num[0]['num'] : 0;
     }*/
 
-    /*public function getCountKo($listeCIP)
+    /*public function getCountKo()
     {
 
         $sql = "SELECT count(*) as num
                 FROM produits p, familles f, s_familles s, ss_famille ss, laboratoires l
-                WHERE p.cip13 NOT IN  $listeCIP
+                WHERE p.cip13 IN  {$this->selectCIP}
                 ".criterMoteurRecherche($this->page)."
                 AND p.id_laboratoire = l.id_laboratoire
                 AND p.id_famille = f.id_famille 
@@ -46,12 +46,12 @@ class Parapharmacie extends Bdd
         return ($num)? $num[0]['num'] : 0;
     }*/
 
-    /*public function getCountOk($listeCIP)
+    /*public function getCountOk()
     {
         
         $sql = "SELECT count(*) as num
                 FROM produits p, familles f, s_familles s, ss_famille ss, laboratoires l
-                WHERE p.cip13 IN $listeCIP 
+                WHERE p.cip13 IN {$this->selectCIP} 
                 ".criterMoteurRecherche($this->page)."
                 AND p.id_famille = f.id_famille 
                 AND p.id_laboratoire = l.id_laboratoire
@@ -63,12 +63,12 @@ class Parapharmacie extends Bdd
         return ($num)? $num[0]['num'] : 0;
     }*/
 
-    /*public function getOk($debut, $limit, $listeCIP)
+    /*public function getOk($debut, $limit)
     {
         $sql = "SELECT p.produit_actif, p.id_produit, p.cip13, p.libelle_ospharm, f.designation as famille,
                         s.designation as sFamille, ss.designation as ssFamille, l.designation as laboratoire
                 FROM produits p, familles f, s_familles s, ss_famille ss, laboratoires l
-                WHERE p.cip13 IN $listeCIP
+                WHERE p.cip13 IN {$this->selectCIP}
                 ".criterMoteurRecherche($this->page)."
                 AND p.id_famille = f.id_famille 
                 AND p.id_laboratoire = l.id_laboratoire
@@ -80,12 +80,12 @@ class Parapharmacie extends Bdd
         return $this->query($sql);
     }*/
     
-    /*public function getKo($debut, $limit, $listeCIP)
+    /*public function getKo($debut, $limit)
     {
         $sql = "SELECT p.produit_actif, p.id_produit, p.cip13, p.libelle_ospharm, f.designation as famille, 
                         s.designation as sFamille, ss.designation as ssFamille, l.designation as laboratoire
                 FROM produits p, familles f, s_familles s, ss_famille ss, laboratoires l
-                WHERE p.cip13 NOT IN  $listeCIP
+                WHERE p.cip13 IN  {$this->selectCIP}
                 {criterMoteurRecherche($this->page)}
                 AND p.id_laboratoire = l.id_laboratoire
                 AND p.id_famille = f.id_famille 
