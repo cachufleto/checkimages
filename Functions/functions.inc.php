@@ -234,6 +234,7 @@ function enregistrerImageJpg($produit)
 function open_image ($file) {
     //detect type and process accordinally
     $size=getimagesize($file);
+
     switch($size["mime"]){
         case "image/jpeg":
             $im = imagecreatefromjpeg($file); //jpeg file
@@ -248,5 +249,47 @@ function open_image ($file) {
             $im=false;
             break;
     }
+
     return $im;
+}
+
+function variablenumerique($data)
+{
+    if(empty($data) OR preg_match('#[a-zA-Z]#', $data)){
+        return true;
+    }
+
+    return false;
+}
+
+function variabletexte($data)
+{
+    if(empty($data)){
+        return true;
+    }
+
+    return false;
+}
+
+function numerique($data)
+{
+    $datatest = intval($data);
+    if(strlen($data) != strlen($datatest)){
+        exit("ERROR $data != $datatest");
+    }
+
+    if(empty($datatest) OR $datatest < 1 OR strlen($data) != strlen($datatest) ){
+        return true;
+    }
+
+    return false;
+}
+
+function codeceido($data)
+{
+    if(empty($data) OR preg_match('#^(0_)#', $data) OR preg_match('#^[a-zA-Z]#', $data)){
+        return true;
+    }
+    
+    return false;
 }

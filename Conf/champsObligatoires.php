@@ -7,19 +7,19 @@
  */
 
 $medicaments = [
-'cis',
-'id_famille',
-'denomination',
-'id_laboratoire',
-'libelle_ospharm'
+'cis' => 'variablenumerique',
+'id_famille' => 'numerique',
+'denomination' => 'variabletexte',
+'id_laboratoire' => 'numerique',
+'libelle_ospharm' => 'variabletexte'
 ];
 
 $parapharmacie = [
-    'cacl',
-    'libelle_ospharm',
-    'composition',
-    'descriptif',
-    'conseils',
-    'id_laboratoire',
-    'code_int_ceido_1',
+    'cacl' => 'variablenumerique',
+    'libelle_ospharm' => 'variabletexte',
+    'composition' => 'variabletexte',
+    'descriptif' => 'variabletexte',
+    'conseils' => 'variabletexte',
+    'id_laboratoire' => 'numerique',
+    'code_int_ceido_1' => 'codeceido'
 ];
