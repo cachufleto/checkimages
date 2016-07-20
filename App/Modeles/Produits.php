@@ -195,7 +195,6 @@ class Produits extends Bdd
         $sql = "SELECT DISTINCT l.id_laboratoire as id, l.designation 
                 FROM laboratoires l, produits p 
                 WHERE l.id_laboratoire = p.id_laboratoire 
-                AND p.cip13 IN {$this->selectCIP}
                 ".$this->criterMoteurRecherche()."
                 ORDER BY l.designation ASC";
         return $this->query($sql);
@@ -206,7 +205,6 @@ class Produits extends Bdd
         $sql = "SELECT DISTINCT f.id_famille as id, f.designation as nom
                 FROM familles f, produits p 
                 WHERE f.id_famille = p.id_famille 
-                AND p.cip13 IN {$this->selectCIP}
                 ".$this->criterMoteurRecherche()."
                 ORDER BY F.designation ASC";
         return $this->query($sql);
