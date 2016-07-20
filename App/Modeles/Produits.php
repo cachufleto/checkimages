@@ -15,14 +15,13 @@ class Produits extends Bdd
     public function getCount()
     {
 
-        $sql = "SELECT count(*) as num
-                FROM produits p, familles f, s_familles s, ss_famille ss, laboratoires l
-                WHERE 1 
-                ".$this->criterMoteurRecherche()."
-                AND p.id_famille = f.id_famille 
-                AND p.id_laboratoire = l.id_laboratoire
-                AND p.id_sfamille = s.id_sfamille 
-                AND p.id_ssfamille = ss.id_ssfamille ";
+        $sql = "SELECT 
+                    count(*) as num
+                FROM
+                    produits p
+                WHERE 
+                    1 
+                    ".$this->criterMoteurRecherche()."";
 
         $num = $this->query($sql);
 
@@ -32,14 +31,13 @@ class Produits extends Bdd
     public function getCountKo()
     {
 
-        $sql = "SELECT count(*) as num
-                FROM produits p, familles f, s_familles s, ss_famille ss, laboratoires l
-                WHERE p.id_laboratoire = l.id_laboratoire
-                AND p.id_famille = f.id_famille 
-                AND p.id_sfamille = s.id_sfamille 
-                AND p.id_ssfamille = ss.id_ssfamille
-                AND p.cip13 IN  {$this->selectCIP}
-                ".$this->criterMoteurRecherche()."";
+        $sql = "SELECT 
+                    count(*) as num
+                FROM
+                    produits p
+                WHERE 
+                    p.cip13 IN {$this->selectCIP} 
+                    ".$this->criterMoteurRecherche()."";
 
         $num = $this->query($sql);
 
@@ -49,14 +47,13 @@ class Produits extends Bdd
     public function getCountOk()
     {
         
-        $sql = "SELECT count(*) as num
-                FROM produits p, familles f, s_familles s, ss_famille ss, laboratoires l
-                WHERE p.id_famille = f.id_famille 
-                AND p.id_laboratoire = l.id_laboratoire
-                AND p.id_sfamille = s.id_sfamille 
-                AND p.id_ssfamille = ss.id_ssfamille 
-                AND p.cip13 IN {$this->selectCIP} 
-                ".$this->criterMoteurRecherche()."";
+        $sql = "SELECT 
+                    count(*) as num
+                FROM
+                    produits p
+                WHERE 
+                    p.cip13 IN {$this->selectCIP} 
+                    ".$this->criterMoteurRecherche()."";
 
         $num = $this->query($sql);
 
@@ -65,16 +62,29 @@ class Produits extends Bdd
 
     public function getOk($debut, $limit)
     {
-        $sql = "SELECT p.produit_actif, p.id_produit, p.cip13, p.libelle_ospharm, f.designation as famille,
-                        s.designation as sFamille, ss.designation as ssFamille, l.designation as laboratoire
-                FROM produits p, familles f, s_familles s, ss_famille ss, laboratoires l
-                WHERE p.id_famille = f.id_famille 
-                AND p.id_laboratoire = l.id_laboratoire
-                AND p.id_sfamille = s.id_sfamille 
-                AND p.id_ssfamille = ss.id_ssfamille
-                AND p.cip13 IN {$this->selectCIP} 
-                ".$this->criterMoteurRecherche()."
-                ORDER BY l.designation ASC,  p.libelle_ospharm ASC
+        $sql = "SELECT
+                    p.produit_actif,
+                    p.id_produit,
+                    p.cip13,
+                    p.libelle_ospharm,
+                    f.designation AS famille,
+                    s.designation AS sFamille,
+                    ss.designation AS ssFamille,
+                    l.designation AS laboratoire
+                FROM
+                    produits p
+                LEFT JOIN
+                    familles AS f ON p.id_famille = f.id_famille
+                LEFT JOIN
+                    s_familles AS s ON p.id_sfamille = s.id_sfamille
+                LEFT JOIN
+                    ss_famille AS ss ON p.id_ssfamille = ss.id_ssfamille
+                LEFT JOIN
+                    laboratoires AS l ON p.id_laboratoire = l.id_laboratoire
+                WHERE 
+                    p.cip13 IN {$this->selectCIP} 
+                    ".$this->criterMoteurRecherche()."
+                ORDER BY l.designation ASC, p.libelle_ospharm ASC
                 LIMIT $debut, $limit";
 
         return $this->query($sql);
@@ -82,33 +92,63 @@ class Produits extends Bdd
     
     public function getKo($debut, $limit)
     {
-        $sql = "SELECT p.produit_actif, p.id_produit, p.cip13, p.libelle_ospharm, f.designation as famille, 
-                        s.designation as sFamille, ss.designation as ssFamille, l.designation as laboratoire
-                FROM produits p, familles f, s_familles s, ss_famille ss, laboratoires l
-                WHERE p.id_laboratoire = l.id_laboratoire
-                AND p.id_famille = f.id_famille 
-                AND p.id_sfamille = s.id_sfamille 
-                AND p.id_ssfamille = ss.id_ssfamille 
-                AND p.cip13 IN  {$this->selectCIP}
-                ".$this->criterMoteurRecherche()."
-                ORDER BY l.designation ASC,  p.libelle_ospharm ASC
-                LIMIT $debut, $limit";
+        $sql = "SELECT
+                  p.produit_actif,
+                  p.id_produit,
+                  p.cip13,
+                  p.libelle_ospharm,
+                  f.designation AS famille,
+                  s.designation AS sFamille,
+                  ss.designation AS ssFamille,
+                  l.designation AS laboratoire
+                FROM
+                  produits p
+                LEFT JOIN
+                  familles AS f ON p.id_famille = f.id_famille
+                LEFT JOIN
+                  s_familles AS s ON p.id_sfamille = s.id_sfamille
+                LEFT JOIN
+                  ss_famille AS ss ON p.id_ssfamille = ss.id_ssfamille
+                LEFT JOIN
+                  laboratoires AS l ON p.id_laboratoire = l.id_laboratoire
+                WHERE
+                  p.cip13 IN {$this->selectCIP}
+                  ".$this->criterMoteurRecherche()."
+                ORDER BY
+                  l.designation ASC,
+                  p.libelle_ospharm ASC
+                LIMIT $debut, $limit;";
 
         return $this->query($sql);
     }
 
     public function get($debut, $limit)
     {
-        $sql = "SELECT p.produit_actif, p.id_produit, p.cip13, p.libelle_ospharm, f.designation as famille, 
-                        s.designation as sFamille, ss.designation as ssFamille, l.designation as laboratoire
-                FROM produits p, familles f, s_familles s, ss_famille ss, laboratoires l
-                WHERE 1 
-                ".$this->criterMoteurRecherche()."
-                AND p.id_famille = f.id_famille 
-                AND p.id_laboratoire = l.id_laboratoire
-                AND p.id_sfamille = s.id_sfamille 
-                AND p.id_ssfamille = ss.id_ssfamille 
-                ORDER BY l.designation ASC,  p.libelle_ospharm ASC
+        $sql = "SELECT
+                  p.cip13,
+                  p.id_produit,
+                  p.produit_actif,
+                  p.libelle_ospharm,
+                  f.designation AS famille,
+                  s.designation AS sFamille,
+                  ss.designation AS ssFamille,
+                  l.designation AS laboratoire
+                FROM
+                  produits p
+                LEFT JOIN
+                  familles AS f ON p.id_famille = f.id_famille
+                LEFT JOIN
+                  s_familles AS s ON p.id_sfamille = s.id_sfamille
+                LEFT JOIN
+                  ss_famille AS ss ON p.id_ssfamille = ss.id_ssfamille
+                LEFT JOIN
+                  laboratoires AS l ON p.id_laboratoire = l.id_laboratoire
+                WHERE
+                  1
+                  ".$this->criterMoteurRecherche()."
+                ORDER BY
+                  l.designation ASC,
+                  p.libelle_ospharm ASC 
                 LIMIT $debut, $limit";
 
         return $this->query($sql);
@@ -116,14 +156,24 @@ class Produits extends Bdd
 
     public function getProduit($id)
     {
-        $sql = "SELECT p.*, f.designation as famille, 
-                        s.designation as sFamille, ss.designation as ssFamille, l.designation as laboratoire
-                FROM produits p, familles f, s_familles s, ss_famille ss, laboratoires l
-                WHERE p.id_produit = $id
-                AND p.id_famille = f.id_famille 
-                AND p.id_laboratoire = l.id_laboratoire
-                AND p.id_sfamille = s.id_sfamille 
-                AND p.id_ssfamille = ss.id_ssfamille";
+        $sql = "SELECT
+                  p.*,
+                  f.designation AS famille,
+                  s.designation AS sFamille,
+                  ss.designation AS ssFamille,
+                  l.designation AS laboratoire
+                FROM
+                  produits p
+                LEFT JOIN
+                  familles AS f ON p.id_famille = f.id_famille
+                LEFT JOIN
+                  s_familles AS s ON p.id_sfamille = s.id_sfamille
+                LEFT JOIN
+                  ss_famille AS ss ON p.id_ssfamille = ss.id_ssfamille
+                LEFT JOIN
+                  laboratoires AS l ON p.id_laboratoire = l.id_laboratoire
+                WHERE
+                  p.id_produit = $id";
 
         return $this->query($sql);
     }
