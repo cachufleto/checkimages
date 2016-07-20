@@ -20,7 +20,6 @@ $parapharmacie = [
     'composition',
     'descriptif',
     'conseils',
-    'id_famille',
     'id_laboratoire',
     'code_int_ceido_1',
 ];
