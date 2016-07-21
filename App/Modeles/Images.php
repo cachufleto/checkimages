@@ -21,8 +21,8 @@ class Images extends Bdd
                 WHERE  i.zapper  {$this->zapper}
                 {$this->rechercheCip}
                 {$this->rechercheNom}
-                AND i.id = p.id_image ".
-                $this->criterMoteurRecherche();
+                AND i.id = p.id_image 
+                {$this->moteurRecherche};";
 
         $num = $this->query($sql);
 
@@ -35,7 +35,7 @@ class Images extends Bdd
                 FROM images i
                 WHERE i.zapper  {$this->zapper}
                 {$this->rechercheCip}
-                {$this->rechercheNom}";
+                {$this->rechercheNom};";
 
         $num = $this->query($sql);
 
@@ -50,8 +50,8 @@ class Images extends Bdd
                 WHERE  i.zapper  {$this->zapper}
                 {$this->rechercheCip}
                 {$this->rechercheNom}
-                AND i.id NOT IN  (SELECT id_image FROM produits) ".
-                $this->criterMoteurRecherche();
+                AND i.id NOT IN  (SELECT id_image FROM produits)
+                {$this->moteurRecherche};";
         $num = $this->query($sql);
 
         return ($num)? $num[0]['num'] : 0;
@@ -65,7 +65,7 @@ class Images extends Bdd
                 WHERE  i.zapper  {$this->zapper}
                 {$this->rechercheCip}
                 {$this->rechercheNom}
-                AND i.id NOT IN  (SELECT id_image FROM produits) ";
+                AND i.id NOT IN  (SELECT id_image FROM produits);";
         $num = $this->query($sql);
 
         return ($num)? $num[0]['num'] : 0;
@@ -80,8 +80,8 @@ class Images extends Bdd
                 {$this->rechercheCip}
                 {$this->rechercheNom}
                 AND i.id = p.id_image 
-                AND i.upload = 0".
-                $this->criterMoteurRecherche();
+                AND i.upload = 0
+                {$this->moteurRecherche};";
 
         $num = $this->query($sql);
 
@@ -96,7 +96,7 @@ class Images extends Bdd
                 WHERE  i.zapper  {$this->zapper}
                 {$this->rechercheCip}
                 {$this->rechercheNom}
-                AND i.upload = 1 ";
+                AND i.upload = 1;";
 
         $num = $this->query($sql);
 
@@ -113,10 +113,10 @@ class Images extends Bdd
                 WHERE  i.zapper  {$this->zapper}
                 {$this->rechercheCip}
                 {$this->rechercheNom}
-                AND i.id = p.id_image " .
-                $this->criterMoteurRecherche() . "
+                AND i.id = p.id_image 
+                {$this->moteurRecherche}
                 ORDER BY p.denomination ASC, i.nom ASC
-                LIMIT $debut, $limit";
+                LIMIT $debut, $limit;";
 
         return $this->query($sql);
     }
@@ -134,7 +134,7 @@ class Images extends Bdd
                 AND i.id = p.id_image
                 AND i.upload = 1
                 ORDER BY p.denomination ASC, i.nom ASC
-                LIMIT $debut, $limit";
+                LIMIT $debut, $limit;";
 
         return $this->query($sql);
     }
@@ -150,10 +150,10 @@ class Images extends Bdd
                 {$this->rechercheCip}
                 {$this->rechercheNom}
                 AND i.id = p.id_image
-                AND i.upload = 0 " .
-                $this->criterMoteurRecherche() . "
+                AND i.upload = 0 
+                {$this->moteurRecherche}
                 ORDER BY p.denomination ASC, i.nom ASC
-                LIMIT $debut, $limit";
+                LIMIT $debut, $limit;";
 
         return $this->query($sql);
     }
@@ -167,7 +167,7 @@ class Images extends Bdd
                 {$this->rechercheNom}
                 AND i.upload = 0  
                 ORDER BY i.nom ASC
-                LIMIT $debut, $limit";
+                LIMIT $debut, $limit;";
 
         return $this->query($sql);
     }
@@ -182,9 +182,9 @@ class Images extends Bdd
                 WHERE  i.zapper  {$this->zapper}
                 {$this->rechercheCip}
                 {$this->rechercheNom}
-                ".$this->criterMoteurRecherche()."
+                {$this->moteurRecherche}
                 AND i.id = p.id_image 
-                ORDER BY p.denomination ASC, i.nom ASC ";
+                ORDER BY p.denomination ASC, i.nom ASC;";
 
         return $this->query($sql);
     }
@@ -210,9 +210,9 @@ class Images extends Bdd
                 FROM images i
                 LEFT JOIN produits p ON i.id = p.id_image
                 WHERE i.id = $id
-                LIMIT 0, 1";
+                LIMIT 0, 1;";
         $produit = $this->query($sql);
-        return ($produit = $this->query($sql))? $produit[0] : false;
+        return (!empty($produit[0]))? $produit[0] : false;
     }
 
     public function getProduitCip($cip13, $id = -1){
@@ -223,21 +223,21 @@ class Images extends Bdd
                 FROM images i
                 LEFT JOIN produits p ON i.id = p.id_image
                 WHERE i.id != $id AND i.cip13 = '$cip13'
-                LIMIT 0, 1";
+                LIMIT 0, 1;";
         return $this->query($sql);
     }
 
     public function getProduitCipOK(){
         $sql = "SELECT cip13
                 FROM produits
-                WHERE 1";
+                WHERE 1;";
         return $this->query($sql);
     }
 
     public function setProduit($id, $cip13, $type=1, $denomination='', $presentation='', $libelle = ''){
         $sql = "INSERT INTO `produits` 
                   (`id_image`, `id`, `cip13`, `denomination`, `presentation`, `type`, `date_traitement`, `libelle`)
-                  VALUES ($id, NULL, '$cip13', '$denomination', '$presentation', '$type', CURRENT_TIMESTAMP, '$libelle')";
+                  VALUES ($id, NULL, '$cip13', '$denomination', '$presentation', '$type', CURRENT_TIMESTAMP, '$libelle');";
         $this->queryInsert($sql);
     }
 

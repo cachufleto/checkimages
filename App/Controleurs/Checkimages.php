@@ -35,7 +35,7 @@ class Checkimages extends Image
 
         $this->menu = new Menu();
         $this->menu->info = $this;
-        $this->recherche = !empty($this->criterMoteurRecherche())? true : false ;
+        $this->recherche = !empty($this->moteurRecherche)? true : false ;
         $this->listeLocal = ['id'=>'-1','nom'=>"'_'"];
 
         $this->parapharmacie = new Produit();

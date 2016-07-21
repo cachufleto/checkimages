@@ -38,6 +38,7 @@ class Medicaments extends Produit
         $this->image->connexion(SURFIMAGE);
         //$this->image->session = $this->session;
         $this->image->session = $this->session;
+        $this->moteurRecherche = $this->criterMoteurRecherche();
     }
 
     public function indexAction()

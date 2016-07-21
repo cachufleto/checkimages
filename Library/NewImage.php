@@ -134,7 +134,7 @@ class NewImage extends NewImages
         {
             return false;
         }
-        
+
         if (!empty($cip13) and $this->parapharmacie->getUpdateCount($cip13)){
             $id = $this->setImageLocal($repertoire, $nom, $cip13);
             $this->setProduit($id, $cip13, 2);
@@ -160,7 +160,7 @@ class NewImage extends NewImages
         }
         return;
     }
-    
+
     /*
      * function qui verifie le premier état des produits
      * passage en hors ligne ou en ligne selon les critaires specifiées

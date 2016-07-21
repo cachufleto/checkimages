@@ -39,6 +39,8 @@ class Parapharmacie extends Produit
         $this->image->session = $this->session;
 
         $this->champsObligatoires = file_contents_parapharmacie();
+        $this->moteurRecherche = $this->criterMoteurRecherche();
+
     }
 
     public function indexAction()
