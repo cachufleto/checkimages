@@ -151,4 +151,5 @@ class NewImages extends Bdd
                 WHERE `cip13` = '$cip13';";
         $this->queryUpdate($sql);
     }
+    
 }

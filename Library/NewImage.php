@@ -151,11 +151,12 @@ class NewImage extends NewImages
         $this->listeLocal['nom'] .= ", '$nom'";
     }
 
-    public function listeChangements($liste, $produits)
+    public function listeChangements()
     {
+        $liste = $this->produits->getProduits($this->outCIP());
         foreach ($liste as $key=>$produit){
-            if($mode = $this->checkProduits($produit, $produits->checkImage($produit['cip13']))){
-                $produits->updateProduitEtat($produit['id_produit'], $mode);
+            if($mode = $this->checkProduits($produit)){
+                $this->produits->updateProduitEtat($produit['id_produit'], $mode);
             }
         }
         return;
@@ -166,8 +167,9 @@ class NewImage extends NewImages
      * passage en hors ligne ou en ligne selon les critaires specifiées
      */
 
-    public function checkProduits($produit, $img)
+    public function checkProduits($produit)
     {
+        $img = $this->produits->checkImage($produit['cip13']);
         $mod = ['ko', 'ok'];
         $msg = $ko_msg = $i_msg = '';
         if($produit['produit_actif'] == 'o'){
@@ -204,13 +206,45 @@ class NewImage extends NewImages
         $msg = '';
 
         foreach ($this->champsObligatoires as $champ => $function){
-            if($function($produit[$champ])){
+            if($function == 'codeceido'){
+                if($function($produit[$champ])){
+                    if($this->controleIDFamilles($produit)){
+                        $msg .= (!empty($msg)? ', ' : '' ) . $this->_lib['champ'][$champ];
+                    }
+                } else {
+                    $this->controleFamilles($produit);
+                }
+            } else if($function($produit[$champ])){
                 $msg .= (!empty($msg)? ', ' : '' ) . $this->_lib['champ'][$champ];
             }
         }
 
         return $msg;
     }
+
+    public function controleIDFamilles($produit)
+    {
+        if(empty($produit['id_famille'])){
+            return true;
+        }
+
+        $code_int_ceido_1 = ($produit['id_famille']<10)? "0{$produit['id_famille']}_" : "{$produit['id_famille']}_";
+        $code_int_ceido_1 .= !empty($produit['id_sfamille'])? (($produit['id_sfamille']<10)? "0{$produit['id_sfamille']}_" : "{$produit['id_sfamille']}_") : "0_";
+        $code_int_ceido_1 .= !empty($produit['id_ssfamille'])? (($produit['id_ssfamille']<10)? "0{$produit['id_ssfamille']}_" : "{$produit['id_ssfamille']}_") : "0";
+        
+        $this->produits->updateCodeCeido($produit['cip13'], $code_int_ceido_1);
+    }
+
+    public function controleFamilles($produit)
+    {
+        $familles = explode('_',$produit['code_int_ceido_1']);
+        $id_famille = isset($familles[0])? $familles[0] : $produit['code_int_ceido_1'];
+        $id_sfamille = isset($familles[1])? $familles[1] : 0;
+        $id_ssfamille = isset($familles[2])? $familles[2] : 0;
+        
+        $this->produits->updateFamilles($produit['cip13'], intval($id_famille), intval($id_sfamille), intval($id_ssfamille));
+    }
+
     public function produitModification($produit, $etat, $msg)
     {
         $mod = $this->getProduitModification($produit['cip13']);

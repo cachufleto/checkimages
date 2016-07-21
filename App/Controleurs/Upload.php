@@ -101,7 +101,8 @@ class Upload extends NewImage
 
     public function checker($produits)
     {
-        $this->listeChangements( $produits->getProduits($this->outCIP()), $produits);
+        $this->produits = $produits;
+        $this->listeChangements();
         $liste = $this->getChangementsOK($this->type);
         include_once VUE . 'produitsModifies.tpl.php';
     }

@@ -224,5 +224,20 @@ class Produits extends Bdd
         return $this->queryUpdate($sql);
     }
 
+    public function updateFamilles($cip13, $id_famille, $id_sfamille, $id_ssfamille)
+    {
+        $sql = "UPDATE `produits` 
+                set id_famille = $id_famille, id_sfamille = $id_sfamille, id_ssfamille = $id_ssfamille 
+                WHERE `cip13` = '$cip13';";
+        $this->queryUpdate($sql);
+    }
+
+    public function updateCodeCeido($cip13, $code_int_ceido_1)
+    {
+        $sql = "UPDATE `produits` 
+                set code_int_ceido_1 = '$code_int_ceido_1' 
+                WHERE `cip13` = '$cip13';";
+        $this->queryUpdate($sql);
+    }
 
 }

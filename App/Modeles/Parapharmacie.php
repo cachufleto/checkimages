@@ -11,5 +11,5 @@ use App\Bdd;
 
 class Parapharmacie extends Bdd
 {
-    
+
 }
