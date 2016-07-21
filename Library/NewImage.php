@@ -249,8 +249,8 @@ class NewImage extends NewImages
     {
         $mod = $this->getProduitModification($produit['cip13']);
 
-        if(!empty($mod)){
-            $this->updateProduitModification($produit['cip13'], $etat, $this->type, $mod['message']."\t\n".$msg);
+        if(!empty($mod[0])){
+            $this->updateProduitModification($produit['cip13'], $etat, $this->type, $mod[0]['message']."\t\n".$msg);
             return;
         }
 
