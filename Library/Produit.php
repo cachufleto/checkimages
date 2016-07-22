@@ -214,7 +214,6 @@ class Produit extends Produits
 
     public function imgProd($img, $nom)
     {
-        //$type = ($this->control->type == 2)? 'produit de Parapharmacie' : 'Medicament';
         if ($img['image'] == 1) {
             $img['image'] = figureHTML($this->link . $nom . '.jpg',  $nom . ' Grande');
             if($img['image'] == 'NULL'){

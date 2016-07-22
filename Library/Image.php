@@ -267,17 +267,21 @@ class Image extends Images
 
     public function imgProd($img, $nom)
     {
-        $image = [];
-
         if ($img['image'] == 1) {
-            $image['image'] = figureHTML($this->link . $nom . '.jpg',  $nom . ' Grande');
+            $img['image'] = figureHTML($this->link . $nom . '.jpg',  $nom . ' Grande');
+            if($img['image'] == 'NULL'){
+                return false;
+            }
         }
 
         if ($img['vignette'] == 1) {
-            //$image['vignette'] = figureHTML($this->link . $nom . '_vig.jpg', $nom . ' Vignette');
+            $img['vignette'] = figureHTML($this->link . $nom . '_vig.jpg', $nom . ' Vignette');
+            if($img['vignette'] == 'NULL'){
+                return false;
+            }
         }
 
-        return $image;
+        return $img;
     }
 
     public function imgTestProd($cip13){
