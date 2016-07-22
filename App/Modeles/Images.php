@@ -309,5 +309,13 @@ class Images extends Bdd
         $sql = "DELETE FROM `produits` WHERE id = $id;";
         return $this->queryUpdate($sql);
     }
-   
+
+    public function updateImageType($cip13, $type = 0)
+    {
+        $sql = "UPDATE `control_images` 
+                set `type` = $type 
+                WHERE `cip13` = '$cip13';";
+        $this->queryUpdate($sql);
+    }
+
 }

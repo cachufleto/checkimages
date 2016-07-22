@@ -96,14 +96,35 @@ function remote_file_exists ($url)
     return $return;
 }
 
-function figureHTML($nom, $texte){
-    $image = preg_match('#^http#', $nom)? $nom : SITE . $nom;
-    list($width, $height, $type, $attr) = getimagesize($image);
-    return "
-            <figure>
+function figureHTML($nom, $texte)
+{
+    /*
+     * trouver le moyens de anticiper l'erreur du type 1 ou 2
+     * */
+    $info = "ERREUR : l'image n'est plus disponible";
+    if($attributs = image_attributs($nom)){
+        $info = $attributs[3];
+
+    return "<figure>
             <img src='$nom' alt='$texte'/>
-            <figcaption>$texte ($width x $height)</figcaption>
+            <figcaption>$texte $info</figcaption>
             </figure>";
+    }
+    
+    return "$texte : $info<br>";
+}
+
+function image_attributs($nom)
+{
+    if(preg_match('#^http#', $nom)){
+        if(remote_file_exists($nom)) {
+            return getimagesize($nom);
+        }
+    } else if(file_exists(SITE . $nom)){
+        return getimagesize($nom);
+    }
+
+    return false;
 }
 
 function testCIP13($cip13)
@@ -186,23 +207,22 @@ function enregistrerImageJpg($produit)
     }
 }
 
-function open_image ($file) {
+function open_image ($file)
+{
     //detect type and process accordinally
-    $size=getimagesize($file);
-
-    switch($size["mime"]){
-        case "image/jpeg":
-            $im = imagecreatefromjpeg($file); //jpeg file
-            break;
-        case "image/gif":
-            $im = imagecreatefromgif($file); //gif file
-            break;
-        case "image/png":
-            $im = imagecreatefrompng($file); //png file
-            break;
-        default:
-            $im=false;
-            break;
+    $im=false;
+    if($size=image_attributs($file)){
+        switch($size["mime"]){
+            case "image/jpeg":
+                $im = imagecreatefromjpeg($file); //jpeg file
+                break;
+            case "image/gif":
+                $im = imagecreatefromgif($file); //gif file
+                break;
+            case "image/png":
+                $im = imagecreatefrompng($file); //png file
+                break;
+        }
     }
 
     return $im;

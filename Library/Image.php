@@ -289,11 +289,11 @@ class Image extends Images
     public function imgTestProd($cip13){
         $info = [];
         if ($img = $this->control->getImage($cip13)){
-            $info['medicament'] = $this->medicament->imgProd($img, $cip13);
-        }
-
-        if ($img = $this->control->getImage($cip13)){
-            $info['pharmacie'] = $this->parapharmacie->imgProd($img, $cip13);
+            if($img['type'] == 1){
+                $info['medicament'] = $this->medicament->imgProd($img, $cip13);
+            } else if($img['type'] == 2){
+                $info['pharmacie'] = $this->parapharmacie->imgProd($img, $cip13);
+            }
         }
         return $info;
     }
@@ -308,13 +308,9 @@ class Image extends Images
 
     public function testImage($nom, $link)
     {
-        $img = [];
-        if(preg_match('/^(http)/', $link)){
-            $img['image'] = remote_file_exists(str_replace('//'. $nom, '/'. $nom, $link . '/'. $nom) )? 1 : 0;
-        } else {
-            $img['image'] = file_exists(SITE . str_replace('//'. $nom, '/'. $nom, $link . '/'. $nom) )? 1 : 0;
-        }
-        return $this->imgLocal($img, str_replace('//'. $nom, '/'. $nom, $link . '/'. $nom));
+        $image = str_replace('//'. $nom, '/'. $nom, $link . '/'. $nom);
+        $img['image'] = (image_attributs($image))? 1 : 0;
+        return $this->imgLocal($img, $image);
     }
 
     public function criterMoteurRecherche()
@@ -399,12 +395,13 @@ class Image extends Images
     public function updateImageJpg($produit, $new)
     {
         $origine = $produit['cip13'];
-        if(preg_match('/^(photo)/', $produit['site']) AND $origine != $new ){
+        if(preg_match('/^photo/', $produit['site']) AND $origine != $new ){
             $this->renommerImage($produit, $new);
         } else {
             $produit['cip13'] = $new;
             $this->enregistrerImageJpg($produit);
         }
+        return true;
     }
 
     public function enregistrerImageJpg($produit, $url = '')
@@ -476,10 +473,11 @@ class Image extends Images
             return false;
         }
 
-        if($produit['id_image']){
+        if(!empty($produit['id_image'])){
             $this->msg[$id] = "Mise à Jour du produit: $cip13";
             if($this->updateImageJpg($produit, $cip13)){
                 $this->updateProduit($id, $cip13, $denomination, $presentation, $type);
+                $this->updateImageType($cip13, $type);
             }
         } else {
             $this->msg[$id] = "Isertion Nouveau Produit: $cip13";
