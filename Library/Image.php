@@ -267,34 +267,31 @@ class Image extends Images
 
     public function imgProd($img, $nom)
     {
-        if ($img['image'] == 1 && $img['vignette'] == 1) {
-            return [
-                'image'=>figureHTML($this->link . $nom . '.jpg',  $nom . ' Grande'),
-                'vignette'=>figureHTML($this->link . $nom . '_vig.jpg', $nom . ' Vignette')
-                ];
-        } else if ($img['image'] == 1) {
-            return [
-                'image'=>figureHTML($this->link . $nom . '.jpg',  $nom . ' Grande'),
-                'vignette'=>''
-                ];
-        } else if ($img['vignette'] == 1) {
-            return [
-                'image'=> '',
-                'vignette'=>figureHTML($this->link . $nom . '_vig.jpg', $nom . ' Vignette')
-                ];
+        $image = [];
+
+        if ($img['image'] == 1) {
+            $image['image'] = figureHTML($this->link . $nom . '.jpg',  $nom . ' Grande');
         }
-        return false;
+
+        if ($img['vignette'] == 1) {
+            //$image['vignette'] = figureHTML($this->link . $nom . '_vig.jpg', $nom . ' Vignette');
+        }
+
+        return $image;
     }
 
     public function imgTestProd($cip13){
         $info = [];
         if ($img = $this->control->getImage($cip13)){
             if($img['type'] == 1){
-                $info['medicament'] = $this->medicament->imgProd($img, $cip13);
+                $img = $this->medicament->imgProd($img, $cip13);
+                $info['medicament'] = ($img)? $img : $this->_lib['erreurTypeMed'];
             } else if($img['type'] == 2){
-                $info['pharmacie'] = $this->parapharmacie->imgProd($img, $cip13);
+                $img = $this->parapharmacie->imgProd($img, $cip13);
+                $info['pharmacie'] = ($img)? $img : $this->_lib['erreurTypePara'];
             }
         }
+
         return $info;
     }
 

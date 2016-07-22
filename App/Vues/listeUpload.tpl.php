@@ -46,30 +46,36 @@ foreach ($liste as $key => $image){
         $imagePharmacie =
         $vignettePharmacie = '';
     $production = '';
-    if(isset($photo['production']) && !empty($photo['production'])){
+    if(isset($photo['production']) && !empty($photo['production'])) {
         $_images = $photo['production'];
-        if(!empty($_images['medicament'])){
-            $production .= "
+        if (!empty($_images['medicament'])) {
+            if (!is_array($_images['medicament'])) {
+                $production .= "<span class='alert'>{$_images['medicament']}</span>";
+            } else {
+                $production .= "
         <div class=\"medicament\">
             <div>MEDICAMENT:</div>
             {$_images['medicament']['image']}
             {$_images['medicament']['vignette']}
         </div>";
-
+            }
         }
-        if(!empty($_images['pharmacie'])){
-            $production .= "
-        <div class=\"parapaharmacie\">
-            <div>PARAPHARMACIE:</div>
-            {$_images['pharmacie']['image']}
-            {$_images['pharmacie']['vignette']}
+        if (!empty($_images['pharmacie'])) {
+            if (!is_array($_images['pharmacie'])) {
+                $production .= "<span class='alert'>{$_images['pharmacie']}</span>";
+            } else {
+                    $production .= "
+            <div class=\"parapaharmacie\">
+                <div>PARAPHARMACIE:</div>
+                {$_images['pharmacie']['image']}
+                {$_images['pharmacie']['vignette']}
+            </div>";
+            }
+        }
+            $production = "
+        <div class=\"ligne production\">
+        $production
         </div>";
-        }
-        $production = "
-    <div class=\"ligne production\">
-    $production
-    </div>";
-
     }
 
     $_zap = ['sans', 'ecarte', 'conserve'];

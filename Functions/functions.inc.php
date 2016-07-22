@@ -111,7 +111,7 @@ function figureHTML($nom, $texte)
             </figure>";
     }
     
-    return "$texte : $info<br>";
+    return "NULL";
 }
 
 function image_attributs($nom)

@@ -214,23 +214,22 @@ class Produit extends Produits
 
     public function imgProd($img, $nom)
     {
-        if ($img['image'] == 1 && $img['vignette'] == 1) {
-            return [
-                'image'=>figureHTML($this->link . $nom . '.jpg',  $nom . ' Grande'),
-                'vignette'=>figureHTML($this->link . $nom . '_vig.jpg', $nom . ' Vignette')
-                ];
-        } else if ($img['image'] == 1) {
-            return [
-                'image'=>figureHTML($this->link . $nom . '.jpg',  $nom . ' Grande'),
-                'vignette'=>''
-                ];
-        } else if ($img['vignette'] == 1) {
-            return [
-                'image'=> '',
-                'vignette'=>figureHTML($this->link . $nom . '_vig.jpg', $nom . ' Vignette')
-                ];
+        //$type = ($this->control->type == 2)? 'produit de Parapharmacie' : 'Medicament';
+        if ($img['image'] == 1) {
+            $img['image'] = figureHTML($this->link . $nom . '.jpg',  $nom . ' Grande');
+            if($img['image'] == 'NULL'){
+                return false;
+            }
         }
-        return false;
+
+        if ($img['vignette'] == 1) {
+            $img['vignette'] = figureHTML($this->link . $nom . '_vig.jpg', $nom . ' Vignette');
+            if($img['vignette'] == 'NULL'){
+                return false;
+            }
+        }
+
+        return $img;
     }
 
     public function testImage($nom)

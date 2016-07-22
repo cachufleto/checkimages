@@ -22,6 +22,10 @@ body.Checkimages{
     width: 100%;
 }
 
+.alert{
+    color: darkred;
+}
+
 .form{
     float: left;
     width: 50%;
