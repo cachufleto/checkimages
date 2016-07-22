@@ -26,6 +26,7 @@ class Checkimages extends Image
     var $alert = [];
     var $listeLocal = [];
     var $produit = '';
+    var $moteurRecherche = '';
 
     public function __construct()
     {
@@ -45,6 +46,8 @@ class Checkimages extends Image
         $this->medicament = new Produit();
         $this->medicament->connexion(MEDICAMENTS);
         $this->medicament->link = 'https://www.pharmaplay.fr/m/produits/';
+
+        $this->moteurRecherche = $this->criterMoteurRecherche();
     }
 
     public function indexAction()
@@ -57,15 +60,4 @@ class Checkimages extends Image
         $f = '&display=' . $display . '&nombre=' . $b;
         include_once VUE . 'listeUpload.tpl.php';
     }
-    
-    /*public function ficheImage()
-    {
-        if(isset($_GET['cip13']) and intval($_GET['cip13'])){
-
-            $this->imageAction();
-            $cip13 = isset($_POST['cip13'])? testCIP13($_POST['cip13']) : $_GET['cip13'];
-            $liste = $this->getImages($this->getProduitCip($cip13));
-           include_once VUE . 'listeUpload.tpl.php';
-        }
-    }*/
 }

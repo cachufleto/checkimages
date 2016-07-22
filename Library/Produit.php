@@ -40,7 +40,7 @@ class Produit extends Produits
         $this->selectCIP = $this->control->selectCIP;
     }
 
-    public function count()
+    public function countData()
     {
         $produit = isset($_SESSION[$this->session]['produit']) ? $_SESSION[$this->session]['produit'] : '';
         

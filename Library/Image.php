@@ -33,14 +33,13 @@ class Image extends Images
         $this->control->session = $this->session;
     }
 
-    public function count($recherche)
+    public function countData()
     {
-        debug($recherche, __FUNCTION__);
         $produit = (
             isset($_SESSION[$this->session]['produit']) ? 
                 $_SESSION[$this->session]['produit'] : ''
             ) . (
-                empty($recherche)? '': 'R'
+            ($this->moteurRecherche)? 'R': ''
             );
 
         debug($produit, __FUNCTION__);
@@ -74,7 +73,7 @@ class Image extends Images
             isset($_SESSION[$this->session]['produit']) ?
                 $_SESSION[$this->session]['produit'] : ''
             ) . (
-            ($this->recherche)? 'R': ''
+            ($this->moteurRecherche)? 'R': ''
             );
         
         switch ($produit) {

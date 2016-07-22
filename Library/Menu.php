@@ -33,12 +33,11 @@ class Menu
 
     public function afficherDATA()
     {
-        // extract($_SESSION[$this->info->page]);
         $session = $this->info->session;
         $data = [];
         $data['page'] = $this->info->page;
         $data['b'] = $_SESSION[$session]['b'];
-        $data['numProduits'] = $this->info->count($this->info->criterMoteurRecherche());
+        $data['numProduits'] = $this->info->countData();
 
         $p = $_SESSION[$session]['p'];
         $display = $_SESSION[$session]['display'];
@@ -90,7 +89,7 @@ class Menu
         $data = [];
         $data['page'] = $this->info->page;
         $data['b'] = $_SESSION[$session]['b'];
-        $data['numProduits'] = 0; //$this->info->count($this->info->criterMoteurRecherche());
+        $data['numProduits'] = $this->info->countData();
 
         $p = $_SESSION[$session]['p'];
         $display = $_SESSION[$session]['display'];
@@ -137,12 +136,12 @@ class Menu
 
     public function afficherNewImagesDATA()
     {
-        // extract($_SESSION[$this->info->page]);
+        // en cour de amelioration
         $session = $this->info->session;
         $data = [];
         $data['page'] = $this->info->page;
         $data['b'] = $_SESSION[$session]['b'];
-        $data['numProduits'] = 0; //$this->info->count($this->info->criterMoteurRecherche());
+        $data['numProduits'] = 0; //$this->info->countData();
 
         $p = $_SESSION[$session]['p'];
         $display = $_SESSION[$session]['display'];
