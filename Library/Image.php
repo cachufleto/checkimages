@@ -265,7 +265,7 @@ class Image extends Images
         return $_liste;
     }
 
-    public function imgProd($img, $nom)
+    /*public function imgProd($img, $nom)
     {
         if ($img['image'] == 1) {
             $img['image'] = figureHTML($this->link . $nom . '.jpg',  $nom . ' Grande');
@@ -282,7 +282,7 @@ class Image extends Images
         }
 
         return $img;
-    }
+    }*/
 
     public function imgTestProd($cip13){
         $info = [];

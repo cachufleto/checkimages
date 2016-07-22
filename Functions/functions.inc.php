@@ -103,7 +103,7 @@ function figureHTML($nom, $texte)
      * */
     $info = "ERREUR : l'image n'est plus disponible";
     if($attributs = image_attributs($nom)){
-        $info = $attributs[3];
+        $info = "({$attributs[0]} x {$attributs[1]})";
 
     return "<figure>
             <img src='$nom' alt='$texte'/>
