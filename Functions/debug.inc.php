@@ -7,7 +7,9 @@
  */
 function debug($var, $libelle = 'debug' )
 {
-    $_ENV['debug'][$libelle][] = $var;
+    if(DEBUG){
+        $_ENV['debug'][$libelle][] = $var;
+    }
 }
 
 function getDebug()
