@@ -96,58 +96,13 @@ function remote_file_exists ($url)
     return $return;
 }
 
-/*function afficheMenu($page, $session, $numProduits = 0)
-{
-
-    include CONF . 'libelles.php';
-    extract($_SESSION[$session]);
-
-    $_arriere = ($display >= 1)? $display-1 : 0;
-    $_suivante = ($display == intval($numProduits/$b))? $display : $display+1 ;
-
-    $l = ($p)? $b."&produit=$produit" : $b;
-    $f = '&display=' . $display . '&nombre=' . $l;
-    $link = '
-    << <a href="?page=' . $page . '&display=' . $_arriere . '&nombre=' . $l .'"> page avant</a> ::
-    <a href="?page=' . $page . '&produit=ok"> Avec Images  </a> :: 
-    <a href="?page=' . $page . '&produit=ko"> Sans Images </a> :: 
-    <a href="?page=' . $page . '"> à traiter </a>
-    <a href="?page=' . $page . '&display=' . $_suivante . '&nombre=' . $l . '"> page suivante</a> >>  
-    ';
-    $titre = ($p)? (($produit == 'ok')? "Tous les produits" : "Liste des produits sans images") : 'Liste des produits avec images';
-
-    include VUE . 'menu_old.tpl.php';
-    return $f;
-}*/
-
-/*function testPagination($session, $num, $page)
-{
-    if($num < $_SESSION[$session]['a']){
-        $_SESSION[$session]['display'] = intval( $num / $_SESSION[$session]['b']);
-        header('Location:?page='.$page.'&display='.$_SESSION[$session]['display']);
-        exit();
-    }
-    $_SESSION[$session]['a'] = $_SESSION[$session]['b'] * $_SESSION[$session]['display'];
-}*/
-
-
-/*function listerReperoires($dir){
-// Ouvre un dossier bien connu, et liste tous les fichiers
-    if (is_dir($dir)) {
-        if ($dh = opendir($dir)) {
-            while (($file = readdir($dh)) !== false) {
-                echo "fichier : $file : type : " . filetype($dir . $file) . "\n";
-            }
-            closedir($dh);
-        }
-    }
-}*/
-
 function figureHTML($nom, $texte){
+    $image = preg_match('#^http#', $nom)? $nom : SITE . $nom;
+    list($width, $height, $type, $attr) = getimagesize($image);
     return "
             <figure>
             <img src='$nom' alt='$texte'/>
-            <figcaption>$texte</figcaption>
+            <figcaption>$texte ($width x $height)</figcaption>
             </figure>";
 }
 

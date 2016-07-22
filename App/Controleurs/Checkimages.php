@@ -52,8 +52,6 @@ class Checkimages extends Image
         $this->imageAction();
         $this->menu->afficherUpload();
         $liste = $this->getImages($this->produits());
-        debug($_POST, 'PRODUITS POST');
-        debug($liste, 'LISTE DES PRODUITS');
         $display = isset($_SESSION[$this->session]['display'])? $_SESSION[$this->session]['display'] : 0;
         $b = isset($_SESSION[$this->session]['b'])? $_SESSION[$this->session]['b'] : NUM;
         $f = '&display=' . $display . '&nombre=' . $b;
