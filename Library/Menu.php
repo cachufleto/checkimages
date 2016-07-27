@@ -15,8 +15,10 @@ class Menu
     var $file = '';
     var $nav = [];
 
-    public function __construct()
+    public function __construct($info, $file='')
     {
+        $this->info = $info;
+        $this->file = $file;
         $this->nav = file_contents_nav();
     }
 

@@ -12,7 +12,7 @@ echo <<<EOL
          page suivante <a class="page" href="?page={$data['page']}&display={$data['suivante']}&nombre={$data['l']}">>></a>  
     </div>
 EOL;
-$this->info->afficheMoteurRecherche();
+$this->info->moteur->afficheMoteurRecherche();
 echo <<<EOL
     <div class="suite">
         <div class="resultat">Images : {$data['num']}

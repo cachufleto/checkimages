@@ -21,7 +21,7 @@ class Produits extends Bdd
                     produits p
                 WHERE 
                     1 
-                    {$this->moteurRecherche};";
+                    {$this->moteur->Recherche};";
 
         $num = $this->query($sql);
 
@@ -37,7 +37,7 @@ class Produits extends Bdd
                     produits p
                 WHERE 
                     p.cip13 IN {$this->selectCIP} 
-                    {$this->moteurRecherche};";
+                    {$this->moteur->Recherche};";
 
         $num = $this->query($sql);
 
@@ -53,7 +53,7 @@ class Produits extends Bdd
                     produits p
                 WHERE 
                     p.cip13 IN {$this->selectCIP} 
-                    {$this->moteurRecherche};";
+                    {$this->moteur->Recherche};";
 
         $num = $this->query($sql);
 
@@ -83,7 +83,7 @@ class Produits extends Bdd
                     laboratoires AS l ON p.id_laboratoire = l.id_laboratoire
                 WHERE 
                     p.cip13 IN {$this->selectCIP} 
-                    {$this->moteurRecherche}
+                    {$this->moteur->Recherche}
                 ORDER BY l.designation ASC, p.libelle_ospharm ASC
                 LIMIT $debut, $limit";
 
@@ -113,7 +113,7 @@ class Produits extends Bdd
                   laboratoires AS l ON p.id_laboratoire = l.id_laboratoire
                 WHERE
                   p.cip13 IN {$this->selectCIP}
-                  {$this->moteurRecherche}
+                  {$this->moteur->Recherche}
                 ORDER BY
                   l.designation ASC,
                   p.libelle_ospharm ASC
@@ -145,7 +145,7 @@ class Produits extends Bdd
                   laboratoires AS l ON p.id_laboratoire = l.id_laboratoire
                 WHERE
                   1
-                  {$this->moteurRecherche}
+                  {$this->moteur->Recherche}
                 ORDER BY
                   l.designation ASC,
                   p.libelle_ospharm ASC 
@@ -195,7 +195,7 @@ class Produits extends Bdd
         $sql = "SELECT DISTINCT l.id_laboratoire as id, l.designation 
                 FROM laboratoires l, produits p 
                 WHERE l.id_laboratoire = p.id_laboratoire 
-                ".$this->criterMoteurRechercheLaboratoires()."
+                {$this->moteur->Nom} {$this->moteur->Etat} {$this->moteur->Famille}
                 ORDER BY l.designation ASC";
         return $this->query($sql);
     }
@@ -205,7 +205,7 @@ class Produits extends Bdd
         $sql = "SELECT DISTINCT f.id_famille as id, f.designation as nom
                 FROM familles f, produits p 
                 WHERE f.id_famille = p.id_famille 
-                ".$this->criterMoteurRechercheFamilles()."
+                {$this->moteur->Laboratoire} {$this->moteur->Nom} {$this->moteur->Etat}
                 ORDER BY F.designation ASC";
         return $this->query($sql);
     }

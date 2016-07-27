@@ -11,18 +11,13 @@ use App\Bdd;
 
 class Images extends Bdd
 {
-    var $rechercheNom = '';
-    var $rechercheCip = '';
-    
     public function getCountR()
     {
         $sql = "SELECT count(*) as num
                 FROM images i, produits p
-                WHERE  i.zapper  {$this->zapper}
-                {$this->rechercheCip}
-                {$this->rechercheNom}
+                WHERE  i.zapper  {$this->moteur->Zapper}
                 AND i.id = p.id_image 
-                {$this->moteurRecherche};";
+                {$this->moteur->RechercheImage};";
 
         $num = $this->query($sql);
 
@@ -33,9 +28,9 @@ class Images extends Bdd
     {
         $sql = "SELECT count(*) as num
                 FROM images i
-                WHERE i.zapper  {$this->zapper}
-                {$this->rechercheCip}
-                {$this->rechercheNom};";
+                WHERE i.zapper  {$this->moteur->Zapper}
+                {$this->moteur->imageCip13}
+                {$this->moteur->imageNom};";
 
         $num = $this->query($sql);
 
@@ -47,11 +42,9 @@ class Images extends Bdd
 
         $sql = "SELECT count(*) as num
                 FROM images i, produits p
-                WHERE  i.zapper  {$this->zapper}
-                {$this->rechercheCip}
-                {$this->rechercheNom}
+                WHERE  i.zapper  {$this->moteur->Zapper}
                 AND i.id NOT IN  (SELECT id_image FROM produits)
-                {$this->moteurRecherche};";
+                {$this->moteur->RechercheImage};";
         $num = $this->query($sql);
 
         return ($num)? $num[0]['num'] : 0;
@@ -62,9 +55,9 @@ class Images extends Bdd
 
         $sql = "SELECT count(*) as num
                 FROM images i
-                WHERE  i.zapper  {$this->zapper}
-                {$this->rechercheCip}
-                {$this->rechercheNom}
+                WHERE  i.zapper  {$this->moteur->Zapper}
+                {$this->moteur->imageCip13}
+                {$this->moteur->imageNom}
                 AND i.id NOT IN  (SELECT id_image FROM produits);";
         $num = $this->query($sql);
 
@@ -76,12 +69,10 @@ class Images extends Bdd
         
         $sql = "SELECT count(*) as num
                 FROM images i, produits p
-                WHERE  i.zapper  {$this->zapper}
-                {$this->rechercheCip}
-                {$this->rechercheNom}
+                WHERE  i.zapper  {$this->moteur->Zapper}
                 AND i.id = p.id_image 
                 AND i.upload = 0
-                {$this->moteurRecherche};";
+                {$this->moteur->RechercheImage};";
 
         $num = $this->query($sql);
 
@@ -93,9 +84,9 @@ class Images extends Bdd
 
         $sql = "SELECT count(*) as num
                 FROM images i
-                WHERE  i.zapper  {$this->zapper}
-                {$this->rechercheCip}
-                {$this->rechercheNom}
+                WHERE  i.zapper  {$this->moteur->Zapper}
+                {$this->moteur->imageCip13}
+                {$this->moteur->imageNom}
                 AND i.upload = 1;";
 
         $num = $this->query($sql);
@@ -110,11 +101,9 @@ class Images extends Bdd
                     p.id_image, p.denomination, p.presentation, 
                     p.type, p.date_traitement, p.libelle
                 FROM images i, produits p
-                WHERE  i.zapper  {$this->zapper}
-                {$this->rechercheCip}
-                {$this->rechercheNom}
+                WHERE  i.zapper  {$this->moteur->Zapper}
                 AND i.id = p.id_image 
-                {$this->moteurRecherche}
+                {$this->moteur->RechercheImage}
                 ORDER BY p.denomination ASC, i.nom ASC
                 LIMIT $debut, $limit;";
 
@@ -128,9 +117,8 @@ class Images extends Bdd
                     p.id_image, p.denomination, p.presentation, 
                     p.type, p.date_traitement, p.libelle
                 FROM images i, produits p
-                WHERE  i.zapper  {$this->zapper}
-                {$this->rechercheCip}
-                {$this->rechercheNom}
+                WHERE  i.zapper  {$this->moteur->Zapper}
+                {$this->moteur->RechercheImage}
                 AND i.id = p.id_image
                 AND i.upload = 1
                 ORDER BY p.denomination ASC, i.nom ASC
@@ -146,12 +134,11 @@ class Images extends Bdd
                     p.id_image, p.denomination, p.presentation, 
                     p.type, p.date_traitement, p.libelle
                 FROM images i, produits p
-                WHERE  i.zapper  {$this->zapper}
-                {$this->rechercheCip}
-                {$this->rechercheNom}
+                WHERE  i.zapper  {$this->moteur->Zapper}
+                {$this->moteur->imageCip13}
+                {$this->moteur->imageNom}
                 AND i.id = p.id_image
                 AND i.upload = 0 
-                {$this->moteurRecherche}
                 ORDER BY p.denomination ASC, i.nom ASC
                 LIMIT $debut, $limit;";
 
@@ -162,9 +149,9 @@ class Images extends Bdd
     {
         $sql = "SELECT *
                 FROM images i
-                WHERE  i.zapper  {$this->zapper}
-                {$this->rechercheCip}
-                {$this->rechercheNom}
+                WHERE  i.zapper  {$this->moteur->Zapper}
+                {$this->moteur->imageCip13}
+                {$this->moteur->imageNom}
                 AND i.upload = 0  
                 ORDER BY i.nom ASC
                 LIMIT $debut, $limit;";
@@ -179,10 +166,8 @@ class Images extends Bdd
                     p.id_image, p.denomination, p.presentation, 
                     p.type, p.date_traitement, p.libelle
                 FROM images i, produits p
-                WHERE  i.zapper  {$this->zapper}
-                {$this->rechercheCip}
-                {$this->rechercheNom}
-                {$this->moteurRecherche}
+                WHERE  i.zapper  {$this->moteur->Zapper}
+                {$this->moteur->RechercheImage}
                 AND i.id = p.id_image 
                 ORDER BY p.denomination ASC, i.nom ASC;";
 
@@ -193,9 +178,9 @@ class Images extends Bdd
     {
         $sql = "SELECT *
                 FROM images i
-                WHERE i.zapper  {$this->zapper}
-                {$this->rechercheCip}
-                {$this->rechercheNom}
+                WHERE i.zapper  {$this->moteur->Zapper}
+                {$this->moteur->imageCip13}
+                {$this->moteur->imageNom}
                 ORDER BY i.nom ASC
                 LIMIT $debut, $limit;";
 
@@ -243,21 +228,21 @@ class Images extends Bdd
 
     public function updateZapper($id)
     {
-        $sql = "UPDATE `images` SET `zapper` = '1' WHERE `images`.`id` = $id;";
+        $sql = "UPDATE `images` SET `Zapper` = '1' WHERE `images`.`id` = $id;";
         $this->queryUpdate($sql);
         return true;
     }
 
     public function updateConserver($id)
     {
-        $sql = "UPDATE `images` SET `zapper` = '2' WHERE `images`.`id` = $id;";
+        $sql = "UPDATE `images` SET `Zapper` = '2' WHERE `images`.`id` = $id;";
         $this->queryUpdate($sql);
         return true;
     }
 
     public function updateRetirer($id)
     {
-        $sql = "UPDATE `images` SET `zapper` = '0' WHERE `images`.`id` = $id;";
+        $sql = "UPDATE `images` SET `Zapper` = '0' WHERE `images`.`id` = $id;";
         $this->queryUpdate($sql);
         return true;
     }
@@ -306,7 +291,7 @@ class Images extends Bdd
 
     public function deleteUdateProduit($id)
     {
-        $sql = "DELETE FROM `produits` WHERE id = $id;";
+        $sql = "DELETE FROM `produits` WHERE id_image = $id;";
         return $this->queryUpdate($sql);
     }
 

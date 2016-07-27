@@ -20,7 +20,6 @@ class Produit extends Produits
     var $_lib = [];
     var $page = '';
     var $listeRecherche = 'Recherche ';
-    var $moteurRecherche = '';
     var $control = '';
     var $selectCIP = '';
     var $BDD = '';
@@ -75,118 +74,7 @@ class Produit extends Produits
                 break;
         }
     }
-
-    function afficheMoteurRecherche()
-    {
-        $Laboratoire = $this->selectLaboratoires();
-        $Etat = $this->listeEtat();
-        $Code = $this->inputCip();
-        $Nom = $this->inputNom();
-        $Fam = $this->listeFamilles();
-        $listeRecherche = $this->listeRecherche;
-
-        include_once VUE . 'moteurRecherche.tpl.php';
-    }
-
-    public function selectLaboratoires()
-    {
-        $data = $this->getLaboratoires();
-
-        $balise = "<select name='labo'>";
-        $balise .= "
-            <option value='0'>---</option>";
-
-        $choix = isset($_SESSION['recherche'][$this->session]['labo']) ?
-                    $_SESSION['recherche'][$this->session]['labo'] : 0;
-        foreach ($data as $info) {
-            $selected = '';
-            if($info['id'] == $choix){
-                $selected = 'selected';
-                $this->listeRecherche .= "Laboratoire : {$info['designation']}";
-            }
-            $balise .= "
-            <option value='{$info['id']}' $selected >{$info['designation']}</option>";
-        }
-        $balise .= "
-        </select>";
-
-        return $balise;
-    }
-
-    public function listeEtat()
-    {
-        $choix = isset($_SESSION['recherche'][$this->session]['etat'])?
-                $_SESSION['recherche'][$this->session]['etat'] : '';
-
-        $checked['i'] = isset($choix['i']) ? 'checked' : '';
-        $checked['o'] = isset($choix['o']) ? 'checked' : '';
-        $checked['n'] = isset($choix['n']) ? 'checked' : '';
-        $checked['a'] = isset($choix['a']) ? 'checked' : '';
-        $checked['e'] = isset($choix['e']) ? 'checked' : '';
-
-        $this->listeRecherche .= isset($choix['i']) ? ": {$this->_lib['etat']['i']} " : '';
-        $this->listeRecherche .= isset($choix['o']) ? ": {$this->_lib['etat']['o']} " : '';
-        $this->listeRecherche .= isset($choix['n']) ? ": {$this->_lib['etat']['n']} " : '';
-        $this->listeRecherche .= isset($choix['a']) ? ": {$this->_lib['etat']['a']} " : '';
-        $this->listeRecherche .= isset($choix['e']) ? ": {$this->_lib['etat']['e']} " : '';
-
-        $etat = "
-            {$this->_lib['etat']['o']}<input name='etat[o]' type='checkbox' value='1' {$checked['o']} >
-            {$this->_lib['etat']['i']}<input name='etat[i]' type='checkbox' value='1' {$checked['i']} >
-            {$this->_lib['etat']['e']}<input name='etat[e]' type='checkbox' value='1' {$checked['e']} >
-            {$this->_lib['etat']['n']}<input name='etat[n]' type='checkbox' value='1' {$checked['n']} >
-            {$this->_lib['etat']['a']}<input name='etat[a]' type='checkbox' value='1' {$checked['a']} >
-            ";
-
-        return $etat;
-    }
-
-    public function inputCip()
-    {
-        $choix = isset($_SESSION['recherche'][$this->session]['cip13']) ? $_SESSION['recherche'][$this->session]['cip13'] : '';
-        if(!empty($choix)){
-            $this->listeRecherche = ": $choix ";
-        }
-        return '<input type="texte" name="cip13" placeholder="' . $choix . '" >';
-
-    }
-
-    public function inputNom()
-    {
-        $choix = isset($_SESSION['recherche'][$this->session]['nom']) ? $_SESSION['recherche'][$this->session]['nom'] : '';
-        if($choix){
-            $this->listeRecherche = ": $choix ";
-        }
-
-        return '<input type="texte" name="nom" placeholder="' . $choix . '" >';
-    }
-
-    public function listeFamilles()
-    {
-        $data = $this->getFamilles();
-
-        $balise = '<select name="famille">';
-        $balise .= '
-            <option value="0">---</option>';
-        $choix = isset($_SESSION['recherche'][$this->session]['famille']) ? $_SESSION['recherche'][$this->session]['famille'] : 0;
-        foreach ($data as $info) {
-            if($info['id'] == 0){
-                continue;
-            }
-            $select = '';
-            if($info['id'] == $choix){
-                $select = 'selected';
-                $this->listeRecherche .= ': famille "' . utf8_encode($info['nom']) . '" ';
-            }
-            $balise .= '
-            <option value="' . $info['id'] . '" ' . $select . '>' . utf8_encode($info['nom']) . '</option>';
-        }
-        $balise .= '
-        </select>';
-
-        return $balise;
-    }
-
+    
     public function getImages($liste)
     {
         $_liste = [];
@@ -214,21 +102,23 @@ class Produit extends Produits
 
     public function imgProd($img, $nom)
     {
+        //test de validité du type de produit
+        $images = ['image'=>'','vignette'=>''];
+        // test sur image 600x600
         if ($img['image'] == 1) {
-            $img['image'] = figureHTML($this->link . $nom . '.jpg',  $nom . ' Grande');
-            if($img['image'] == 'NULL'){
+            $images['image'] = figureHTML($this->link . $nom . '.jpg',  $nom . ' Grande');
+            if($images['image'] == 'NULL'){
                 return false;
             }
         }
-
+        // test sur vignette 162x162
         if ($img['vignette'] == 1) {
-            $img['vignette'] = figureHTML($this->link . $nom . '_vig.jpg', $nom . ' Vignette');
-            if($img['vignette'] == 'NULL'){
+            $images['vignette'] = figureHTML($this->link . $nom . '_vig.jpg', $nom . ' Vignette');
+            if($images['vignette'] == 'NULL'){
                 return false;
             }
         }
-
-        return $img;
+        return $images;
     }
 
     public function testImage($nom)
@@ -252,7 +142,7 @@ class Produit extends Produits
 
         return $img;
     }
-
+    /*
     public function criterMoteurRecherche()
     {
         debug(__FUNCTION__, 'FUNCTIONS');
@@ -402,4 +292,5 @@ class Produit extends Produits
 
         return ' AND ' . ((count($option) > 1 )? "( $_option )" : $_option);
     }
+    */
 }

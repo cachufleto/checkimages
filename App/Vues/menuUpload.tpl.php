@@ -15,7 +15,7 @@ echo <<<EOL
     </form>   
     </div>
 EOL;
-$this->info->afficheMoteurRecherche();
+$this->info->moteur->afficheMoteurRechercheImages();
 echo <<<EOL
     <div class="suite">
         <div class="resultat">Images : {$data['num']}

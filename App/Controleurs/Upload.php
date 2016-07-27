@@ -33,8 +33,8 @@ class Upload extends NewImage
         $this->connexion(SURFIMAGE);
         $this->zapper = isset($_SESSION['recherche'][$this->session]['etat'])? "= ".$_SESSION['recherche'][$this->session]['etat'] : "= 0";
         // menu
-        $this->menu = new Menu();
-        $this->menu->info = $this;
+        $this->menu = new Menu($this);
+
         $this->listeLocal = ['id'=>'-1','nom'=>"'_'"];
         // produits de parapharmacie
         $this->parapharmacie = new Produit();

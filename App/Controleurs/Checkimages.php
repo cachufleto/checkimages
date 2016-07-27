@@ -17,6 +17,9 @@ use App\Image;
 require_once LIB . 'Menu.php';
 use App\Menu;
 
+require_once LIB . 'Moteur.php';
+use App\Moteur;
+
 class Checkimages extends Image
 {
     var $menu = false;
@@ -26,7 +29,6 @@ class Checkimages extends Image
     var $alert = [];
     var $listeLocal = [];
     var $produit = '';
-    var $moteurRecherche = '';
 
     public function __construct()
     {
@@ -34,10 +36,7 @@ class Checkimages extends Image
         $this->connexion(SURFIMAGE);
         $this->zapper = isset($_SESSION['recherche'][$this->session]['etat'])? "= ".$_SESSION['recherche'][$this->session]['etat'] : "= 0";
 
-        $this->menu = new Menu();
-        $this->menu->info = $this;
-        $this->recherche = !empty($this->moteurRecherche)? true : false ;
-        $this->listeLocal = ['id'=>'-1','nom'=>"'_'"];
+        $this->menu = new Menu($this);
 
         $this->parapharmacie = new Produit();
         $this->parapharmacie->connexion(PARAPHARMACIE);
@@ -47,7 +46,11 @@ class Checkimages extends Image
         $this->medicament->connexion(MEDICAMENTS);
         $this->medicament->link = 'https://www.pharmaplay.fr/m/produits/';
 
-        $this->moteurRecherche = $this->criterMoteurRecherche();
+        $this->moteur = new moteur($this, $this, $_SESSION['recherche'][$this->session]);
+        debug($this->moteur, 'RECHERCHE');
+        $this->recherche = !empty($this->moteur->RechercheImage)? true : false ;
+        $this->listeLocal = ['id'=>'-1','nom'=>"'_'"];
+        // $this->moteurRecherche = $this->criterMoteurRechercheImage();
     }
 
     public function indexAction()

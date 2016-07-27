@@ -202,9 +202,9 @@ function enregistrerImageJpg($produit)
 
     imagejpeg($im2, PHOTO. "en_cours/{$produit['cip13']}.jpg");
 
-    if(preg_match('/^(photos)/', $produit['site']) AND file_exists(SITE . $_url)){
+    /*if(preg_match('/^photos/', $produit['site']) AND file_exists(SITE . $_url)){
         unlink(SITE . $_url);
-    }
+    }*/
 }
 
 function open_image ($file)

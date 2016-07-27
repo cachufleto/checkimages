@@ -17,12 +17,16 @@ use App\Menu;
 require_once LIB . 'Image.php';
 use App\Image;
 
+require_once LIB . 'Moteur.php';
+use App\Moteur;
+
 
 class Medicaments extends Produit
 {
     var $session = 'Medicaments';
     var $mage = '';
     var $champsObligatoires =[];
+    var $moteur ='';
 
     public function __construct()
     {
@@ -31,14 +35,15 @@ class Medicaments extends Produit
         $this->champsObligatoires = file_contents_medicaments();
         $this->connexion(MEDICAMENTS);
 
-        $this->menu = new Menu();
-        $this->menu->info = $this;
+        $this->menu = new Menu($this);
 
         $this->image = new Image();
         $this->image->connexion(SURFIMAGE);
         //$this->image->session = $this->session;
         $this->image->session = $this->session;
-        $this->moteurRecherche = $this->criterMoteurRecherche();
+
+        $this->moteur = new moteur($this, $this->image, $_SESSION['recherche'][$this->session]);
+        debug($this->moteur, 'RECHERCHE');
     }
 
     public function indexAction()

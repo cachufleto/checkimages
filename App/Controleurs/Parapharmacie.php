@@ -17,6 +17,9 @@ use App\Menu;
 require_once LIB . 'Image.php';
 use App\Image;
 
+require_once LIB . 'Moteur.php';
+use App\Moteur;
+
 class Parapharmacie extends Produit
 {
     var $session = 'Parapharmacie';
@@ -29,9 +32,7 @@ class Parapharmacie extends Produit
         $this->link = 'https://www.pharmaplay.fr/p/produits/';
         $this->connexion(PARAPHARMACIE);
 
-        $this->menu = new Menu();
-        $this->menu->info = $this;
-        $this->menu->file = 'Produits';
+        $this->menu = new Menu($this, 'Produits');
 
         $this->image = new Image();
         $this->image->connexion(SURFIMAGE);
@@ -39,14 +40,14 @@ class Parapharmacie extends Produit
         $this->image->session = $this->session;
 
         $this->champsObligatoires = file_contents_parapharmacie();
-        $this->moteurRecherche = $this->criterMoteurRecherche();
 
+        $this->moteur = new moteur($this, $this->image, $_SESSION['recherche'][$this->session]);
+        debug($this->moteur, 'RECHERCHE');
     }
 
     public function indexAction()
     {
         $this->menu->afficher();
-        //$this->afficheMoteurRecherche();
         $liste = $this->getImages($this->produits());
 
         include_once VUE . 'liste_produits.tpl.php';
