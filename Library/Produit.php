@@ -39,7 +39,7 @@ class Produit extends Produits
         //$this->control->session = $this->session;
         $this->control->session = $this->session;
         $this->control->listeCIP();
-        $this->selectCIP = $this->control->selectCIP;
+        $this->selectCIP = $this->control->selectImages;
 
         $this->selectProduit = isset($_SESSION[$this->session]['produit']) ? $_SESSION[$this->session]['produit'] : '';
         $this->debut = isset($_SESSION[$this->session]['a']) ? $_SESSION[$this->session]['a'] : 0;

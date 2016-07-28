@@ -36,7 +36,7 @@ class Produits extends Bdd
                 FROM
                     produits p
                 WHERE 
-                    p.cip13 IN {$this->selectCIP} 
+                    p.cip13 IN ({$this->selectCIP}) 
                     {$this->moteur->Recherche};";
 
         $num = $this->query($sql);
@@ -52,7 +52,7 @@ class Produits extends Bdd
                 FROM
                     produits p
                 WHERE 
-                    p.cip13 IN {$this->selectCIP} 
+                    p.cip13 IN ({$this->selectCIP}) 
                     {$this->moteur->Recherche};";
 
         $num = $this->query($sql);
@@ -82,7 +82,7 @@ class Produits extends Bdd
                 LEFT JOIN
                     laboratoires AS l ON p.id_laboratoire = l.id_laboratoire
                 WHERE 
-                    p.cip13 IN {$this->selectCIP} 
+                    p.cip13 IN ({$this->selectCIP}) 
                     {$this->moteur->Recherche}
                 ORDER BY l.designation ASC, p.libelle_ospharm ASC
                 LIMIT {$this->debut}, {$this->limit}";
@@ -112,7 +112,7 @@ class Produits extends Bdd
                 LEFT JOIN
                   laboratoires AS l ON p.id_laboratoire = l.id_laboratoire
                 WHERE
-                  p.cip13 IN {$this->selectCIP}
+                  p.cip13 IN ({$this->selectCIP})
                   {$this->moteur->Recherche}
                 ORDER BY
                   l.designation ASC,

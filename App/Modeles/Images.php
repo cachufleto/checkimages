@@ -215,7 +215,7 @@ class Images extends Bdd
     public function getProduitCipOK(){
         $sql = "SELECT cip13
                 FROM produits
-                WHERE 1;";
+                WHERE cip13 != '' OR cip13 != NULL;";
         return $this->query($sql);
     }
 

@@ -24,7 +24,7 @@ class NewImage extends NewImages
     var $listeRecherche = 'Recherche ';
     var $type = 0;
     var $countListeCIP = 0;
-    var $selectCIP = '';
+    var $selectImages = '';
 
     public function __construct()
     {
@@ -279,14 +279,14 @@ class NewImage extends NewImages
         $produit = isset($_SESSION[$this->session]['produit']) ? $_SESSION[$this->session]['produit'] : '';
         $selectImages = !empty($produit)? $selectImages : '';
 
-        $listeCIP = '';
+        $listeCIP = "'9876543210'";
         if($liste = $this->getCIP($this->type, $selectImages)){
             $this->countListeCIP = $liste;
             foreach ($liste as $key=>$data){
                 $listeCIP .= ", '{$data['cip13']}'";
             }
         };
-        $this->selectCIP = "(''$listeCIP)";
+        $this->selectImages = "$listeCIP";
     }
 
     public function uploadImageJpg($produit)
