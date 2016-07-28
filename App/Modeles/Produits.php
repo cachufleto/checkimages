@@ -35,8 +35,9 @@ class Produits extends Bdd
                     count(*) as num
                 FROM
                     produits p
-                WHERE 
-                    p.cip13 IN ({$this->selectCIP}) 
+                WHERE
+                    (p.cip13 IN ({$this->selectCIP})
+                    {$this->moteur->EnCours})
                     {$this->moteur->Recherche};";
 
         $num = $this->query($sql);
@@ -51,10 +52,11 @@ class Produits extends Bdd
                     count(*) as num
                 FROM
                     produits p
-                WHERE 
-                    p.cip13 IN ({$this->selectCIP}) 
+                WHERE
+                    (p.cip13 IN ({$this->selectCIP})
+                    {$this->moteur->EnCours})
                     {$this->moteur->Recherche};";
-
+        echo $sql;
         $num = $this->query($sql);
 
         return ($num)? $num[0]['num'] : 0;
@@ -82,7 +84,8 @@ class Produits extends Bdd
                 LEFT JOIN
                     laboratoires AS l ON p.id_laboratoire = l.id_laboratoire
                 WHERE 
-                    p.cip13 IN ({$this->selectCIP}) 
+                    (p.cip13 IN ({$this->selectCIP})
+                    {$this->moteur->EnCours})
                     {$this->moteur->Recherche}
                 ORDER BY l.designation ASC, p.libelle_ospharm ASC
                 LIMIT {$this->debut}, {$this->limit}";
@@ -112,7 +115,8 @@ class Produits extends Bdd
                 LEFT JOIN
                   laboratoires AS l ON p.id_laboratoire = l.id_laboratoire
                 WHERE
-                  p.cip13 IN ({$this->selectCIP})
+                  (p.cip13 IN ({$this->selectCIP})
+                  {$this->moteur->EnCours})
                   {$this->moteur->Recherche}
                 ORDER BY
                   l.designation ASC,
@@ -195,7 +199,7 @@ class Produits extends Bdd
         $sql = "SELECT DISTINCT l.id_laboratoire as id, l.designation 
                 FROM laboratoires l, produits p 
                 WHERE l.id_laboratoire = p.id_laboratoire 
-                {$this->moteur->Nom} {$this->moteur->Etat} {$this->moteur->Famille}
+                {$this->moteur->rechercheLaboratoires}
                 ORDER BY l.designation ASC";
         return $this->query($sql);
     }
@@ -205,7 +209,7 @@ class Produits extends Bdd
         $sql = "SELECT DISTINCT f.id_famille as id, f.designation as nom
                 FROM familles f, produits p 
                 WHERE f.id_famille = p.id_famille 
-                {$this->moteur->Laboratoire} {$this->moteur->Nom} {$this->moteur->Etat}
+                {$this->moteur->rechercheFamilles}
                 ORDER BY F.designation ASC";
         return $this->query($sql);
     }
