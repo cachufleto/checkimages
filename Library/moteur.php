@@ -34,6 +34,7 @@ class Moteur
         $this->image = $image;
         $this->chercher = $session;
         $this->_lib = file_contents_libelles();
+        /**********************************/
         $this->rechercheImageZapper();
         $this->rechercheNom();
         $this->rechercheCip13();
@@ -130,23 +131,23 @@ class Moteur
         }
 
         $recherche = '';
-        if(is_array($etat)){
+        if(is_array($etat) AND !empty($etat)){
             foreach ($etat as $key=>$val){
                 $recherche .= (!empty($recherche)? ' OR ' : '' ) . " p.produit_actif = '$key'";
             }
             $recherche = ' AND ' . ((count($etat) > 1 )? "( $recherche )" : $recherche);
         }
 
-        if($encour){
+        if($encour AND (!isset($this->chercher['cip13']) OR empty($this->chercher['cip13']))){
 
             $listeNew = $this->image->getProduitCipOK();
-            $listeCip = '';
+            $listeCip = "'0123456789'";
             if(is_array($listeNew)){
                 foreach ($listeNew as $key=>$cip){
                     $listeCip .= ", '{$cip['cip13']}'";
                 }
             }
-            $recherche .=  " AND p.cip13 IN (''$listeCip)";
+            $recherche .= " AND p.cip13 IN ($listeCip)";
         }
 
         $this->Etat = $recherche;
