@@ -21,6 +21,9 @@ class Image extends Images
     var $session = '';
     var $page = '';
     var $listeRecherche = 'Recherche ';
+    var $selectProduit = '';
+    var $debut = 0;
+    var $limit = 2;
 
     public function __construct()
     {
@@ -31,14 +34,15 @@ class Image extends Images
         $this->control->connexion(SURFIMAGE);
         // la valeur de session estinjecté à la suite
         $this->control->session = $this->session;
+
+        $this->selectProduit = isset($_SESSION[$this->session]['produit']) ? $_SESSION[$this->session]['produit'] : '';
+        $this->debut = isset($_SESSION[$this->session]['a']) ? $_SESSION[$this->session]['a'] : 0;
+        $this->limit = isset($_SESSION[$this->session]['b']) ? $_SESSION[$this->session]['b'] : NUM;
     }
 
     public function countData()
     {
-        $produit = (
-            isset($_SESSION[$this->session]['produit']) ? 
-                $_SESSION[$this->session]['produit'] : ''
-            ) . (
+        $produit = $this->selectProduit . (
             ($this->recherche)? 'R': ''
             );
 
@@ -67,33 +71,28 @@ class Image extends Images
 
     public function produits()
     {
-        $debut = isset($_SESSION[$this->session]['a']) ? $_SESSION[$this->session]['a'] : 0;
-        $limit = isset($_SESSION[$this->session]['b']) ? $_SESSION[$this->session]['b'] : NUM;
-        $produit = (
-            isset($_SESSION[$this->session]['produit']) ?
-                $_SESSION[$this->session]['produit'] : ''
-            ) . (
+        $produit = $this->selectProduit . (
             ($this->recherche)? 'R': ''
             );
         
         switch ($produit) {
             case 'okR':
-                return $this->getOkR($debut, $limit);
+                return $this->getOkR();
                 break;
             case 'ok':
-                return $this->getOk($debut, $limit);
+                return $this->getOk();
                 break;
             case 'koR':
-                return $this->getKoR($debut, $limit);
+                return $this->getKoR();
                 break;
             case 'ko':
-                return $this->getKo($debut, $limit);
+                return $this->getKo();
                 break;
             case 'R':
-                return $this->getR($debut, $limit);
+                return $this->getR();
                 break;
             case '':
-                return $this->get($debut, $limit);
+                return $this->get();
                 break;
         }
     }
@@ -119,13 +118,13 @@ class Image extends Images
 
             $info['image']['encours'] = '';
             if (!empty($info['cip13']) AND file_exists(PHOTO_EN_COUR . "{$info['cip13']}.jpg")) {
-                $info['image']['encours'] = figureHTML(LINK_EN_COUR . "{$info['cip13']}.jpg", "EN COURS");
+                $info['image']['encours'] = figureHTML(LINK_EN_COUR . "{$info['cip13']}.jpg", $this->_lib['imageEnCours']);
                 // existante sur le site
             }
 
             $info['image']['vignette'] = '';
             if (!empty($info['cip13']) AND file_exists(PHOTO_EN_COUR . "{$info['cip13']}_vig.jpg")) {
-                $info['image']['vignette'] = figureHTML(LINK_EN_COUR . "{$info['cip13']}_vig.jpg", "VIGNETTE");
+                $info['image']['vignette'] = figureHTML(LINK_EN_COUR . "{$info['cip13']}_vig.jpg", $this->_lib['imageVignette']);
             }
 
             if(!empty($info['cip13'])){

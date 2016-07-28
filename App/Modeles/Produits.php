@@ -60,7 +60,7 @@ class Produits extends Bdd
         return ($num)? $num[0]['num'] : 0;
     }
 
-    public function getOk($debut, $limit)
+    public function getOk()
     {
         $sql = "SELECT
                     p.produit_actif,
@@ -85,12 +85,12 @@ class Produits extends Bdd
                     p.cip13 IN {$this->selectCIP} 
                     {$this->moteur->Recherche}
                 ORDER BY l.designation ASC, p.libelle_ospharm ASC
-                LIMIT $debut, $limit";
+                LIMIT {$this->debut}, {$this->limit}";
 
         return $this->query($sql);
     }
     
-    public function getKo($debut, $limit)
+    public function getKo()
     {
         $sql = "SELECT
                   p.produit_actif,
@@ -117,12 +117,12 @@ class Produits extends Bdd
                 ORDER BY
                   l.designation ASC,
                   p.libelle_ospharm ASC
-                LIMIT $debut, $limit;";
+                LIMIT {$this->debut}, {$this->limit};";
 
         return $this->query($sql);
     }
 
-    public function get($debut, $limit)
+    public function get()
     {
         $sql = "SELECT
                   p.cip13,
@@ -149,7 +149,7 @@ class Produits extends Bdd
                 ORDER BY
                   l.designation ASC,
                   p.libelle_ospharm ASC 
-                LIMIT $debut, $limit";
+                LIMIT {$this->debut}, {$this->limit}";
 
         return $this->query($sql);
     }

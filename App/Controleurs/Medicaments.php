@@ -31,7 +31,7 @@ class Medicaments extends Produit
     public function __construct()
     {
         parent::__construct();
-        $this->link = 'https://www.pharmaplay.fr/m/produits/';
+        $this->link = LINK_PRODUITS_MEDICAMENTS;
         $this->champsObligatoires = file_contents_medicaments();
         $this->connexion(MEDICAMENTS);
 

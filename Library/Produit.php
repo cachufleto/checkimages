@@ -23,6 +23,9 @@ class Produit extends Produits
     var $control = '';
     var $selectCIP = '';
     var $BDD = '';
+    var $selectProduit = '';
+    var $debut = 0;
+    var $limit = NUM;
 
     public function __construct()
     {
@@ -37,18 +40,20 @@ class Produit extends Produits
         $this->control->session = $this->session;
         $this->control->listeCIP();
         $this->selectCIP = $this->control->selectCIP;
+
+        $this->selectProduit = isset($_SESSION[$this->session]['produit']) ? $_SESSION[$this->session]['produit'] : '';
+        $this->debut = isset($_SESSION[$this->session]['a']) ? $_SESSION[$this->session]['a'] : 0;
+        $this->limit = isset($_SESSION[$this->session]['b']) ? $_SESSION[$this->session]['b'] : NUM;
     }
 
     public function countData()
     {
-        $produit = isset($_SESSION[$this->session]['produit']) ? $_SESSION[$this->session]['produit'] : '';
-        
-        switch ($produit) {
+        switch ($this->selectProduit) {
             case 'ok':
-                return $this->getCountOk($this->control->listeCIP());
+                return $this->getCountOk();
                 break;
             case 'ko':
-                return $this->getCountKo($this->control->listeCIP());
+                return $this->getCountKo();
                 break;
             case '':
                 return $this->getCount();
@@ -58,19 +63,15 @@ class Produit extends Produits
 
     public function produits()
     {
-        $produit = isset($_SESSION[$this->session]['produit']) ? $_SESSION[$this->session]['produit'] : '';
-        $debut = isset($_SESSION[$this->session]['a']) ? $_SESSION[$this->session]['a'] : 0;
-        $limit = isset($_SESSION[$this->session]['b']) ? $_SESSION[$this->session]['b'] : NUM;
-
-        switch ($produit) {
+        switch ($this->selectProduit) {
             case 'ok':
-                return $this->getOk($debut, $limit, $this->control->listeCIP());
+                return $this->getOk();
                 break;
             case 'ko':
-                return $this->getKo($debut, $limit, $this->control->listeCIP());
+                return $this->getKo();
                 break;
             case '':
-                return $this->get($debut, $limit);
+                return $this->get();
                 break;
         }
     }
@@ -92,7 +93,7 @@ class Produit extends Produits
             }
 
             if (file_exists(PHOTO_EN_COUR . "{$info['cip13']}.jpg")) {
-                $info['image']['encours'] = figureHTML(LINK_EN_COUR . "{$info['cip13']}.jpg", $info['cip13'].' EN COURS');
+                $info['image']['encours'] = figureHTML(LINK_EN_COUR . "{$info['cip13']}.jpg", $info['cip13'] . $this->_lib['imageEnCours']);
             }
 
             $_liste[] = $info;
@@ -106,14 +107,14 @@ class Produit extends Produits
         $images = ['image'=>'','vignette'=>''];
         // test sur image 600x600
         if ($img['image'] == 1) {
-            $images['image'] = figureHTML($this->link . $nom . '.jpg',  $nom . ' Grande');
+            $images['image'] = figureHTML($this->link . $nom . '.jpg',  $nom . $this->_lib['imageGrande']);
             if($images['image'] == 'NULL'){
                 return false;
             }
         }
         // test sur vignette 162x162
         if ($img['vignette'] == 1) {
-            $images['vignette'] = figureHTML($this->link . $nom . '_vig.jpg', $nom . ' Vignette');
+            $images['vignette'] = figureHTML($this->link . $nom . '_vig.jpg', $nom . $this->_lib['imageVignette']);
             if($images['vignette'] == 'NULL'){
                 return false;
             }
@@ -142,155 +143,4 @@ class Produit extends Produits
 
         return $img;
     }
-    /*
-    public function criterMoteurRecherche()
-    {
-        debug(__FUNCTION__, 'FUNCTIONS');
-        $chercher = $_SESSION['recherche'][$this->session];
-        $option = [];
-        $selection = '';
-        if( (
-                isset($chercher['cip13']) AND !empty($chercher['cip13'])
-            ) OR (
-                isset($chercher['nom']) AND !empty($chercher['nom'])
-            ) )
-        {
-            // recherche par cip
-            if (isset($chercher['cip13']) AND !empty($chercher['cip13'])){
-                $selection .= $this->moteurRechercheCip13($chercher['cip13']);
-            }
-
-            // recherche par libelle du produit
-            if( isset($chercher['nom']) AND !empty($chercher['nom']))
-            {
-                $selection .= $this->moteurRechecheNom($chercher['nom']);
-            }
-
-        } else {
-
-            if (isset($chercher['labo']) && $chercher['labo'] > 0){
-                $selection .= $this->moteurRechercheLaboratoire($chercher['labo']);
-            }
-
-            if(isset($chercher['etat'])){
-                $selection .= $this->moteurRechecheEtat($chercher['etat']);
-            }
-
-            // recherche partielle
-            if (isset($chercher['famille']) && !empty($chercher['famille'])){
-                $selection .= $this->moteurRechercheFamilles($chercher['famille']);
-            }
-
-            return (!empty($selection))? $selection : '';
-        }
-    }
-
-    public function criterMoteurRechercheLaboratoires()
-    {
-        debug(__FUNCTION__, 'FUNCTIONS');
-        $chercher = $_SESSION['recherche'][$this->session];
-        $selection = '';
-        if( isset($chercher['nom']) AND !empty($chercher['nom']))
-        {
-            $selection .= $this->moteurRechecheNom($chercher['nom']);
-        }
-
-        if(isset($chercher['etat'])){
-            $selection .= $this->moteurRechecheEtat($chercher['etat']);
-        }
-
-        if (isset($chercher['famille']) && !empty($chercher['famille'])){
-            $selection .= $this->moteurRechercheFamilles($chercher['famille']);
-        }
-
-        return $selection;
-
-    }
-
-    public function criterMoteurRechercheFamilles()
-    {
-        debug(__FUNCTION__, 'FUNCTIONS');
-        $chercher = $_SESSION['recherche'][$this->session];
-        $selection = '';
-        if (isset($chercher['labo']) && $chercher['labo'] > 0){
-            $selection .= $this->moteurRechercheLaboratoire($chercher['labo']);
-        }
-
-        if( isset($chercher['nom']) AND !empty($chercher['nom']))
-        {
-            $selection .= $this->moteurRechecheNom($chercher['nom']);
-        }
-
-        if(isset($chercher['etat'])){
-            $selection .= $this->moteurRechecheEtat($chercher['etat']);
-        }
-
-        return $selection;
-    }
-
-    public function moteurRechercheCip13($cip13)
-    {
-        // recherche partielle
-        return " AND p.cip13 LIKE '%$cip13%'";
-
-    }
-
-    public function moteurRechercheLaboratoire($laboratoire)
-    {
-        // recherche partielle
-        return " AND p.id_laboratoire = $laboratoire ";
-    }
-
-    public function moteurRechercheFamilles($famille)
-    {
-        // recherche partielle
-        return ' AND p.id_famille = ' . $famille;
-    }
-
-    public function moteurRechecheEtat($etat)
-    {
-        $_etat = '';
-        foreach ($etat as $key=>$val){
-            if($key != 'e'){
-                $_etat .= (!empty($_etat)? ' OR ' : '' ) . " p.produit_actif = '$key'";
-            }
-        }
-
-        $_etat = !empty($_etat)? ' AND ' . ((count($etat) > 1 )? "( $_etat )" : $_etat) : '';
-
-        if(isset($etat['e'])){
-            $listeNew = $this->image->getProduitCipOK();
-            $liste = '';
-            if(is_array($listeNew)){
-                foreach ($listeNew as $key=>$cip){
-                    $liste .= ", '{$cip['cip13']}'";
-                }
-            }
-            $_etat .=  " AND p.cip13 IN (''$liste)";
-        }
-
-        return $_etat;
-    }
-
-    public function moteurRechecheNom($nom){
-        $option = [];
-        // recherche par libelle du produit
-        $option[] = ' p.libelle_ospharm LIKE "%' . $nom . '%"';
-        // agrementation du libelle du produit
-        $_nom = explode(' ', $nom);
-
-        if(is_array($_nom) AND count($_nom) > 1){
-            foreach ($_nom as $mot){
-                $option[] = ' p.libelle_ospharm LIKE "%' . $mot .'%"';
-            }
-        }
-
-        $_option = '';
-        foreach($option as $_r){
-            $_option .= (empty($_option)? '' : ' OR ') . $_r;
-        }
-
-        return ' AND ' . ((count($option) > 1 )? "( $_option )" : $_option);
-    }
-    */
 }

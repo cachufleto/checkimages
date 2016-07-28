@@ -94,7 +94,7 @@ class Images extends Bdd
         return ($num)? $num[0]['num'] : 0;
     }
 
-    public function getOkR($debut, $limit)
+    public function getOkR()
     {
         $sql = "SELECT 
                     i.id, i.site, i.nom, i.produit, i.upload, i.zapper, i.cip13, 
@@ -105,12 +105,12 @@ class Images extends Bdd
                 AND i.id = p.id_image 
                 {$this->moteur->RechercheImage}
                 ORDER BY p.denomination ASC, i.nom ASC
-                LIMIT $debut, $limit;";
+                LIMIT {$this->debut}, {$this->limit};";
 
         return $this->query($sql);
     }
     
-    public function getOk($debut, $limit)
+    public function getOk()
     {
         $sql = "SELECT 
                     i.id, i.site, i.nom, i.produit, i.upload, i.zapper, i.cip13, 
@@ -122,12 +122,12 @@ class Images extends Bdd
                 AND i.id = p.id_image
                 AND i.upload = 1
                 ORDER BY p.denomination ASC, i.nom ASC
-                LIMIT $debut, $limit;";
+                LIMIT {$this->debut}, {$this->limit};";
 
         return $this->query($sql);
     }
 
-    public function getKoR($debut, $limit)
+    public function getKoR()
     {
         $sql = "SELECT 
                     i.id, i.site, i.nom, i.produit, i.upload, i.zapper, i.cip13, 
@@ -140,12 +140,12 @@ class Images extends Bdd
                 AND i.id = p.id_image
                 AND i.upload = 0 
                 ORDER BY p.denomination ASC, i.nom ASC
-                LIMIT $debut, $limit;";
+                LIMIT {$this->debut}, {$this->limit};";
 
         return $this->query($sql);
     }
 
-    public function getKo($debut, $limit)
+    public function getKo()
     {
         $sql = "SELECT *
                 FROM images i
@@ -154,12 +154,12 @@ class Images extends Bdd
                 {$this->moteur->imageNom}
                 AND i.upload = 0  
                 ORDER BY i.nom ASC
-                LIMIT $debut, $limit;";
+                LIMIT {$this->debut}, {$this->limit};";
 
         return $this->query($sql);
     }
 
-    public function getR($debut, $limit)
+    public function getR()
     {
         $sql = "SELECT 
                     i.id, i.site, i.nom, i.produit, i.upload, i.zapper, i.cip13, 
@@ -174,7 +174,7 @@ class Images extends Bdd
         return $this->query($sql);
     }
 
-    public function get($debut, $limit)
+    public function get()
     {
         $sql = "SELECT *
                 FROM images i
@@ -182,7 +182,7 @@ class Images extends Bdd
                 {$this->moteur->imageCip13}
                 {$this->moteur->imageNom}
                 ORDER BY i.nom ASC
-                LIMIT $debut, $limit;";
+                LIMIT {$this->debut}, {$this->limit};";
 
         return $this->query($sql);
     }

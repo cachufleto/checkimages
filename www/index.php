@@ -6,7 +6,7 @@
  * Time: 13:40
  */
 require '../params.php';
-require RACINE . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
+require RACINE . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
 
 if(file_exists(CONF . 'Bdd.inc.php')){
     include_once (CONF . 'Bdd.inc.php');

@@ -40,13 +40,13 @@ class Upload extends NewImage
         $this->parapharmacie = new Produit();
         $this->parapharmacie->BDD = PARAPHARMACIE;
         $this->parapharmacie->connexion(PARAPHARMACIE);
-        $this->parapharmacie->link = 'https://www.pharmaplay.fr/p/produits/';
+        $this->parapharmacie->link = LINK_PRODUITS_PARAPHARMACIE;
         $this->parapharmacie->session = $this->session;
         // Medicaments
         $this->medicament = new Produit();
         $this->medicament->BDD = MEDICAMENTS;
         $this->medicament->connexion(MEDICAMENTS);
-        $this->medicament->link = 'https://www.pharmaplay.fr/m/produits/';
+        $this->medicament->link = LINK_PRODUITS_MEDICAMENTS;
         $this->medicament->session = $this->session;
     }
 

@@ -6,41 +6,62 @@
  * Time: 13:07
  */
 
+/*
+ * RETURN array route
+ */
 function file_contents_route(){
     include ( CONF . 'route.inc');
     return $_r;
 }
 
+/*
+ * RETURN array Textes du site
+ */
 function file_contents_libelles()
 {
     include CONF . 'libelles.php';
     return $_libelle;
 }
 
+/*
+ * RETURN array Type Mimes des images
+ */
 function file_contents_mimes()
 {
     include CONF . 'mimes.php';
     return $mimes;
 }
 
+/*
+ * RETURN array Items de navigation
+ */
 function file_contents_nav()
 {
     include CONF . 'nav.inc';
     return $nav;
 }
 
+/*
+ * RETURN array Items de navigation Optionels
+ */
 function file_contents_option()
 {
     include CONF . 'nav.inc';
     return $option;
 }
 
+/*
+ * RETURN array Champs Obligatoires
+ */
 function file_contents_medicaments()
 {
     include CONF . 'champsObligatoires.php';
     return $medicaments;
 }
 
+/*
+ * RETURN array Champs Obligatoires
+ */
 function file_contents_parapharmacie()
 {
     include CONF . 'champsObligatoires.php';
@@ -204,11 +225,7 @@ function enregistrerImageJpg($produit)
         }
     }
 
-    imagejpeg($im2, PHOTO. "en_cours/{$produit['cip13']}.jpg");
-
-    /*if(preg_match('/^photos/', $produit['site']) AND file_exists(SITE . $_url)){
-        unlink(SITE . $_url);
-    }*/
+    imagejpeg($im2, PHOTO_EN_COUR . $produit['cip13'] . ".jpg");
 }
 
 function open_image ($file)

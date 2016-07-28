@@ -29,7 +29,7 @@ class Parapharmacie extends Produit
     public function __construct()
     {
         parent::__construct();
-        $this->link = 'https://www.pharmaplay.fr/p/produits/';
+        $this->link = LINK_PRODUITS_PARAPHARMACIE;
         $this->connexion(PARAPHARMACIE);
 
         $this->menu = new Menu($this, 'Produits');
