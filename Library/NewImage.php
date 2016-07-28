@@ -1,6 +1,6 @@
 <?php
 /**
- * Created by PhpStorm.
+ * Created by ceidodev.com
  * User: Carlos PAZ DUPRIEZ
  * Date: 08/07/2016
  * Time: 10:47
@@ -40,11 +40,11 @@ class NewImage extends NewImages
         foreach($liste as $key=>$image){
             $supprimer = true;
             // on verifie si l'image à était traité
-            if (!empty($image['cip13']) and file_exists(SITE . 'photos/production/original/'.$image['cip13'].'.jpg')){
+            if (!empty($image['cip13']) and file_exists(PHOTO_PRODUCTION . 'original' . DIRECTORY_SEPARATOR . $image['cip13'].'.jpg')){
                 $supprimer = false;
-            } else if (!empty($image['cip13']) and file_exists(SITE . 'photos/en_cours/'.$image['cip13'].'.jpg')){
+            } else if (!empty($image['cip13']) and file_exists(PHOTO_EN_COUR . $image['cip13'].'.jpg')){
                 $supprimer = false;
-            } else if (file_exists(SITE . $image['site'].'/'.$image['nom'])){
+            } else if (file_exists(SITE . $image['site'] . DIRECTORY_SEPARATOR . $image['nom'])){
                 $supprimer = false;
             }
             
@@ -291,7 +291,7 @@ class NewImage extends NewImages
 
     public function uploadImageJpg($produit)
     {
-        if(!file_exists('photos/en_cours/' . $produit['nom'])){
+        if(!file_exists('photos' . DIRECTORY_SEPARATOR . 'en_cours' . DIRECTORY_SEPARATOR . $produit['nom'])){
             enregistrerImageJpg($produit);
         }
     }

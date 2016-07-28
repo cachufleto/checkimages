@@ -1,11 +1,15 @@
 <?php
 /**
- * Created by PhpStorm.
+ * Created by ceidodev.com
  * User: Carlos PAZ DUPRIEZ
  * Date: 01/06/2016
  * Time: 13:07
  */
 
+function file_contents_route(){
+    include ( CONF . 'route.inc');
+    return $_r;
+}
 
 function file_contents_libelles()
 {

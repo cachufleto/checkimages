@@ -1,6 +1,6 @@
 <?php
 /**
- * Created by PhpStorm.
+ * Created by ceidodev.com
  * User: CARLOS PAZ
  * Date: 31/05/2016
  * Time: 15:47
@@ -8,7 +8,7 @@
 
 namespace Site;
 
-require APP . 'Modeles/Import.php';
+require MOD . 'Import.php';
 
 use Site\Import;
 

@@ -1,12 +1,12 @@
 <?php
 /**
- * Created by PhpStorm.
+ * Created by ceidodev.com
  * User: Carlos PAZ DUPRIEZ
  * Date: 31/05/2016
  * Time: 13:40
  */
-require dirname(__DIR__) . '/vendor/autoload.php';
-require dirname(__DIR__) . '/Conf/param.php';
+require '../params.php';
+require RACINE . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
 
 if(file_exists(CONF . 'Bdd.inc.php')){
     include_once (CONF . 'Bdd.inc.php');

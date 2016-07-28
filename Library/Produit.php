@@ -1,6 +1,6 @@
 <?php
 /**
- * Created by PhpStorm.
+ * Created by ceidodev.com
  * User: Carlos PAZ DUPRIEZ
  * Date: 13/06/2016
  * Time: 11:47
@@ -91,8 +91,8 @@ class Produit extends Produits
                     ];
             }
 
-            if (file_exists(PHOTO . "en_cours/{$info['cip13']}.jpg")) {
-                $info['image']['encours'] = figureHTML('photos/en_cours/'.$info['cip13'].'.jpg', $info['cip13'].' EN COURS');
+            if (file_exists(PHOTO_EN_COUR . "{$info['cip13']}.jpg")) {
+                $info['image']['encours'] = figureHTML(LINK_EN_COUR . "{$info['cip13']}.jpg", $info['cip13'].' EN COURS');
             }
 
             $_liste[] = $info;
@@ -129,8 +129,8 @@ class Produit extends Produits
     public function checkImage($nom)
     {
         $img = [];
-        $img['image'] = remote_file_exists('' . $this->link . $nom . '.jpg')? 1 : 0;
-        $img['vignette'] = remote_file_exists('' . $this->link . $nom . '_vig.jpg')? 1 : 0;
+        $img['image'] = remote_file_exists($this->link . $nom . '.jpg')? 1 : 0;
+        $img['vignette'] = remote_file_exists($this->link . $nom . '_vig.jpg')? 1 : 0;
         
         if($getimg = $this->control->getImage($nom)){
             if($getimg['image'] != $img['image'] OR $getimg['vignette'] != $img['vignette'] ){

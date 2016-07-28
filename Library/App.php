@@ -1,6 +1,6 @@
 <?php
 /**
- * Created by PhpStorm.
+ * Created by ceidodev.com
  * User: Carlos PAZ DUPRIEZ
  * Date: 31/05/2016
  * Time: 13:54
@@ -16,13 +16,13 @@ class App
     var $session = 'Site';
     var $controleur = 'Site\Site';
     var $action = 'indexAction';
-    var $class = APP . 'Controleurs/Site.php';
+    var $class = APP . 'Controleurs' . DIRECTORY_SEPARATOR . 'Site.php';
 
     public function __construct()
     {
         session_start();
         $this->destroy();
-        $this->getRoute();
+        $this->routeur = file_contents_route();
         $this->setPage();
         $this->setSession();
         $this->setSessionMoteurRecherche();
@@ -38,11 +38,6 @@ class App
         }
     }
 
-    public function getRoute(){
-        include ( CONF . 'route.inc');
-        $this->routeur = $_r;
-    }
-    
     public function setPage(){
         if(!empty($_GET)){
             $this->page = (isset($_GET['page']) AND !empty($_GET['page']))? $_GET['page'] : 'accueil';
@@ -52,9 +47,9 @@ class App
 
     public function setControleur(){
         if(array_key_exists($this->page, $this->routeur)){
-            if(file_exists(APP . 'Controleurs/'.$this->routeur[$this->page]['controleur'].'.php')){
+            if(file_exists(APP . 'Controleurs' . DIRECTORY_SEPARATOR . $this->routeur[$this->page]['controleur'] . '.php')){
                 $controleur = $this->routeur[$this->page]['controleur'];
-                $this->class = APP . 'Controleurs/'.$controleur.'.php';
+                $this->class = APP . 'Controleurs' . DIRECTORY_SEPARATOR . $controleur . '.php';
                 $this->session = $controleur;
                 $this->controleur = $controleur.'\\'.$controleur;
                 $this->action = $this->routeur[$this->page]['action'];

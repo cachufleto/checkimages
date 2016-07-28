@@ -32,7 +32,7 @@ foreach ($liste as $key => $image){
     $presentation = (isset($image['data']['presentation']))? utf8_encode($image['data']['presentation']) : '';
     $cip13 = (isset($image['data']['cip13']))? $image['data']['cip13'] : '';
     $msg = isset($this->msg[$id])? $this->msg[$id] : '';
-    $existedeja = (isset($this->alert[$id]) and file_exists(PHOTO . "en_cours/{$_POST['cip13']}.jpg"))?
+    $existedeja = (isset($this->alert[$id]) and file_exists(PHOTO_EN_COUR . "{$_POST['cip13']}.jpg"))?
         $cip13 : "";
     $alert = (empty($alert) AND isset($this->alert[$id]))? $existedeja : $alert;
     $med = (isset($image['data']['type']) && $image['data']['type'] == '1')? 'selected="selected"' : '';

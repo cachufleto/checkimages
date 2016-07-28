@@ -8,8 +8,8 @@ foreach ($liste as $key => $image){
     $id = $image['id'];
     $msg = isset($this->msg[$id])? $this->msg[$id] : '';
     $alert = (empty($alert) AND isset($this->alert[$id]))? isset($this->alert[$id]) : $alert;
-    $existedeja = (isset($this->alert[$id]) and file_exists(PHOTO . "en_cours/{$_POST['cip13']}.jpg"))?
-        "<img width='150' src='photos/en_cours/{$_POST['cip13']}.jpg'>" : "";
+    $existedeja = (isset($this->alert[$id]) and file_exists(PHOTO_EN_COUR . "{$_POST['cip13']}.jpg"))?
+        "<img width='150' src='". LINK_EN_COUR . "{$_POST['cip13']}.jpg'>" : "";
     $nom = $image['nom']. ' ['. $image['site'].']';
     $zap = isset($image['zapper'])? $image['zapper'] : 0;
     $existe = (file_exists(PHOTO . $image['nom']. '.jpg'))?

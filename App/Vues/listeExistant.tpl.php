@@ -33,7 +33,7 @@ EOL;
             </div>
         </div>";
 
-if(file_exists(PHOTO . $produit['nom'].'.jpg')){
+if(file_exists(PHOTO . $produit['nom'] . '.jpg')){
 
         echo <<<EOL
         <div class="ligne">
@@ -47,7 +47,7 @@ if(file_exists(PHOTO . $produit['nom'].'.jpg')){
 EOL;
         }
 
-        if(file_exists(PHOTO . $produit['nom'].'.png')){
+        if(file_exists(PHOTO . $produit['nom'] . '.png')){
             echo <<<EOL
         <div class="ligne">
             <div class="existimg">
@@ -60,7 +60,7 @@ EOL;
 EOL;
         }
 
-        if(file_exists(PHOTO . $produit['cip13'].'.jpg')){
+        if(file_exists(PHOTO . $produit['cip13'] . '.jpg')){
             echo <<<EOL
         <div class="ligne">
             <div class="existimg">
@@ -73,7 +73,7 @@ EOL;
 EOL;
         }
 
-        if(file_exists(PHOTO . $produit['cip13'].'.png')){
+        if(file_exists(PHOTO . $produit['cip13'] . '.png')){
             echo <<<EOL
         <div class="ligne">
             <div class="existimg">

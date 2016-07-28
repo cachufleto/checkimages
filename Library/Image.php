@@ -1,6 +1,6 @@
 <?php
 /**
- * Created by PhpStorm.
+ * Created by ceidodev.com
  * User: Carlos PAZ DUPRIEZ
  * Date: 15/06/2016
  * Time: 13:41
@@ -118,14 +118,14 @@ class Image extends Images
             $info['image']['image'] = $this->testImage($info['nom'], $info['site']);
 
             $info['image']['encours'] = '';
-            if (!empty($info['cip13']) AND file_exists(PHOTO . "en_cours/{$info['cip13']}.jpg")) {
-                $info['image']['encours'] = figureHTML("photos/en_cours/{$info['cip13']}.jpg", "EN COURS");
+            if (!empty($info['cip13']) AND file_exists(PHOTO_EN_COUR . "{$info['cip13']}.jpg")) {
+                $info['image']['encours'] = figureHTML(LINK_EN_COUR . "{$info['cip13']}.jpg", "EN COURS");
                 // existante sur le site
             }
 
             $info['image']['vignette'] = '';
-            if (!empty($info['cip13']) AND file_exists(PHOTO . "en_cours/{$info['cip13']}_vig.jpg")) {
-                $info['image']['vignette'] = figureHTML("photos/en_cours/{$info['cip13']}_vig.jpg", "VIGNETTE");
+            if (!empty($info['cip13']) AND file_exists(PHOTO_EN_COUR . "{$info['cip13']}_vig.jpg")) {
+                $info['image']['vignette'] = figureHTML(LINK_EN_COUR . "{$info['cip13']}_vig.jpg", "VIGNETTE");
             }
 
             if(!empty($info['cip13'])){
@@ -253,16 +253,19 @@ class Image extends Images
         // on verifie chaque possibilité
         // l'image est dans le repertoire de en cours
         // on verifie si l'image de destination existe déjà
-        $urlNew = str_replace('//' . $new, '/' . $new, PHOTO . 'en_cours/' . $new . '.jpg');
-
+        $urlNew = str_replace( '/',  DIRECTORY_SEPARATOR, PHOTO_EN_COUR . $new . '.jpg');
+        $urlNew = str_replace( DIRECTORY_SEPARATOR . DIRECTORY_SEPARATOR . $new,  DIRECTORY_SEPARATOR . $new, $urlNew);
+        debug($urlNew, 'URLs IMAGES');
         if (file_exists($urlNew)) {
             return false;
         }
 
         // on verifie si l'image d'irigine existe bien
-        if(preg_match('/^(photo)/', $produit['site']) ) {
+        if(preg_match('/^photo/', $produit['site']) ) {
 
-            $url = str_replace('//' . $produit['cip13'], '/' . $produit['cip13'], PHOTO . 'en_cours/' . $produit['cip13'] . '.jpg');
+            $url = str_replace( '/',  DIRECTORY_SEPARATOR, PHOTO_EN_COUR . $produit['cip13'] . '.jpg');
+            $url = str_replace( DIRECTORY_SEPARATOR . DIRECTORY_SEPARATOR . $produit['cip13'],  DIRECTORY_SEPARATOR . $produit['cip13'], $url);
+            debug($url, 'URLs IMAGES');
             if (!file_exists($url)) {
                 return false;
             }
@@ -311,12 +314,12 @@ class Image extends Images
                     $this->deleteUdate($id);
                     $this->deleteUdateProduit($id);
 
-                    $link = SITE . $produit['site'] . '/' . $produit['nom'];
+                    $link = SITE . $produit['site'] . DIRECTORY_SEPARATOR . $produit['nom'];
                     if(file_exists($link)){
                         unlink($link);
                     }
 
-                    $link = PHOTO . 'en_cours/' . $produit['cip13'].'.jpg';
+                    $link = PHOTO_EN_COUR . $produit['cip13'].'.jpg';
                     if(file_exists($link)){
                         unlink($link);
                     }

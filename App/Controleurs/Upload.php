@@ -1,6 +1,6 @@
 <?php
 /**
- * Created by PhpStorm.
+ * Created by ceidodev.com
  * User: Carlos PAZ DUPRIEZ
  * Date: 06/06/2016
  * Time: 11:58
@@ -65,7 +65,7 @@ class Upload extends NewImage
     public function localAction()
     {
         $this->menu->afficherNewImages();
-        $this->listerReperoires(REP_TRAITEMETN);
+        $this->listerReperoires(PHOTO_TRAITEMENT);
         header('content-type image/jpeg');
 
         $data = $this->listeLocal;

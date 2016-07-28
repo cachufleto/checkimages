@@ -16,7 +16,7 @@ $data['descriptif'] = utf8_encode($data['descriptif']);
 $data['famille'] = utf8_encode($data['famille']);
 $data['sFamille'] = utf8_encode($data['sFamille']);
 $data['ssFamille'] = utf8_encode($data['ssFamille']);
-$image = file_exists(SITE . "photos/en_cours/{$data['cip13']}.jpg")? "<img height='400px' src='photos/en_cours/{$data['cip13']}.jpg'>" : "";
+$image = file_exists(PHOTO_EN_COUR . "{$data['cip13']}.jpg")? "<img height='400px' src='photos" . DIRECTORY_SEPARATOR . "en_cours" . DIRECTORY_SEPARATOR . "{$data['cip13']}.jpg'>" : "";
 
 echo <<<EOL
 <div class='ligne'><label>{$this->_lib['champ']['libelle_ospharm']} : </label><div>{$data['libelle_ospharm']}</div></div>
