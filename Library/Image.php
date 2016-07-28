@@ -181,7 +181,7 @@ class Image extends Images
     public function imgLocal($img, $nom)
     {
         if ($img['image'] == 1) {
-            return figureHTML($nom, 'Originale');
+            return figureHTML($nom, $this->_lib['imageOriginale']);
         }
         return false;
     }
