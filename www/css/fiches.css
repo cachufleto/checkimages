@@ -1,0 +1,266 @@
+body {
+    margin:0;
+    font-family:Verdana, Arial, Helvetica, sans-serif;
+    font-size:12px;
+    color:#666666;
+    background-color:#FFFFFF;
+    overflow-x:hidden;
+}
+.global {
+    position:relative;
+    width: 100%;
+}
+.conteneur_corps {
+    position:relative;
+    max-width:1050px;
+    margin-left: auto;
+    margin-right: auto;
+    overflow:visible;
+}
+.corps {
+    position:relative;
+}
+#contenu {
+    position:relative;
+    margin-left: 0;
+    margin-right: 220px;
+    margin-top: 10px;
+    background-color:#ffffff;
+    /*	background-image:url(../s/im/picto_page_charte.png)*/;
+    background-position:left top;
+    background-repeat:no-repeat;
+    padding-bottom:10px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    padding-top:10px;
+
+}
+.bt_fiche_parapharmacie {
+    width:180px;
+    height:25px;
+    background-color:#92D400;
+    -moz-border-radius:5px 5px 5px 5px;
+    -webkit-border-radius:5px 5px 5px 5px;
+    border-radius:5px 5px 5px 5px;
+    cursor:pointer;
+    line-height:25px;
+    color:#FFFFFF;
+    text-align:center;
+    text-decoration:none;
+}
+.bt_fiche_parapharmacie:hover {
+    background-color:#666666;
+}
+.contenu_fiche_parapharmacie {
+    position:relative;
+    width:100%;
+    height:auto;
+    -moz-border-radius:5px 5px 5px 5px;
+    -webkit-border-radius:5px 5px 5px 5px;
+    border-radius:5px 5px 5px 5px;
+    border:1px #92D400 solid;
+    display:none;
+    text-align:center;
+}
+.titre_produit {
+    font-size:18px;
+    font-weight:600;
+    text-transform:uppercase;
+    color:#999999;
+}
+.titre_laboratoire {
+    font-size:15px;
+    text-transform:uppercase;
+    color:#666666;
+}
+.chemin_produit {
+    max-width:1050px;
+    text-align:right;
+    color:#92D400;
+    padding:10px;
+}
+.libelle_produit {
+    text-align:right;
+    color:#92D400;
+}
+.prix_produit {
+    position:relative;
+    width:200px;
+    color:#999999;
+    border: #999999 1px solid;
+    --moz-border-radius:5px;
+    -webkit-border-radius:5px;
+    border-radius:5px;
+
+}
+.ajout_panier {
+    position:relative;
+    width:255px;
+    height:30px;
+    background-color:#92D400;
+    border:1px #999999 solid -moz-border-radius:5px 5px 5px 5px;
+    -webkit-border-radius:5px 5px 5px 5px;
+    border-radius:5px 5px 5px 5px;
+    padding:5px 5px 5px 5px;
+    cursor:pointer;
+    line-height:30px;
+    color:#FFFFFF;
+    text-align:center;
+}
+.titre {
+    position:relative;
+    max-width:100%;
+    height:50px;
+    padding:20px;
+    background-image:url(https://www.pharmaplay.fr/s/im/picto_titre.png);
+    background-position-x: 60px;
+    background-position-y: 20px;
+    background-repeat:no-repeat;
+    font-size:22px;
+    text-indent:100px;
+'/* Firefox v4.0+ , Safari v5.1+ , Chrome v10.0+, IE v10+ and by Opera v10.5+ */
+'text-shadow:5px 5px 4px rgba(153,153,153,0.65);
+'-ms-filter:"progid:DXImageTransform.Microsoft.dropshadow(OffX=5,OffY=5,Color=#a6999999,Positive=true)";zoom:1;
+'filter:progid:DXImageTransform.Microsoft.dropshadow(OffX=5,OffY=5,Color=#a6999999,Positive=true);
+}
+.detail_ligne_panier {
+    float:right;
+    width:90%;
+    overflow:visible;
+    margin-bottom:20px;
+    border: 1px #CCCCCC solid;
+    -moz-border-radius:5px 5px 5px 5px;
+    -webkit-border-radius:5px 5px 5px 5px;
+    border-radius:5px 5px 5px 5px;
+}
+.bt_sup_detail_panier {
+    position:relative;
+    width:70px;
+    height:25px;
+    /*background-image:url(../s/im/icone_sup_panier.png);*/
+    cursor:pointer;
+}
+.bt_sup_detail_panier:hover {
+    /*background-image:url(../s/im/icone_sup_panier_hover.png);*/
+    color:#999999;
+}
+.ajout_panier:hover {
+    background-color:#999999;
+}
+#colonne_droite {
+    position:relative;
+    float: right;
+    max-width: 210px;
+
+}
+.chemin_arbo {
+    padding: 3px 10px 3px 10px;
+    background-color:#92D400;
+    color:#FFFFFF;
+    -moz-border-radius:5px;
+    -webkit-border-radius:5px;
+    border-radius:5px;
+    text-decoration:none;
+}
+
+.chemin_arbo:hover {
+    text-decoration:none;
+    background-color:#666666;
+    color:#FFFFFF;
+
+}
+.lien_panier_detailpanier {
+    position:relative;
+    cursor:pointer;
+}
+
+.lien_panier_detailpanier:hover {
+    text-decoration:underline;
+}
+.lib_formulaire_neutre {
+    color:#999999;
+    font-size:11px;
+}
+a {
+    color:#666666;
+    text-decoration:underline;
+}
+a:hover {
+    color:#333333;
+    text-decoration:underline;
+}
+input {
+    border:1px solid #FFFFFF;
+    background-color:#E8E8E8;
+    color:#333333;
+}
+select, option {
+    border:1px solid #FFFFFF;
+    background-color:#E8E8E8;
+    color:#333333;
+}
+textarea {
+    border:1px solid #FFFFFF;
+    background-color:#E8E8E8;
+    color:#333333;
+}
+select {
+    border:1px solid #FFFFFF;
+    background-color:#E8E8E8;
+    color:#333333;
+}
+h1 {
+    font-size:20px;
+}
+h2 {
+    font-size:17px;
+    text-align:left;
+}
+h3 {
+    font-size:14px;
+    text-align:left;
+}
+/*--DEBUT STYLE AFFICHAGE POPUP POUR PHARMAPLAY.FR ET .NET--*/
+
+#fade { /*--Masque opaque noir de fond--*/
+    display: none; /*--masqué par défaut--*/
+    background: #000;
+    position: fixed; left: 0; top: 0;
+    width: 100%; height: 100%;
+    opacity: .80;
+    z-index: 9999;
+}
+img.btn_close {
+    float: right;
+    margin: -55px -55px 0 0;
+}
+/*--Gérer la position fixed pour IE6--*/
+*html #fade {
+    position: absolute;
+}
+*html .popup_block {
+    position: absolute;
+}
+
+.contenu_fiche{
+    border: solid 1px green;
+}
+
+.ligne{
+    float: left;
+    width: 100%;
+}
+.ficheinfo{
+    float: left;
+    width: 49%;
+}
+label {
+    float: left;
+    color: coral;
+    width: 120px;
+    height: 20px;
+    text-align: right;
+    padding-right: 5px;
+}
+

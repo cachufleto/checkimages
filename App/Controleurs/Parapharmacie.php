@@ -57,6 +57,7 @@ class Parapharmacie extends Produit
         $id = isset($_GET['id'])? intval($_GET['id']) : -1;
         $produit = $this->getProduit($id);
         include VUE . 'fichePharmacie.tpl.php';
+        exit();
     }
     
 }

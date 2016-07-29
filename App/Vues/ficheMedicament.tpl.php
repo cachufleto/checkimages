@@ -10,12 +10,20 @@ echo "
 <div class='ligne'><label>PHOTO : </label><div><img height='400px' src='{$this->link}{$produit[0]['cip13']}.jpg'> </div></div>";*/
 $data = $produit[0];
 $data['libelle_ospharm'] = utf8_encode($data['libelle_ospharm']);
+$data['denomination'] = utf8_encode($data['denomination']);
 $data['ansm'] = utf8_encode($data['ansm']);
 $data['presentation'] = utf8_encode($data['presentation']);
 $data['famille'] = utf8_encode($data['famille']);
 $data['sFamille'] = utf8_encode($data['sFamille']);
 $data['ssFamille'] = utf8_encode($data['ssFamille']);
-$image = file_exists(PHOTO_EN_COUR . "{$data['cip13']}.jpg")? "<img height='400px' src='". LINK_EN_COUR . "{$data['cip13']}.jpg'>" : "";
+$imageVignette = (($imageVignette = figureHTML("{$this->link}{$data['cip13']}_vig.jpg", $this->_lib['imageVignette'])) != 'NULL')?
+    $imageVignette : $this->_lib['imageVignette'] . $this->_lib['imageEmpty'];
+$imageGrande = (($imageGrande = figureHTML("{$this->link}{$data['cip13']}.jpg", $this->_lib['imageGrande'])) != 'NULL')?
+    $imageGrande : $this->_lib['imageGrande'] . $this->_lib['imageEmpty'];
+$image = file_exists(PHOTO_EN_COUR . "{$data['cip13']}.jpg")? "photos/en_cours/{$data['cip13']}.jpg" : "";
+$imageEnCours = (($imageEnCours = figureHTML($image, $this->_lib['imageEnCours']))!= 'NULL')?
+    $imageEnCours : $this->_lib['imageEnCours'] . $this->_lib['imageEmpty'];
+
 echo <<<EOL
 <div class="ligne"><label>{$this->_lib['champ']['libelle_ospharm']} : </label><div>{$data['libelle_ospharm']}</div></div>
 <div class="ligne"><label>{$this->_lib['champ']['denomination']} : </label><div>{$data['denomination']}</div></div>
@@ -36,8 +44,8 @@ echo <<<EOL
 <div class="ligne"><label>{$this->_lib['champ']['ansm']} : </label><div>{$data['ansm']}</div></div>
 <div class='ligne'><label>PHOTOS : </label><div></div></div>
 <div class='ligne'>
-    <img height='100px' src='{$this->link}{$data['cip13']}_vig.jpg'>
-    <img height='400px' src='{$this->link}{$data['cip13']}.jpg'>
-    $image
+    <br>$imageVignette
+    <br>$imageGrande
+    <br>$imageEnCours
 </div>
 EOL;

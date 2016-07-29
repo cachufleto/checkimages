@@ -130,10 +130,10 @@ function figureHTML($nom, $texte)
     if($attributs = image_attributs($nom)){
         $info = "({$attributs[0]} x {$attributs[1]})";
 
-    return "<figure>
-            <img src='$nom' alt='$texte'/>
-            <figcaption>$texte $info</figcaption>
-            </figure>";
+        return "<figure>
+                <img src='$nom' alt='$texte'/>
+                <figcaption>$texte $info</figcaption>
+                </figure>";
     }
     
     return "NULL";
@@ -145,7 +145,7 @@ function image_attributs($nom)
         if(remote_file_exists($nom)) {
             return getimagesize($nom);
         }
-    } else if(file_exists(SITE . $nom)){
+    } else if(!empty($nom) AND file_exists(SITE . $nom)){
         return getimagesize($nom);
     }
 

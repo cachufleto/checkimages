@@ -58,6 +58,7 @@ class Medicaments extends Produit
         $id = isset($_GET['id'])? $_GET['id'] : -1;
         $produit = $this->getProduit($id);
         include VUE . 'ficheMedicament.tpl.php';
+        exit();
     }
 
 }

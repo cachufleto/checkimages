@@ -23,6 +23,7 @@ $_libelle['famille'] = "Famille";
 $_libelle['id_produit'] = "Produit";
 $_libelle['image'] = "Photos";
 $_libelle['imageEnCours'] = " En cours (Local)";
+$_libelle['imageEmpty'] = " Vide";
 $_libelle['imageGrande'] = " Grande (Site)";
 $_libelle['imageOriginale'] = " Originale";
 $_libelle['imageVignette'] = " Vignette (Site)";
