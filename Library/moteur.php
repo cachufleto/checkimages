@@ -19,6 +19,7 @@ class Moteur
     var $Laboratoire = '';
     var $Famille = '';
     var $Etat = '';
+    var $EnCours = '';
     var $imageNom = '';
     var $imageCip13 = '';
     var $imageDenomination = '';
@@ -27,6 +28,8 @@ class Moteur
     var $Recherche = '';
     var $RechercheImage = '';
     var $listeRecherche = '';
+    var $rechercheLaboratoires = '';
+    var $rechercheFamilles = '';
 
     public function __construct($produit, $image, $session)
     {
@@ -34,6 +37,7 @@ class Moteur
         $this->image = $image;
         $this->chercher = $session;
         $this->_lib = file_contents_libelles();
+
         /**********************************/
         $this->rechercheImageZapper();
         $this->rechercheNom();
@@ -44,9 +48,12 @@ class Moteur
         $this->rechercheImageNom();
         $this->rechercheImageDenomination();
         $this->rechercheImagePresentation();
+
         /**********************************/
         $this->criterMoteurRecherche();
         $this->criterMoteurRechercheImage();
+        $this->criterMoteurRechercheLaboratoires();
+        $this->criterMoteurRechercheFamilles();
     }
 
     public function criterMoteurRecherche()
@@ -81,12 +88,12 @@ class Moteur
 
     public function criterMoteurRechercheLaboratoires()
     {
-        return $this->Nom . $this->Etat . $this->Famille;
+        $this->rechercheLaboratoires = $this->Nom . $this->Etat . $this->Famille;
     }
 
     public function criterMoteurRechercheFamilles()
     {
-        return $this->Laboratoire . $this->Nom . $this->Etat;
+        $this->rechercheFamilles = $this->Laboratoire . $this->Nom . $this->Etat;
     }
 
     /*******************************************************************/
@@ -136,6 +143,7 @@ class Moteur
                 $recherche .= (!empty($recherche)? ' OR ' : '' ) . " p.produit_actif = '$key'";
             }
             $recherche = ' AND ' . ((count($etat) > 1 )? "( $recherche )" : $recherche);
+            $this->Etat = $recherche;
         }
 
         if($encour AND (!isset($this->chercher['cip13']) OR empty($this->chercher['cip13']))){
@@ -147,10 +155,10 @@ class Moteur
                     $listeCip .= ", '{$cip['cip13']}'";
                 }
             }
-            $recherche .= " AND p.cip13 IN ($listeCip)";
+            $recherche = " OR p.cip13 IN ($listeCip)";
+            $this->EnCours = $recherche;
         }
 
-        $this->Etat = $recherche;
     }
 
     public function rechercheNom()
