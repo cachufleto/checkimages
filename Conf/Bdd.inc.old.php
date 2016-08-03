@@ -13,3 +13,4 @@ define ('SURFIMAGE', 'ceido_surfimages'); // base des images externes
 define ('MEDICAMENTS', 'ceido_medicaments'); // base des medicaments
 define ('PARAPHARMACIE', 'ceido_parapharmacie'); // base des parapharmacies
 
+define ('DEBUG', false);

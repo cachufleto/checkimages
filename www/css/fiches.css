@@ -92,14 +92,14 @@ body {
     --moz-border-radius:5px;
     -webkit-border-radius:5px;
     border-radius:5px;
-
 }
 .ajout_panier {
     position:relative;
     width:255px;
     height:30px;
     background-color:#92D400;
-    border:1px #999999 solid -moz-border-radius:5px 5px 5px 5px;
+    border:1px #999999 solid;
+    -moz-border-radius:5px 5px 5px 5px;
     -webkit-border-radius:5px 5px 5px 5px;
     border-radius:5px 5px 5px 5px;
     padding:5px 5px 5px 5px;
@@ -148,6 +148,24 @@ body {
 .ajout_panier:hover {
     background-color:#999999;
 }
+.notice_rcp {
+    float:left;
+    width:117px;
+    height:30px;
+    line-height:30px;
+    background-color:#666666;
+    border:1px #999999 solid;
+    -moz-border-radius:5px 5px 5px 5px;
+    -webkit-border-radius:5px 5px 5px 5px;
+    border-radius:5px 5px 5px 5px;
+    padding:5px 5px 5px 5px;
+    cursor:pointer;
+    color:#FFFFFF;
+    text-align:center;
+}
+.notice_rcp:hover {
+    color:#333333;
+}
 #colonne_droite {
     position:relative;
     float: right;
@@ -181,6 +199,10 @@ body {
 .lib_formulaire_neutre {
     color:#999999;
     font-size:11px;
+}
+.lib_rouge {
+    color:#FF0000;
+    font-weight:600;
 }
 a {
     color:#666666;
@@ -263,4 +285,3 @@ label {
     text-align: right;
     padding-right: 5px;
 }
-

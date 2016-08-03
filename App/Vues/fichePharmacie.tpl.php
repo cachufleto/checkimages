@@ -31,7 +31,7 @@ echo <<<EOL
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8"/>
     <meta name="description" content="Fiche parapharmacie - ma ph@rmacie en ligne - 36 avenue Pierre Lanfrey">
     <link href="https://fonts.googleapis.com/css?family=Comfortaa" rel="stylesheet" type="text/css">
     <link href="css/fiches.css" rel="stylesheet" type="text/css">
@@ -41,7 +41,7 @@ echo <<<EOL
     <script type="text/javascript" src="https://www.pharmaplay.fr/scripts/jssor.utils.js"></script>
     <script type="text/javascript" src="https://www.pharmaplay.fr/scripts/jssor.slider.js"></script>
     <link rel="icon" type="image/png" href="https://www.pharmaplay.fr/s/banque_images/logos_grpt/45/favicon.png" />
-    <title>Fiche parapharmacie</title>
+    <title>CEIDO - Fiche parapharmacie</title>
     <!--popup -->
     <link href="https://www.pharmaplay.fr/css/magnific-popup.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="https://www.pharmaplay.fr/scripts/jquery.magnific-popup.min.js"></script>
@@ -53,8 +53,7 @@ echo <<<EOL
         <div class="corps" onMouseOver="ferme_toutes_div_sf()">
             <div id="colonne_droite">
             </div>
-            <div id="contenu" style="background-image:none;">
-                <!--  ****************************************** -->
+            <div id="contenu">
                 <div class="chemin_produit">
                     <a href="https://www.pharmaplay.fr/p/sfam.asp?idf={$data['id_famille']}" class="chemin_arbo">{$data['famille']}</a>
                     <img src="https://www.pharmaplay.fr/s/im/fleche_chemin.png">
@@ -122,7 +121,7 @@ echo <<<EOL
                                 <tr>
                                     <td>&nbsp;</td>
                                     <td>
-                                        <div>Date de mise &agrave; jour:&nbsp;<strong>{date_traitement}</strong></div>
+                                        <div>Date de mise &agrave; jour:&nbsp;<strong>{data['date_traitement']  }</strong></div>
                                     </td>
                                 </tr>
                             </table>
@@ -131,7 +130,7 @@ echo <<<EOL
                     <div style="float:left; width:50%;">
                         <div style="margin-top:10px; margin-left:40px; width:300px; height:300px;">
                             <a class="image-popup-no-margins" href="https://www.pharmaplay.fr/p/produits/{$data['cip13']}.jpg">
-                                <img src="https://www.pharmaplay.fr/p/produits/{$data['cip13']}.jpg" width="300" height="300" alt=" - ma ph@rmacie en ligne" /></a>
+                                <img src="https://www.pharmaplay.fr/p/produits/{$data['cip13']}.jpg" width="300" height="300" alt="{$data['libelle_ospharm']} - ma ph@rmacie en ligne" /></a>
                         </div>
                         <div style="margin-top:10px; margin-left:40px; width:300px;">
                             <table width="100%" border="0" cellspacing="10" cellpadding="0" align="center">
@@ -163,13 +162,13 @@ echo <<<EOL
                             </table>
                         </div>
                         <div style="max-width:100%; padding:10px;">
-                            <div id="descriptif" class="contenu_fiche">
+                            <div id="descriptif" class="contenu_fiche_parapharmacie">
                                 <div style="padding:10px;">{$data['descriptif']}</div>
                             </div>
-                            <div id="conseils" class="contenu_fiche">
+                            <div id="conseils" class="contenu_fiche_parapharmacie">
                                 <div style="padding:10px;">{$data['conseils']}</div>
                             </div>
-                            <div id="composition" class="contenu_fiche">
+                            <div id="composition" class="contenu_fiche_parapharmacie">
                                 <div style="padding:10px;">{$data['composition']}</div>
                             </div>
                         </div>
@@ -189,7 +188,7 @@ echo <<<EOL
                                         <strong>Parapharmacie</strong> (laboratoire {$data['laboratoire']})
                                     </td>
                                     <td>
-                                        <div class="bt_sup_detail_panier" onClick="document.getElementById('sup_panier{$data['id_produit']}').submit();">Supprimer</div>
+                                        <div class="bt_sup_detail_panier">Supprimer</div>
                                         <form name="sup_panier{$data['id_produit']}" id="sup_panier{$data['id_produit']}" method="post" action="communs_detail_panier.asp">
                                             <input name="id_produit" type="hidden" value="{$data['id_produit']}" />
                                             <input name="nature_produit" type="hidden" value="p" />
@@ -263,11 +262,12 @@ echo <<<EOL
 <div class='ligne'>
     $imageEnCours
 </div>
-<div class="ficheinfo"><label>{$this->_lib['champ']['laboratoire']} : </label><div>{$data['id_laboratoire']} - {$data['laboratoire']}</div></div>
+
+<div class='ficheinfo'><label>{$this->_lib['champ']['laboratoire']} : </label><div>{$data['id_laboratoire']} - {$data['laboratoire']}</div></div>
 <div class='ficheinfo'><label>{$this->_lib['champ']['cacl']} : </label><div>{$data['cacl']}</div></div>
-<div class="ficheinfo"><label>{$this->_lib['champ']['famille']} : </label><div>[{$data['id_famille']}] {$data['famille']}</div></div>
-<div class="ficheinfo"><label>{$this->_lib['champ']['sFamille']} : </label><div>[{$data['id_sfamille']}] {$data['sFamille']}</div></div>
-<div class="ficheinfo"><label>{$this->_lib['champ']['ssFamille']} : </label><div>[{$data['id_ssfamille']}] {$data['ssFamille']}</div></div>
+<div class='ficheinfo'><label>{$this->_lib['champ']['famille']} : </label><div>[{$data['id_famille']}] {$data['famille']}</div></div>
+<div class='ficheinfo'><label>{$this->_lib['champ']['sFamille']} : </label><div>[{$data['id_sfamille']}] {$data['sFamille']}</div></div>
+<div class='ficheinfo'><label>{$this->_lib['champ']['ssFamille']} : </label><div>[{$data['id_ssfamille']}] {$data['ssFamille']}</div></div>
 <div class='ficheinfo'><label>{$this->_lib['champ']['code_int_ceido_1']} : </label><div>{$data['code_int_ceido_1']}</div></div>
 <div class='ficheinfo'><label>{$this->_lib['champ']['code_int_ceido_2']} : </label><div>{$data['code_int_ceido_2']}</div></div>
 <div class='ficheinfo'><label>{$this->_lib['champ']['code_int_ceido_3']} : </label><div>{$data['code_int_ceido_3']}</div></div>
@@ -277,7 +277,9 @@ echo <<<EOL
 <div class='ficheinfo'><label>{$this->_lib['champ']['produit_actif']} : </label><div>{$data['produit_actif']}</div></div>
 <div class='ficheinfo'><label>{$this->_lib['champ']['id_produit_lien']} : </label><div>{$data['id_produit_lien']}</div></div>
 <div class='ficheinfo'><label>{$this->_lib['champ']['id_produit']} : </label><div>{$data['id_produit']}</div></div>
-<div class='ficheinfo'><label>PHOTOS : </label><div></div></div>
+<div class='ligne'>
+    $imageEnCours
+</div>
 <hr>
 </body>
 </html>
