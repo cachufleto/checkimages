@@ -52,6 +52,7 @@ body {
 .bt_fiche_parapharmacie:hover {
     background-color:#666666;
 }
+.contenu_fiche,
 .contenu_fiche_parapharmacie {
     position:relative;
     width:100%;
@@ -62,6 +63,13 @@ body {
     border:1px #92D400 solid;
     display:none;
     text-align:center;
+}
+.contenu_fiche{
+    display:block;
+    margin-top: 1px;
+}
+.alert{
+    color: red;
 }
 .titre_produit {
     font-size:18px;
@@ -277,11 +285,16 @@ img.btn_close {
     float: left;
     width: 49%;
 }
+#colonne_droite{
+    padding: 5px;
+    background-color: #d5ebf3;
+}
 label {
     float: left;
     color: coral;
     width: 120px;
     height: 20px;
-    text-align: right;
+    text-align: left;
     padding-right: 5px;
+    padding-top: 20px;
 }

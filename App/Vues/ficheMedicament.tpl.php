@@ -1,5 +1,4 @@
 <?php
-$data = $produit[0];
 $data['libelle_ospharm'] = utf8_encode($data['libelle_ospharm']);
 $data['denomination'] = utf8_encode($data['denomination']);
 $data['denomination'] = explode(',', $data['denomination']);
@@ -8,6 +7,19 @@ $data['presentation'] = utf8_encode($data['presentation']);
 $data['famille'] = utf8_encode($data['famille']);
 $data['sFamille'] = utf8_encode($data['sFamille']);
 $data['ssFamille'] = utf8_encode($data['ssFamille']);
+$data['limite'] = !empty($data['limite'])? $data['limite'] : LIMIT;
+$selectlimite = '';
+$limit = ($data['limite'] <= LIMIT)? LIMIT : $data['limite'];
+for($i=0; $i<=$limit; $i++){
+    $select = '';
+    if($i == $data['limite']){
+        $selectlimite .= "
+    <option value='$i' selected='selected'>$i**</option>";
+    } else {
+        $selectlimite .= "
+    <option value='$i'>$i</option>";
+    }
+}
 
 $imageVignette = (($imageVignette = figureHTML("{$this->link}{$data['cip13']}_vig.jpg", $this->_lib['imageVignette'])) != 'NULL')?
     $imageVignette : $this->_lib['imageVignette'] . $this->_lib['imageEmpty'];
@@ -42,6 +54,17 @@ echo <<<EOL
     <div  class="conteneur_corps">
         <div class="corps" onMouseOver="ferme_toutes_div_sf()">
             <div id="colonne_droite">
+                <label>{$this->_lib['champ']['produit_actif']} : </label>
+                <div>{$this->_lib['etat'][$data['produit_actif']]}</div>
+                <label>{$this->_lib['champ']['cis']} : </label>
+                <div>{$data['cis']}</div>
+                <label>{$this->_lib['champ']['id_tva']} : </label>
+                <div>{$data['id_tva']}</div>
+                <label>{$this->_lib['champ']['ordre_top']} : </label>
+                <div>{$data['ordre_top']}</div>
+                <label>{$this->_lib['champ']['ansm']} : </label>
+                <div>{$data['ansm']}</div>
+                <label>PHOTOS : </label><div></div>
             </div>
             <div id="contenu">
                 <div class="chemin_produit">
@@ -89,11 +112,12 @@ echo <<<EOL
                                         <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
                                             <tr>
                                                 <td><div class="prix_produit">
-                                                    <div style="font-size:28px; padding:10px; text-align:right; font-weight:bold">{$data['prix_public']} € <span style="font-size: 50%;"> TTC</span> </div>
+                                                    <div style="font-size:28px; padding:10px; text-align:right; font-weight:bold">{$data['prix_public']} € <span style="font-size: 50%;"> TTC<br>Prix Public</span> </div>
+                                                    <div style="font-size:28px; padding:10px; text-align:right; font-weight:bold">{$data['prix_moyen']} € <span style="font-size: 50%;"> TTC<br>Prix Moyen</span> </div>
                                                 </div></td>
                                                 <td valign="bottom"><div style="position:relative; margin-left:10px;" class="libelle_produit">Quantité:
                                                     <select name="quantite_produit" style="width:50px; height:25px;" value="" maxlength="3">
-                                                                <option>{$data['limite']}</option>
+                                                                {$selectlimite}
                                                     </select>
                                                 </div></td>
                                             </tr>
@@ -115,7 +139,10 @@ echo <<<EOL
                                         <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
                                             <tr>
                                                 <td width="30" valign="top"><input type="checkbox" name="notice_panier" id="notice_panier" /></td>
-                                                <td>En  cochant cette case, j&rsquo;accepte les conditions g&eacute;n&eacute;rales  de vente du  site, avoir pris connaissance de l&rsquo;ensemble des notices des m&eacute;dicaments et de  l&rsquo;absence de droit de r&eacute;tractation dans le cas d&rsquo;achat de m&eacute;dicaments.</td>
+                                                <td>En  cochant cette case, j&rsquo;accepte les conditions g&eacute;n&eacute;rales
+                                                de vente du  site, avoir pris connaissance de l&rsquo;ensemble des notices des
+                                                m&eacute;dicaments et de  l&rsquo;absence de droit de r&eacute;tractation dans le cas
+                                                d&rsquo;achat de m&eacute;dicaments.</td>
                                             </tr>
                                         </table></td>
                                     </tr>
@@ -219,7 +246,7 @@ echo <<<EOL
                                         </td>
                                         <td>
                                             <select name="quantite_produit" style="width:50px; height:25px;"  maxlength="3" onChange="document.getElementById('modif_panier{$data['id_produit']}').submit();">
-                                                <option>{$data['limite']}</option>
+                                                {$selectlimite}
                                             </select>
                                         </td>
                                         <td>
@@ -263,26 +290,6 @@ echo <<<EOL
 </script>
 
 <hr>
-<div class='ligne'>
-    $imageEnCours
-</div>
-<div class='ficheinfo'><label>{$this->_lib['champ']['denomination']} : </label><div>{$data['denomination'][0]}, {$data['denomination'][1]}</div></div>
-<div class='ficheinfo'><label>{$this->_lib['champ']['laboratoire']} : </label><div>{$data['id_laboratoire']} - {$data['laboratoire']}</div></div>
-<div class='ficheinfo'><label>{$this->_lib['champ']['cis']} : </label><div>{$data['cis']}</div></div>
-<div class='ficheinfo'><label>{$this->_lib['champ']['cip13']} : </label><div>{$data['cip13']}</div></div>
-<div class='ficheinfo'><label>{$this->_lib['champ']['famille']} : </label><div>[{$data['id_famille']}] {$data['famille']}</div></div>
-<div class='ficheinfo'><label>{$this->_lib['champ']['sFamille']} : </label><div>[{$data['id_sfamille']}] {$data['sFamille']}</div></div>
-<div class='ficheinfo'><label>{$this->_lib['champ']['ssFamille']} : </label><div>[{$data['id_ssfamille']}] {$data['ssFamille']}</div></div>
-<div class='ficheinfo'><label>{$this->_lib['champ']['presentation']} : </label><div>{$data['presentation']}</div></div>
-<div class='ficheinfo'><label>{$this->_lib['champ']['limite']} : </label><div>{$data['limite']}</div></div>
-<div class='ficheinfo'><label>{$this->_lib['champ']['id_tva']} : </label><div>{$data['id_tva']}</div></div>
-<div class='ficheinfo'><label>{$this->_lib['champ']['prix_moyen']} : </label><div>{$data['prix_moyen']}0</div></div>
-<div class='ficheinfo'><label>{$this->_lib['champ']['prix_public']} : </label><div>{$data['prix_public']}</div></div>
-<div class='ficheinfo'><label>{$this->_lib['champ']['ordre_top']} : </label><div>{$data['ordre_top']}</div></div>
-<div class='ficheinfo'><label>{$this->_lib['champ']['date_traitement']} : </label><div>{$data['date_traitement']}</div></div>
-<div class='ficheinfo'><label>{$this->_lib['champ']['produit_actif']} : </label><div>{$this->_lib['etat'][$data['produit_actif']]}</div></div>
-<div class='ficheinfo'><label>{$this->_lib['champ']['ansm']} : </label><div>{$data['ansm']}</div></div>
-<div class='ficheinfo'><label>PHOTOS : </label><div></div></div>
 <div class='ligne'>
     $imageEnCours
 </div>

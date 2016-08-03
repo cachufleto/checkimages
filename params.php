@@ -34,4 +34,5 @@ define('PHOTO_TRAITEMENT', PHOTO . 'traitement' . DIRECTORY_SEPARATOR);
 
 /************** CONSTANTE AFFICHAGE ********************/
 define('NUM', 10);
+define('LIMIT', 20);
 

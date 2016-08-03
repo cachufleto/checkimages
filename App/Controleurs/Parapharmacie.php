@@ -54,8 +54,26 @@ class Parapharmacie extends Produit
     }
 
     public function ficheProduit(){
+        $this->libFamilles();
         $id = isset($_GET['id'])? intval($_GET['id']) : -1;
         $produit = $this->getProduit($id);
+        $data = $produit[0];
+
+        $data['ceido_1'] = explode('_', $data['code_int_ceido_1']);
+        $data['ceido_1'][0] = (isset($data['ceido_1'][0]) AND !empty($data['ceido_1'][0]))? intval($data['ceido_1'][0]) : 0;
+        $data['ceido_1'][1] = isset($data['ceido_1'][1])? intval($data['ceido_1'][1]) : 0;
+        $data['ceido_1'][2] = isset($data['ceido_1'][2])? intval($data['ceido_1'][2]) : 0;
+
+        $data['ceido_2'] = explode('_', $data['code_int_ceido_2']);
+        $data['ceido_2'][0] = (isset($data['ceido_2'][0]) AND !empty($data['ceido_2'][0]))? intval($data['ceido_2'][0]) : 0;
+        $data['ceido_2'][1] = isset($data['ceido_2'][1])? intval($data['ceido_2'][1]) : 0;
+        $data['ceido_2'][2] = isset($data['ceido_2'][2])? intval($data['ceido_2'][2]) : 0;
+
+        $data['ceido_3'] = explode('_', $data['code_int_ceido_3']);
+        $data['ceido_3'][0] = (isset($data['ceido_3'][0]) AND !empty($data['ceido_3'][0]))? intval($data['ceido_3'][0]) : 0;
+        $data['ceido_3'][1] = isset($data['ceido_3'][1])? intval($data['ceido_3'][1]) : 0;
+        $data['ceido_3'][2] = isset($data['ceido_3'][2])? intval($data['ceido_3'][2]) : 0;
+
         include VUE . 'fichePharmacie.tpl.php';
         exit();
     }

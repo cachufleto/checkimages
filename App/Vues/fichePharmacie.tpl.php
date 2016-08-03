@@ -10,7 +10,6 @@ echo "
 <div class='ligne'><label>PHOTO : </label><div><img height='400px' src='{$data[cip13]}.jpg'> </div></div>";
 */
 
-$data = $produit[0];
 $data['libelle_ospharm'] = utf8_encode($data['libelle_ospharm']);
 $data['descriptif'] = utf8_encode($data['descriptif']);
 $data['composition'] = utf8_encode($data['composition']);
@@ -18,6 +17,19 @@ $data['conseils'] = utf8_encode($data['conseils']);
 $data['famille'] = utf8_encode($data['famille']);
 $data['sFamille'] = utf8_encode($data['sFamille']);
 $data['ssFamille'] = utf8_encode($data['ssFamille']);
+$data['limite'] = !empty($data['limite'])? $data['limite'] : LIMIT;
+$selectlimite = '';
+$limit = ($data['limite'] <= LIMIT)? LIMIT : $data['limite'];
+for($i=0; $i<=$limit; $i++){
+    $select = '';
+    if($i == $data['limite']){
+        $selectlimite .= "
+    <option value='$i' selected='selected'>$i**</option>";
+    } else {
+        $selectlimite .= "
+    <option value='$i'>$i</option>";
+    }
+}
 
 $imageVignette = (($imageVignette = figureHTML("{$this->link}{$data['cip13']}_vig.jpg", $this->_lib['imageVignette'])) != 'NULL')?
     $imageVignette : $this->_lib['imageVignette'] . $this->_lib['imageEmpty'];
@@ -26,6 +38,8 @@ $imageGrande = (($imageGrande = figureHTML("{$this->link}{$data['cip13']}.jpg", 
 $image = file_exists(PHOTO_EN_COUR . "{$data['cip13']}.jpg")? "photos/en_cours/{$data['cip13']}.jpg" : "";
 $imageEnCours = (($imageEnCours = figureHTML($image, $this->_lib['imageEnCours']))!= 'NULL')?
     $imageEnCours : $this->_lib['imageEnCours'] . $this->_lib['imageEmpty'];
+
+
 
 echo <<<EOL
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -52,14 +66,71 @@ echo <<<EOL
     <div  class="conteneur_corps">
         <div class="corps" onMouseOver="ferme_toutes_div_sf()">
             <div id="colonne_droite">
+                <label>{$this->_lib['champ']['produit_actif']} : </label>
+                <div>{$this->_lib['etat'][$data['produit_actif']]}</div>
+                <label>{$this->_lib['champ']['cacl']} : </label>
+                <div>{$data['cacl']}</div>
+                <label>{$this->_lib['champ']['date_traitement']} : </label>
+                <div>{$data['date_traitement']}</div>
+                <label>{$this->_lib['champ']['famille']} : </label>
+                <div>[{$data['id_famille']}] {$data['famille']}</div>
+                <label>{$this->_lib['champ']['sFamille']} : </label>
+                <div>[{$data['id_sfamille']}] {$data['sFamille']}</div>
+                <label>{$this->_lib['champ']['ssFamille']} : </label>
+                <div>[{$data['id_ssfamille']}] {$data['ssFamille']}</div>
+                <label>{$this->_lib['champ']['code_int_ceido_1']} : </label>
+                <div>{$data['code_int_ceido_1']}</div>
+                <label>{$this->_lib['champ']['code_int_ceido_2']} : </label>
+                <div>{$data['code_int_ceido_2']}</div>
+                <label>{$this->_lib['champ']['code_int_ceido_3']} : </label>
+                <div>{$data['code_int_ceido_3']}</div>
+                <label>{$this->_lib['champ']['id_tva']} : </label>
+                <div>{$data['id_tva']}</div>
+                <label>{$this->_lib['champ']['ordre_top']} : </label>
+                <div>{$data['ordre_top']}</div>
+                <label>{$this->_lib['champ']['id_produit_lien']} : </label>
+                <div>{$data['id_produit_lien']}</div>
+                <label>{$this->_lib['champ']['id_produit']} : </label>
+                <div>{$data['id_produit']}</div>
             </div>
             <div id="contenu">
                 <div class="chemin_produit">
-                    <a href="https://www.pharmaplay.fr/p/sfam.asp?idf={$data['id_famille']}" class="chemin_arbo">{$data['famille']}</a>
+EOL;
+
+if(!empty($data['ceido_1'][0])) {
+    echo <<<EOL
+
+                    <a href="https://www.pharmaplay.fr/p/sfam.asp?idf={$data['ceido_1'][0]}" class="chemin_arbo">{$this->_lib['liste_Familles'][$data['ceido_1'][0]]}</a>
                     <img src="https://www.pharmaplay.fr/s/im/fleche_chemin.png">
-                    <a href="https://www.pharmaplay.fr/p/prodlist.asp?idsf={$data['id_sfamille']}" class="chemin_arbo">{$data['sFamille']}</a>
+                    <a href="https://www.pharmaplay.fr/p/prodlist.asp?idsf={$data['ceido_1'][1]}" class="chemin_arbo">{$this->_lib['liste_sFamilles'][$data['ceido_1'][1]]}</a>
                     <img src="https://www.pharmaplay.fr/s/im/fleche_chemin.png">
-                    <a href="https://www.pharmaplay.fr/p/prodlist.asp?idssf={$data['id_ssfamille']}" class="chemin_arbo">{$data['ssFamille']}</a>
+                    <a href="https://www.pharmaplay.fr/p/prodlist.asp?idssf={$data['ceido_1'][2]}" class="chemin_arbo">{$this->_lib['liste_ssFamille'][$data['ceido_1'][2]]}</a>
+                    Code Ceido 1
+EOL;
+} else {
+    echo $this->_lib['pasDeFamilles'];
+}
+if(!empty($data['ceido_2'][0])) {
+echo <<<EOL
+                    <a href="https://www.pharmaplay.fr/p/sfam.asp?idf={$data['ceido_2'][0]}" class="chemin_arbo">{$this->_lib['liste_Familles'][$data['ceido_2'][0]]}</a>
+                    <img src="https://www.pharmaplay.fr/s/im/fleche_chemin.png">
+                    <a href="https://www.pharmaplay.fr/p/prodlist.asp?idsf={$data['ceido_2'][1]}" class="chemin_arbo">{$this->_lib['liste_sFamilles'][$data['ceido_2'][1]]}</a>
+                    <img src="https://www.pharmaplay.fr/s/im/fleche_chemin.png">
+                    <a href="https://www.pharmaplay.fr/p/prodlist.asp?idssf={$data['ceido_2'][2]}" class="chemin_arbo">{$this->_lib['liste_ssFamille'][$data['ceido_2'][2]]}</a>
+                    Code Ceido 2
+EOL;
+}
+if(!empty($data['ceido_3'][0])) {
+    echo <<<EOL
+                    <a href="https://www.pharmaplay.fr/p/sfam.asp?idf={$data['ceido_3'][0]}" class="chemin_arbo">{$this->_lib['liste_Familles'][$data['ceido_3'][0]]}</a>
+                    <img src="https://www.pharmaplay.fr/s/im/fleche_chemin.png">
+                    <a href="https://www.pharmaplay.fr/p/prodlist.asp?idsf={$data['ceido_3'][1]}" class="chemin_arbo">{$this->_lib['liste_sFamilles'][$data['ceido_3'][1]]}</a>
+                    <img src="https://www.pharmaplay.fr/s/im/fleche_chemin.png">
+                    <a href="https://www.pharmaplay.fr/p/prodlist.asp?idssf={$data['ceido_3'][2]}" class="chemin_arbo">{$this->_lib['liste_ssFamille'][$data['ceido_3'][2]]}</a>
+                    Code Ceido 3
+EOL;
+}
+echo <<<EOL
                 </div>
                 <div style="margin-left:100px; padding:20px;">
                     <div class="titre_produit">{$data['libelle_ospharm']}</div>
@@ -93,7 +164,7 @@ echo <<<EOL
                                                     <td valign="bottom">
                                                         <div style="position:relative; margin-left:10px;" class="libelle_produit">Quantité:
                                                             <select name="quantite_produit" style="width:50px; height:25px;" value="" maxlength="3">
-                                                                <option>{$data['limite']}</option>
+                                                                {$selectlimite}
                                                             </select>
                                                         </div>
                                                     </td>
@@ -162,13 +233,13 @@ echo <<<EOL
                             </table>
                         </div>
                         <div style="max-width:100%; padding:10px;">
-                            <div id="descriptif" class="contenu_fiche_parapharmacie">
+                            <div id="descriptif" class="contenu_fiche">
                                 <div style="padding:10px;">{$data['descriptif']}</div>
                             </div>
-                            <div id="conseils" class="contenu_fiche_parapharmacie">
+                            <div id="conseils" class="contenu_fiche">
                                 <div style="padding:10px;">{$data['conseils']}</div>
                             </div>
-                            <div id="composition" class="contenu_fiche_parapharmacie">
+                            <div id="composition" class="contenu_fiche">
                                 <div style="padding:10px;">{$data['composition']}</div>
                             </div>
                         </div>
@@ -213,7 +284,7 @@ echo <<<EOL
                                         </td>
                                         <td>
                                             <select name="quantite_produit" style="width:50px; height:25px;"  maxlength="3" onChange="document.getElementById('modif_panier{$data['id_produit']}').submit();">
-                                                <option>{$data['limite']}</option>
+                                                {$selectlimite}
                                             </select>
                                         </td>
                                         <td>
@@ -262,25 +333,12 @@ echo <<<EOL
 <div class='ligne'>
     $imageEnCours
 </div>
-
-<div class='ficheinfo'><label>{$this->_lib['champ']['laboratoire']} : </label><div>{$data['id_laboratoire']} - {$data['laboratoire']}</div></div>
-<div class='ficheinfo'><label>{$this->_lib['champ']['cacl']} : </label><div>{$data['cacl']}</div></div>
-<div class='ficheinfo'><label>{$this->_lib['champ']['famille']} : </label><div>[{$data['id_famille']}] {$data['famille']}</div></div>
-<div class='ficheinfo'><label>{$this->_lib['champ']['sFamille']} : </label><div>[{$data['id_sfamille']}] {$data['sFamille']}</div></div>
-<div class='ficheinfo'><label>{$this->_lib['champ']['ssFamille']} : </label><div>[{$data['id_ssfamille']}] {$data['ssFamille']}</div></div>
-<div class='ficheinfo'><label>{$this->_lib['champ']['code_int_ceido_1']} : </label><div>{$data['code_int_ceido_1']}</div></div>
-<div class='ficheinfo'><label>{$this->_lib['champ']['code_int_ceido_2']} : </label><div>{$data['code_int_ceido_2']}</div></div>
-<div class='ficheinfo'><label>{$this->_lib['champ']['code_int_ceido_3']} : </label><div>{$data['code_int_ceido_3']}</div></div>
-<div class='ficheinfo'><label>{$this->_lib['champ']['id_tva']} : </label><div>{$data['id_tva']}</div></div>
-<div class='ficheinfo'><label>{$this->_lib['champ']['ordre_top']} : </label><div>{$data['ordre_top']}</div></div>
-<div class='ficheinfo'><label>{$this->_lib['champ']['date_traitement']} : </label><div>{$data['date_traitement']}</div></div>
-<div class='ficheinfo'><label>{$this->_lib['champ']['produit_actif']} : </label><div>{$data['produit_actif']}</div></div>
-<div class='ficheinfo'><label>{$this->_lib['champ']['id_produit_lien']} : </label><div>{$data['id_produit_lien']}</div></div>
-<div class='ficheinfo'><label>{$this->_lib['champ']['id_produit']} : </label><div>{$data['id_produit']}</div></div>
 <div class='ligne'>
-    $imageEnCours
-</div>
 <hr>
-</body>
-</html>
 EOL;
+
+//var_dump($data);
+
+echo "</div></body>
+</html>
+";

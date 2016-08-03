@@ -61,6 +61,40 @@ class Produit extends Produits
         }
     }
 
+    public function libFamilles()
+    {
+        $this->liste_Familles();
+        $this->liste_SFamilles();
+        $this->liste_SSFamilles();
+    }
+
+    public function liste_Familles()
+    {
+        $liste = $this->selectFamilles();
+        $this->_lib['liste_Familles'][0] = '---';
+        foreach ($liste as $key=>$data){
+            $this->_lib['liste_Familles'][intval($data['id_famille'])] = utf8_encode($data['designation']);
+        }
+    }
+
+    public function liste_SFamilles()
+    {
+        $liste = $this->selectSFamilles();
+        $this->_lib['liste_sFamilles'][0] = '---';
+        foreach ($liste as $key=>$data){
+            $this->_lib['liste_sFamilles'][intval($data['id_sfamille'])] = utf8_encode($data['designation']);
+        }
+    }
+
+    public function liste_SSFamilles()
+    {
+        $liste = $this->selectSSFamilles();
+        $this->_lib['liste_ssFamille'][0] = '---';
+        foreach ($liste as $key=>$data){
+            $this->_lib['liste_ssFamille'][intval($data['id_ssfamille'])] = utf8_encode($data['designation']);
+        }
+    }
+
     public function produits()
     {
         switch ($this->selectProduit) {

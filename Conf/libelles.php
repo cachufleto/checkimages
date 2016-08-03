@@ -44,7 +44,7 @@ $_libelle['ssFamille'] = "Sous-Sous Fam.";
 $_libelle['test'] = "Code CIP";
 $_libelle['tousImage'] = "Liste de tous les produits";
 $_libelle['upload'] = "Alimenter la base des nouvelles images";
-
+$_libelle['pasDeFamilles'] = "<span class='alert'>Aucunne famille selectioné</span>";
 $_libelle['etat']['i'] = 'Inédit';
 $_libelle['etat']['o'] = 'En Ligne';
 $_libelle['etat']['n'] = 'Hors Ligne';
@@ -84,7 +84,7 @@ $_libelle['champ']['famille'] = "Famille";
 $_libelle['champ']['id_famille'] = "Famille";
 $_libelle['champ']['id_laboratoire'] = "Laboratoire";
 $_libelle['champ']['id_produit'] = "ID";
-$_libelle['champ']['id_produit_lien'] = "Produit";
+$_libelle['champ']['id_produit_lien'] = "Lien Produit";
 $_libelle['champ']['id_sfamille'] = "Sous Famille";
 $_libelle['champ']['id_ssfamille'] = "S.S. Famille";
 $_libelle['champ']['id_tva'] = "TVA";

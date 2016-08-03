@@ -158,6 +158,30 @@ class Produits extends Bdd
         return $this->query($sql);
     }
 
+    public function selectFamilles()
+    {
+        $sql = "SELECT *
+                FROM familles;";
+
+        return $this->query($sql);
+    }
+
+    public function selectSFamilles()
+    {
+        $sql = "SELECT *
+                FROM s_familles;";
+
+        return $this->query($sql);
+    }
+
+    public function selectSSFamilles()
+    {
+        $sql = "SELECT *
+                FROM ss_famille;";
+
+        return $this->query($sql);
+    }
+
     public function getProduit($id)
     {
         $sql = "SELECT
